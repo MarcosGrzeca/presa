@@ -1,17 +1,23 @@
 function Algoritmo() {
-	this.numeroMaximoInteracoes = 2000;
+	this.numeroMaximoInteracoes = 100;
 	this.interacoes = 0;
+    this.ambiente;
 
 	this.simular = function() {
-		var ambiente = new Ambiente($("#nroLinhas").val(), $("#nroColunas").val());
-        ambiente.desenharAmbiente("espacoAmbiente");
+		this.ambiente = new Ambiente($("#nroLinhas").val(), $("#nroColunas").val());
+        this.ambiente.desenharAmbiente("espacoAmbiente");
 
         var populacao = new Populacao($("#nroPredadores").val(), $("#nroPresas").val());
         populacao.gerarPopulacao();
-
-        while (this.interacoes < this.numeroMaximoInteracoes) {
-
-            this.interacoes++;
-        }
 	}
+
+    this.release = function () {
+        // while (this.interacoes < this.numeroMaximoInteracoes) {
+
+        //     this.interacoes++;
+        // }
+
+        this.ambiente.atualizarAmbiente();
+        setTimeOut("this.simular()", 1000);
+    }
 }

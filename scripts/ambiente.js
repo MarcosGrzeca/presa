@@ -1,7 +1,7 @@
 function Ambiente(nroLinhas, nroColunas) {
 	this.nroLinhas = nroLinhas;
 	this.nroColunas = nroColunas;
-	this.mapa = [][];
+	this.mapa = [];
 
 	this.posicao = 0;
 	this.baixo = '00';
@@ -9,7 +9,18 @@ function Ambiente(nroLinhas, nroColunas) {
 	this.direita = '10';
 	this.esquerda = '11';
 
+
+	this.inicializarMatriz = function() {
+		for (i = 0; i < nroLinhas; i++) {
+			this.mapa[i] = [];
+			for (j = 0; j < nroColunas; j++) {
+				this.mapa[i][j] = 0;
+			}
+		}
+	}
+
 	this.desenharAmbiente = function(idCampo) {
+		this.inicializarMatriz();
 		var html = "<table class='ambiente'>";
 		for (i = 0; i < nroLinhas; i++) {
 			html += "<tr>";
@@ -24,7 +35,11 @@ function Ambiente(nroLinhas, nroColunas) {
 	}
 
 	this.atualizarAmbiente = function() {
-		
+		$.each(this.mapa, function(key, linha) {
+			$.each(linha, function(key, coluna) {
+				console.info(linha + " .. " + coluna);
+			});
+		});
 	}
 	
 	this.validaMovimento = function(posicao, movimento) {

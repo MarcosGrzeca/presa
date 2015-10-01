@@ -1,9 +1,8 @@
-function Individuo() {
+function Agente() {
 	this.fitness;
 	this.sequencia;
 	this.movimentosPossiveis = ["00", "01", "10", "11"];
 	this.posicaoAtual = 0;
-	this.lab = new Labirinto();
 	
 	this.calcularFitness = function() {
 //		this.fitness = gerarRandomico(1000, 0);
@@ -29,5 +28,10 @@ function Individuo() {
 	this.setar = function(sequencia) {
 		this.sequencia = sequencia;
 		this.calcularFitness();
+	}
+
+	this.gerarPosicaoAleatoria = function() {
+		// gerarRandomico(0, )
+		this.ambiente
 	}
 }
