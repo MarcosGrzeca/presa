@@ -1,5 +1,12 @@
 function iniciar() {
-	$("#aguarde").removeClass("hide");
+	$("#telaConfiguracao").hide();
+	$("#telaSimulacao").show();
+
+
+	var algoritmo = new Algoritmo();
+	algoritmo.simular();
+
+/*	$("#aguarde").removeClass("hide");
 	$("#resultado").addClass("hide");
 	
 	setTimeout(function() {
@@ -10,8 +17,6 @@ function iniciar() {
 		var resultado = algoritmo.calcular();
 		var d = new Date();
 		var fim = d.getTime();
-		
-//		console.log(fim + " --- " + inicio);
 		
 		if (resultado.achou == true) {
 			var html = "O caminho mais curto até o final do labirinto possui como movimentos " + resultado.individuo.sequencia + ":<ol>";
@@ -48,5 +53,5 @@ function iniciar() {
 		}
 		$("#aguarde").addClass("hide");
 		$("#resultado").removeClass("hide");
-	}, 100);
+	}, 100);*/
 }

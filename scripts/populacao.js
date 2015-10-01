@@ -1,19 +1,18 @@
-function Populacao(tamanhoPopulacao, taxaMutacao, taxaCrossOver, taxaElitismo, pontosCorte) {
-	this.tamanhoPopulacao = tamanhoPopulacao;
-	this.taxaMutacao = taxaMutacao;
-	this.taxaCrossOver = taxaCrossOver;
-	this.taxaElitismo = taxaElitismo;
-	this.pontosCorte = pontosCorte;
-	this.individuos = [];
-	this.individuosCrossOver = [];
-	this.individuosCopiaParaElitismo = [];
-	this.totalMutados = 0;
+function Populacao(nroPredadores, nroPresas) {
+	this.nroPredadores = nroPredadores;
+	this.nroPresas = nroPresas;
+	this.agentes = [];
 	
 	this.gerarPopulacao = function() {
-		for (var i = 0; i < tamanhoPopulacao; i++) {
-			var individuo = new Individuo();
-			individuo.gerar();
-			this.individuos.push(individuo);
+		for (var i = 0; i < nroPredadores; i++) {
+			var predador = new Predador();
+			predador.gerarPosicaoAleatoria();
+			this.agentes.push(predador);
+		}
+		for (var i = 0; i < nroPresas; i++) {
+			var presa = new Presa();
+			presa.gerarPosicaoAleatoria();
+			this.agentes.push(individuo);
 		}
 	};
 

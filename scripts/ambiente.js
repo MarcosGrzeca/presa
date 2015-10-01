@@ -1,35 +1,31 @@
-function Labirinto() {
-	this.tamanho = 5;
-	this.labirinto = [['00', '11'],
-	                  ['10', '11'],
-	                  ['00', '11'],
-	                  ['00'],
-	                  ['00'],
-	                  ['00', '01'],
-	                  ['00', '10'],
-	                  ['11', '01'],
-	                  ['01', '10'],
-	                  ['00', '01', '11'],
-	                  ['01', '10'],
-	                  ['00', '01', '10', '11'],
-	                  ['00', '10', '11'],
-	                  ['00', '10', '11'],
-	                  ['11', '01'],
-	                  ['00', '10'],
-	                  ['01', '11'],
-	                  ['00', '01'],
-	                  ['01', '10'],
-	                  ['00', '11'],
-	                  ['01', '10'],
-	                  ['10', '11'],
-	                  ['10', '11', '01'],
-	                  ['10', '11'],
-	                  ['01', '11']];
+function Ambiente(nroLinhas, nroColunas) {
+	this.nroLinhas = nroLinhas;
+	this.nroColunas = nroColunas;
+	this.mapa = [][];
+
 	this.posicao = 0;
 	this.baixo = '00';
 	this.cima = '01';
 	this.direita = '10';
 	this.esquerda = '11';
+
+	this.desenharAmbiente = function(idCampo) {
+		var html = "<table class='ambiente'>";
+		for (i = 0; i < nroLinhas; i++) {
+			html += "<tr>";
+			for (j = 0; j < nroColunas; j++) {
+				html += "<td id='field_" + i + "_" + j + "'></td>"; 
+			}
+			html += "</tr>";
+		}
+		html += "</table>";
+		console.info(html);
+		$("#" + idCampo).html(html);
+	}
+
+	this.atualizarAmbiente = function() {
+		
+	}
 	
 	this.validaMovimento = function(posicao, movimento) {
 		var valido = 0;

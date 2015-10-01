@@ -11,95 +11,59 @@
 	<link rel="stylesheet" href="style/estilo.css">
 </head>
 <body style="background-color:#EEE;">
-	<div class="container">
+	<div class="container-fluid">
 		<center>
-			<h1>Labirinto</h1>
-			<h4>Algoritmo Genético</h2>
+			<h1>Presa e Predador</h1>
 		</center>
 
 		<br/>
-		
-		<div class="row">
-		  	<div class="col-md-2">
-				<label>População</label>
-				<input type="text" id="populacao" value="1000" class="form-control" />
+		<div id="telaConfiguracao">
+			<div class="row">
+			  	<div class="col-md-2">
+					<label>Nº Linhas</label>
+					<input type="text" id="nroLinhas" value="20" class="form-control" />
+				</div>
+				<div class="col-md-2">
+					<label>Nº Colunas</label>
+					<input type="text" id="nroColunas" value="20" class="form-control" />
+				</div>
+				<div class="col-md-2">
+					<label>Nº Predadores</label>
+					<select id="nroPredadores" class="form-control">
+						<option>4</option>
+						<option>5</option>
+						<option>6</option>
+						<option>7</option>
+					</select>
+				</div>
+				<div class="col-md-2">
+					<label>Nº Presas</label>
+					<select id="nroPresas" class="form-control">
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+					</select>
+				</div>
+			  	<div class="col-md-2">
+					<label>Movimentação das presas</label>
+					<select id="presasMovimentacao" class="form-control">
+						<option value="1" selected="selected">1</option>
+						<option value="2">2</option>
+					</select>
+				</div>
 			</div>
-			<div class="col-md-2">
-				<label>Taxa de Mutação</label>
-				<input type="text" id="taxaMutacao" value="0.20" class="form-control" />
-			</div>
-			<div class="col-md-2">
-				<label>Taxa de CrossOver</label>
-				<input type="text" id="taxaCrossOver" value="0.20" class="form-control" />
-			</div>
-			<div class="col-md-2">
-				<label>Taxa de Elitismo</label>
-				<input type="text" id="taxaElitismo" value="0.1" class="form-control" />
-			</div>
-		  	<div class="col-md-2">
-				<label>Pontos de corte</label>
-				<select id="pontosCorte" class="form-control">
-					<option value="1" selected="selected">1</option>
-					<option value="2">2</option>
-				</select>
-			</div>
-		</div>
 
-		<br/>
-		<div class="row">
-		  	<div class="col-md-3">
-				<input type="button" onclick="iniciar()" value="Calcular caminhos labirinto" class="form-control btn btn-primary">
+			<br/>
+			<div class="row">
+			  	<div class="col-md-3">
+					<input type="button" onclick="iniciar()" value="Simular ambiente" class="form-control btn btn-primary">
+				</div>
 			</div>
 		</div>
-		<div id="resultado" class="bs-callout bs-callout-info hide row">
-		    <h4>Resultado</h4>
-		    <div class="col-md-7">
-			    <p id="textoResultado"></p>
-			</div>
-			<div class="col-md-5">
-				<table class="table-res">
-					<tr>
-						<td>0</td>
-						<td>1</td>
-						<td class="border-right">2</td>
-						<td class="border-right">3</td>
-						<td>4</td>
-					</tr>
-					<tr>
-						<td>5</td>
-						<td class='border-top border-left'>6</td>
-						<td class="border-right border-bottom">7</td>
-						<td class="border-bottom">8</td>
-						<td>9</td>
-					</tr>
-					<tr>
-						<td class="border-bottom">10</td>
-						<td>11</td>
-						<td>12</td>
-						<td>13</td>
-						<td class="border-bottom">14</td>
-					</tr>
-					<tr>
-						<td>15</td>
-						<td class="border-right border-bottom">16</td>
-						<td>17</td>
-						<td class="border-left border-bottom">18</td>
-						<td>19</td>
-					</tr>
-					<tr>
-						<td>20</td>
-						<td>21</td>
-						<td>22</td>
-						<td>23</td>
-						<td>24</td>
-					</tr>
-				</table>
-			</div>
+		<div id="telaSimulacao" style="display:none;">
+			<div id="espacoAmbiente"></div>
 		</div>
-		<div id="aguarde" class="bs-callout bs-callout-info hide row">
-			<h4>Calculando...</h4>
-		</div>
-		
 	</div>
 </body>
 
@@ -108,7 +72,8 @@
 <script type="text/javascript" src="style/bootstrap/js/bootstrap.min.js"></script>
 
 <script type="text/javascript" src="scripts/index.js"></script>
-<script type="text/javascript" src="scripts/individuo.js"></script>
+<script type="text/javascript" src="scripts/ambiente.js"></script>
+
 <script type="text/javascript" src="scripts/functions.js"></script>
 <script type="text/javascript" src="scripts/populacao.js"></script>
 <script type="text/javascript" src="scripts/algoritmo.js"></script>

@@ -1,6 +1,4 @@
-.container {
-	border: 1px solid #CCC; 
-	padding:10px; 
+.container-fluid {
 	background-color:#FFF; 
 	min-height:600px;
 }
@@ -58,4 +56,15 @@
 
 .casa_percorrida {
 	background-color: #1B809E;
+}
+
+
+.ambiente td {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #000;
+}
+
+.hide {
+    display: none;
 }
