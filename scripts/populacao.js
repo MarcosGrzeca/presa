@@ -12,7 +12,7 @@ function Populacao(nroPredadores, nroPresas) {
 		for (var i = 0; i < nroPresas; i++) {
 			var presa = new Presa();
 			presa.gerarPosicaoAleatoria();
-			this.agentes.push(individuo);
+			this.agentes.push(presa);
 		}
 	};
 

@@ -31,7 +31,15 @@ function Agente() {
 	}
 
 	this.gerarPosicaoAleatoria = function() {
-		// gerarRandomico(0, )
-		this.ambiente
+		var posicaoInvalida = true;
+		while (posicaoInvalida) {
+			var linha = gerarRandomico((Ambiente.nroLinhas - 1), 0);
+			var coluna = gerarRandomico((Ambiente.nroColunas - 1), 0);
+			var objeto = Ambiente.getPosicao(linha, coluna);
+			if (objeto == 0) {
+				posicaoInvalida = false;
+				return {"linha" : linha, "coluna" : coluna};
+			}
+		}
 	}
 }

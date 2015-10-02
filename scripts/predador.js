@@ -1,11 +1,7 @@
 function Predador() {
-	this.fitness;
-	this.sequencia;
-	this.linhaAtual = 0;
-	this.colunaAtual = 0;
 	this.agente = new Agente();
+	this.posicao = {};
 
-	
 	this.calcularFitness = function() {
 //		this.fitness = gerarRandomico(1000, 0);
 //		return;
@@ -33,8 +29,7 @@ function Predador() {
 	}
 
 	this.gerarPosicaoAleatoria = function() {
-		this.posicaoAtual = this.agente.gerarPosicaoAleatoria();
-		this.linhaAtual = 0;
-		this.colunaAtual = 0;
+		this.posicao = this.agente.gerarPosicaoAleatoria();
+		Ambiente.setPosicao(this.posicao.linha, this.posicao.coluna, 1);
 	}
 }

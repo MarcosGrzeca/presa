@@ -4,11 +4,15 @@ function Algoritmo() {
     this.ambiente;
 
 	this.simular = function() {
-		this.ambiente = new Ambiente($("#nroLinhas").val(), $("#nroColunas").val());
-        this.ambiente.desenharAmbiente("espacoAmbiente");
+		//this.ambiente = new Ambiente($("#nroLinhas").val(), $("#nroColunas").val());
+        //this.ambiente.desenharAmbiente("espacoAmbiente");
+
+        Ambiente.inicializar($("#nroLinhas").val(), $("#nroColunas").val());
+        Ambiente.desenhar("espacoAmbiente");
 
         var populacao = new Populacao($("#nroPredadores").val(), $("#nroPresas").val());
         populacao.gerarPopulacao();
+        Ambiente.atualizar();
 	}
 
     this.release = function () {
@@ -17,7 +21,7 @@ function Algoritmo() {
         //     this.interacoes++;
         // }
 
-        this.ambiente.atualizarAmbiente();
+        //this.ambiente.atualizarAmbiente();
         setTimeOut("this.simular()", 1000);
     }
 }

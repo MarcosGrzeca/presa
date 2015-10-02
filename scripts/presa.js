@@ -1,13 +1,8 @@
 function Presa() {
-	this.fitness;
-	this.sequencia;
-	this.movimentosPossiveis = ["00", "01", "10", "11"];
-	this.posicaoAtual = 0;
-	this.lab = new Labirinto();
-	
+	this.agente = new Agente();
+	this.posicao = {};
+
 	this.calcularFitness = function() {
-//		this.fitness = gerarRandomico(1000, 0);
-//		return;
 		this.lab.posicao = 0;
 		this.fitness = this.lab.calcularFitness(this.sequencia);
 	};
@@ -29,5 +24,10 @@ function Presa() {
 	this.setar = function(sequencia) {
 		this.sequencia = sequencia;
 		this.calcularFitness();
+	}
+
+	this.gerarPosicaoAleatoria = function() {
+		this.posicao = this.agente.gerarPosicaoAleatoria();
+		Ambiente.setPosicao(this.posicao.linha, this.posicao.coluna, 2);
 	}
 }

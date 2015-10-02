@@ -1,14 +1,7 @@
-function Ambiente(nroLinhas, nroColunas) {
+/*function Ambiente(nroLinhas, nroColunas) {
 	this.nroLinhas = nroLinhas;
 	this.nroColunas = nroColunas;
 	this.mapa = [];
-
-	this.posicao = 0;
-	this.baixo = '00';
-	this.cima = '01';
-	this.direita = '10';
-	this.esquerda = '11';
-
 
 	this.inicializarMatriz = function() {
 		for (i = 0; i < nroLinhas; i++) {
@@ -42,78 +35,86 @@ function Ambiente(nroLinhas, nroColunas) {
 		});
 	}
 	
-	this.validaMovimento = function(posicao, movimento) {
-		var valido = 0;
-		if(posicao % this.tamanho == 0) { //coluna esquerda
-			if(movimento == this.esquerda) {
-				valido = 10;
+}*/
+
+var Ambiente = {
+	nroLinhas: 0,
+	nroColunas: 0,
+	mapa: [],
+	idCampoTela: "",
+
+	inicializar: function(nroLinhas, nroColunas) {
+		this.nroLinhas = nroLinhas;
+		this.nroColunas = nroColunas;
+	},
+
+	inicializarMatriz: function() {
+		for (i = 0; i < this.nroLinhas; i++) {
+			this.mapa[i] = [];
+			for (j = 0; j < this.nroColunas; j++) {
+				this.mapa[i][j] = 0;
 			}
-		} else if(posicao % this.tamanho == this.tamanho-1) { //coluna direita
-			if(movimento == this.direita) {
-				valido = 10;
+		}
+	},
+
+	desenhar: function(idCampo) {
+		this.idCampoTela = idCampo;		
+		this.inicializarMatriz();
+		var html = "<table class='ambiente'>";
+		for (i = 0; i < this.nroLinhas; i++) {
+			html += "<tr>";
+			for (j = 0; j < this.nroColunas; j++) {
+				html += "<td id='field_" + i + "_" + j + "'></td>"; 
 			}
-		} else if(parseInt(posicao / this.tamanho) == 0) { //linha 1
-			if(movimento == this.cima) {
-				valido = 10;
+			html += "</tr>";
+		}
+		html += "</table>";
+		$("#" + this.idCampoTela).html(html);
+	},
+
+	atualizar: function() {
+		console.dir(this.mapa);
+		/*$.each(this.mapa, function(keyLinha, linha) {
+			$.each(linha, function(keyColuna, coluna) {
+				//console.info(linha + " .. " + coluna);
+				//console.info(keyLinha + " .. " + keyColuna);
+				//console.log(this.mapa[keyLinha][keyColuna]);
+				/*if (this.mapa[keyLinha][keyColuna] == 1) {
+					$("#field_" + keyLinha + "_" + keyColuna).html("imagens/predador/House Lannister-26.png");
+					$("#field_" + keyLinha + "_" + keyColuna).addClass("predador");
+				}
+			});
+		});*/
+		for (i = 0; i < this.nroLinhas; i++) {
+			for (j = 0; j < this.nroColunas; j++) {
+				if (this.mapa[i][j] == 1) {
+					$("#field_" + i + "_" + j).html(this.getHtmlPredador());
+					$("#field_" + i + "_" + j).addClass("predador");
+				} else if (this.mapa[i][j] == 2) {
+					$("#field_" + i + "_" + j).html(this.getHtmlPresa());
+					$("#field_" + i + "_" + j).addClass("presa");
+				}
 			}
-		} else if(parseInt(posicao / this.tamanho) == this.tamanho-1) { //ultima linha
-			if(movimento == this.baixo) {
-				valido = 10;
-			}
 		}
-		if(valido > 0) {
-			return valido;
-		}
-		var pos = this.labirinto[posicao];
-		if (typeof pos == "undefined") {
-			return 15;
-		}
-		if($.inArray(movimento, pos) == -1){
-			valido = 5;
-		}
-		return valido;
-	};
-	
-	this.calculaDistanciaFinal = function(ultimaPosicao) {
-		if (ultimaPosicao > (this.tamanho * this.tamanho)) {
-			return 50;
-		}
-		var linha = this.tamanho - 1 - parseInt(ultimaPosicao / this.tamanho);
-		var coluna = this.tamanho - 1 - (ultimaPosicao % this.tamanho);
-		return linha + coluna;
-	};
-	
-	this.move = function(movimento) {
-		if(movimento == this.esquerda) {
-			this.posicao -= 1;
-		} else if(movimento == this.direita) {
-			this.posicao += 1;
-		} else if(movimento == this.cima) {
-			this.posicao -= this.tamanho;
-		} else if(movimento == this.baixo) {
-			this.posicao += this.tamanho;
-		}
-		return this.posicao;
-	};
-	
-	this.calcularFitness = function(movimentos) {
-		var fitness = 0;
-		var f;
-		var pos = 0;
-		for(var i = 0; i < movimentos.length; i=i+2){
-			var mv = movimentos.substring(i, i+2);
-			f = this.validaMovimento(pos, mv);
-			if (f == 0) {
-				pos = this.move(mv);
-			}
-			
-			fitness += f;
-		}
-		f = this.calculaDistanciaFinal(pos);
-		fitness += f;
-		if(f == 0) {
-			return f;
-		}
-		return fitness;
-	};
+		
+	},
+
+	getPosicao: function(linha, coluna) {
+		return this.mapa[linha][coluna];
+	},
+
+	setPosicao: function(linha, coluna, tipoIndividuo) {
+		console.info (linha + ", " + coluna + ", " + tipoIndividuo);
+		this.mapa[linha][coluna] = tipoIndividuo;
+	},
+
+	getHtmlPredador: function() {
+		return "<img src='imagens/predador/House Lannister-26.png' />";
+	},
+
+	getHtmlPresa: function() {
+		return "<img src='imagens/presa/1443719659_zebra.png' />";
+	}
 }
+
+
