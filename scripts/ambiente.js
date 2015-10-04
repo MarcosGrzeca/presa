@@ -90,6 +90,10 @@ var Ambiente = {
 		return this.mapa[linha][coluna];
 	},
 
+	getPosicaoObjeto: function(objeto) {
+		return this.mapa[objeto.linha][objeto.coluna];
+	},
+
 	setPosicao: function(animal) {
 		var posicoes = animal.getPosicao();
 		this.mapa[posicoes.linha][posicoes.coluna] = animal;

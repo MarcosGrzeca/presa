@@ -17,6 +17,7 @@ function Predador(numero) {
 	}
 
 	this.move = function() {
+		this.animal.getCampoPercepcao();
 		var random = gerarRandomico(4, 1);
 		if (random == 4) {
 			var posicoes = this.animal.moverParaDireita();

@@ -3,6 +3,8 @@ function Animal() {
 	this.sequencia;
 	this.movimentosPossiveis = ["00", "01", "10", "11"];
 	this.posicao = {};
+	this.velocidade = 1;
+	this.duracaoVelocidade = 1;
 	
 	this.calcularFitness = function() {
 //		this.fitness = gerarRandomico(1000, 0);
@@ -78,5 +80,54 @@ function Animal() {
 		} else {
 			return {"linha" : this.posicao.linha - 1, "coluna" : this.posicao.coluna};
 		}
+	}
+
+	this.moverParaDireitaSuperior = function() {
+		var pos = this.moverParaDireita();
+		if (pos.linha == 0) {
+			return {"linha" : (Ambiente.nroLinhas - 1), "coluna" : pos.coluna};
+		} else {
+			return {"linha" : pos.linha - 1, "coluna" : pos.coluna};
+		}
+	}
+
+	this.moverParaDireitaInferior = function() {
+		var pos = this.moverParaDireita();
+		if (pos.linha == (Ambiente.nroLinhas - 1)) {
+			return {"linha" : 0, "coluna" : pos.coluna};
+		} else {
+			return {"linha" : pos.linha + 1, "coluna" : pos.coluna};
+		}
+	}
+
+	this.moverParaEsquerdaSuperior = function() {
+		var pos = this.moverParaEsquerda();
+		if (pos.linha == 0) {
+			return {"linha" : (Ambiente.nroLinhas - 1), "coluna" : pos.coluna};
+		} else {
+			return {"linha" : pos.linha - 1, "coluna" : pos.coluna};
+		}
+	}
+
+	this.moverParaEsquerdaInferior = function() {
+		var pos = this.moverParaEsquerda();
+		if (pos.linha == (Ambiente.nroLinhas - 1)) {
+			return {"linha" : 0, "coluna" : pos.coluna};
+		} else {
+			return {"linha" : pos.linha + 1, "coluna" : pos.coluna};
+		}
+	}
+
+	this.getCampoPercepcao = function() {
+		var percepcoes = [];
+		percepcoes["cima"] = Ambiente.getPosicaoObjeto(this.moverParaCima());
+		percepcoes["baixo"] = Ambiente.getPosicaoObjeto(this.moverParaBaixo());
+		percepcoes["direita"] = Ambiente.getPosicaoObjeto(this.moverParaDireita());
+		percepcoes["esquerda"] = Ambiente.getPosicaoObjeto(this.moverParaEsquerda());
+		percepcoes["direitaSuperior"] = Ambiente.getPosicaoObjeto(this.moverParaDireitaSuperior());
+		percepcoes["direitaInferior"] = Ambiente.getPosicaoObjeto(this.moverParaDireitaInferior());
+		percepcoes["esquerdaSuperior"] = Ambiente.getPosicaoObjeto(this.moverParaEsquerdaSuperior());
+		percepcoes["esquerdaInferior"] = Ambiente.getPosicaoObjeto(this.moverParaEsquerdaInferior());
+		return percepcoes;
 	}
 }
