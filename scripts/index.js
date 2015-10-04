@@ -1,9 +1,15 @@
+var algoritmo;
+
+function release() {
+	algoritmo.release();	
+}
+
 function iniciar() {
 	$("#telaConfiguracao").hide();
 	$("#telaSimulacao").show();
 
 
-	var algoritmo = new Algoritmo();
+	algoritmo = new Algoritmo();
 	algoritmo.simular();
 
 /*	$("#aguarde").removeClass("hide");

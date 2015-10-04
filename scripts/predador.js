@@ -1,35 +1,38 @@
-function Predador() {
-	this.agente = new Agente();
-	this.posicao = {};
-
-	this.calcularFitness = function() {
-//		this.fitness = gerarRandomico(1000, 0);
-//		return;
-		this.lab.posicao = 0;
-		this.fitness = this.lab.calcularFitness(this.sequencia);
-	};
-	
-	this.mutacao = function() {
-		var pontoMutacao = gerarRandomico((this.sequencia.length - 1), 0);
-		this.sequencia = this.sequencia.substr(0, pontoMutacao -1) + gerarRandomico(1, 0) + this.sequencia.substr(pontoMutacao);
-		this.calcularFitness();
-	};
-
-	this.gerar = function() {
-		this.sequencia = "";
-		for (var i = 0; i < 8; i++) {
-			this.sequencia = this.sequencia + this.movimentosPossiveis[gerarRandomico(4, 0)];
-		};
-		this.calcularFitness();
-	}
-	
-	this.setar = function(sequencia) {
-		this.sequencia = sequencia;
-		this.calcularFitness();
-	}
+function Predador(numero) {
+	this.animal = new Animal();
+	this.numero = numero;
 
 	this.gerarPosicaoAleatoria = function() {
-		this.posicao = this.agente.gerarPosicaoAleatoria();
-		Ambiente.setPosicao(this.posicao.linha, this.posicao.coluna, 1);
+		this.animal.gerarPosicaoAleatoria();
+		Ambiente.setPosicao(this);
+		
+	}
+
+	this.getPosicao = function() {
+		return this.animal.posicao;
+	}
+
+	this.getNumero = function() {
+		return this.numero;
+	}
+
+	this.move = function() {
+		var random = gerarRandomico(4, 1);
+		if (random == 4) {
+			var posicoes = this.animal.moverParaDireita();
+		} else if (random == 1) {
+			var posicoes = this.animal.moverParaEsquerda();
+		} else if (random == 2) {
+			var posicoes = this.animal.moverParaCima();
+		} else if (random == 3) {
+			var posicoes = this.animal.moverParaBaixo();
+		}
+		this.setPosicao(posicoes.linha, posicoes.coluna);
+	}
+
+	this.setPosicao = function(linha, coluna) {
+		Ambiente.limparPosicao(this.getPosicao().linha, this.getPosicao().coluna);
+		this.animal.setPosicao(linha, coluna);
+		Ambiente.setPosicao(this);
 	}
 }

@@ -73,39 +73,37 @@ var Ambiente = {
 	},
 
 	atualizar: function() {
-		console.dir(this.mapa);
-		/*$.each(this.mapa, function(keyLinha, linha) {
-			$.each(linha, function(keyColuna, coluna) {
-				//console.info(linha + " .. " + coluna);
-				//console.info(keyLinha + " .. " + keyColuna);
-				//console.log(this.mapa[keyLinha][keyColuna]);
-				/*if (this.mapa[keyLinha][keyColuna] == 1) {
-					$("#field_" + keyLinha + "_" + keyColuna).html("imagens/predador/House Lannister-26.png");
-					$("#field_" + keyLinha + "_" + keyColuna).addClass("predador");
-				}
-			});
-		});*/
 		for (i = 0; i < this.nroLinhas; i++) {
 			for (j = 0; j < this.nroColunas; j++) {
-				if (this.mapa[i][j] == 1) {
+				if (this.mapa[i][j] instanceof Predador) {
 					$("#field_" + i + "_" + j).html(this.getHtmlPredador());
-					$("#field_" + i + "_" + j).addClass("predador");
-				} else if (this.mapa[i][j] == 2) {
+					$("#field_" + i + "_" + j).addClass("predador predador_" + this.mapa[i][j].getNumero());
+				} else if (this.mapa[i][j] instanceof Presa) {
 					$("#field_" + i + "_" + j).html(this.getHtmlPresa());
-					$("#field_" + i + "_" + j).addClass("presa");
+					$("#field_" + i + "_" + j).addClass("presa presa_" + this.mapa[i][j].getNumero());
 				}
 			}
-		}
-		
+		}	
 	},
 
 	getPosicao: function(linha, coluna) {
 		return this.mapa[linha][coluna];
 	},
 
-	setPosicao: function(linha, coluna, tipoIndividuo) {
-		console.info (linha + ", " + coluna + ", " + tipoIndividuo);
-		this.mapa[linha][coluna] = tipoIndividuo;
+	setPosicao: function(animal) {
+		var posicoes = animal.getPosicao();
+		this.mapa[posicoes.linha][posicoes.coluna] = animal;
+	},
+
+	limparPosicao: function(linha, coluna) {
+		if (this.mapa[linha][coluna] != 0) {
+			$("#field_" + linha + "_" + coluna).removeClass("presa_" + this.mapa[linha][coluna].getNumero());
+			$("#field_" + linha + "_" + coluna).removeClass("predador_" + this.mapa[linha][coluna].getNumero());
+		}
+		this.mapa[linha][coluna] = 0;
+		console.info(linha + "_" + coluna);
+		$("#field_" + linha + "_" + coluna).html("");
+		$("#field_" + linha + "_" + coluna).removeClass("presa predador");
 	},
 
 	getHtmlPredador: function() {
@@ -116,5 +114,3 @@ var Ambiente = {
 		return "<img src='imagens/presa/1443719659_zebra.png' />";
 	}
 }
-
-

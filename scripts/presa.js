@@ -1,6 +1,6 @@
-function Presa() {
-	this.agente = new Agente();
-	this.posicao = {};
+function Presa(numero) {
+	this.animal = new Animal();
+	this.numero = numero;
 
 	this.calcularFitness = function() {
 		this.lab.posicao = 0;
@@ -27,7 +27,38 @@ function Presa() {
 	}
 
 	this.gerarPosicaoAleatoria = function() {
-		this.posicao = this.agente.gerarPosicaoAleatoria();
-		Ambiente.setPosicao(this.posicao.linha, this.posicao.coluna, 2);
+		this.animal.gerarPosicaoAleatoria();
+		Ambiente.setPosicao(this);
 	}
+
+	this.getPosicao = function() {
+		return this.animal.posicao;
+	}
+
+	this.getNumero = function() {
+		return this.numero;
+	}
+
+	this.move = function() {
+		var movimenta = gerarRandomico(2, 1);
+		if (movimenta == 2) {
+			var random = gerarRandomico(4, 1);
+			if (random == 4) {
+				var posicoes = this.animal.moverParaDireita();
+			} else if (random == 1) {
+				var posicoes = this.animal.moverParaEsquerda();
+			} else if (random == 2) {
+				var posicoes = this.animal.moverParaCima();
+			} else if (random == 3) {
+				var posicoes = this.animal.moverParaBaixo();
+			}
+			this.setPosicao(posicoes.linha, posicoes.coluna);
+		}
+	}
+
+	this.setPosicao = function(linha, coluna) {
+		Ambiente.limparPosicao(this.getPosicao().linha, this.getPosicao().coluna);
+		this.animal.setPosicao(linha, coluna);
+		Ambiente.setPosicao(this);
+	}	
 }

@@ -1,8 +1,8 @@
-function Agente() {
+function Animal() {
 	this.fitness;
 	this.sequencia;
 	this.movimentosPossiveis = ["00", "01", "10", "11"];
-	this.posicaoAtual = 0;
+	this.posicao = {};
 	
 	this.calcularFitness = function() {
 //		this.fitness = gerarRandomico(1000, 0);
@@ -38,8 +38,45 @@ function Agente() {
 			var objeto = Ambiente.getPosicao(linha, coluna);
 			if (objeto == 0) {
 				posicaoInvalida = false;
+				this.posicao = {"linha" : linha, "coluna" : coluna};
 				return {"linha" : linha, "coluna" : coluna};
 			}
+		}
+	}
+
+	this.setPosicao = function(linha, coluna) {
+		this.posicao = {"linha" : linha, "coluna" : coluna};
+	}
+
+	this.moverParaDireita = function() {
+		if (this.posicao.coluna == (Ambiente.nroColunas - 1)) {
+			return {"linha" : this.posicao.linha, "coluna" : 0};
+		} else {
+			return {"linha" : this.posicao.linha, "coluna" : this.posicao.coluna + 1};
+		}
+	}
+
+	this.moverParaEsquerda = function() {
+		if (this.posicao.coluna == 0) {
+			return {"linha" : this.posicao.linha, "coluna" : Ambiente.nroColunas - 1};
+		} else {
+			return {"linha" : this.posicao.linha, "coluna" : this.posicao.coluna - 1};
+		}
+	}
+
+	this.moverParaBaixo = function() {
+		if (this.posicao.linha == (Ambiente.nroLinhas - 1)) {
+			return {"linha" : 0, "coluna" : this.posicao.coluna};
+		} else {
+			return {"linha" : this.posicao.linha + 1, "coluna" : this.posicao.coluna};
+		}
+	}
+
+	this.moverParaCima = function() {
+		if (this.posicao.linha == 0) {
+			return {"linha" : (Ambiente.nroLinhas - 1), "coluna" : this.posicao.coluna};
+		} else {
+			return {"linha" : this.posicao.linha - 1, "coluna" : this.posicao.coluna};
 		}
 	}
 }
