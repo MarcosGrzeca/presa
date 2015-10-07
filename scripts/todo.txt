@@ -1,0 +1,8 @@
+- Matriz de ferromonios
+- Animais devem se movimentar de acordo com o ambiente (considerar velocidade)
+- Controle de colisão
+- Cálculo da qualidade e quantidade de movimento
+- Controle de velocidade
+- Capturar presas
+
+- Predador mais rapido qdo encontra presa, no máximo por 4 iterações e presa é 8

@@ -4,8 +4,7 @@ function Predador(numero) {
 
 	this.gerarPosicaoAleatoria = function() {
 		this.animal.gerarPosicaoAleatoria();
-		Ambiente.setPosicao(this);
-		
+		Ambiente.setPosicao(this);		
 	}
 
 	this.getPosicao = function() {
