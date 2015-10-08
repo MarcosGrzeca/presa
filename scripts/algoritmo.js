@@ -5,26 +5,25 @@ function Algoritmo() {
     this.populacao;
 
 	this.simular = function() {
-		//this.ambiente = new Ambiente($("#nroLinhas").val(), $("#nroColunas").val());
-        //this.ambiente.desenharAmbiente("espacoAmbiente");
-
-        Ambiente.inicializar($("#nroLinhas").val(), $("#nroColunas").val());
+		Ambiente.inicializar($("#nroLinhas").val(), $("#nroColunas").val());
         Ambiente.desenhar("espacoAmbiente");
 
         this.populacao = new Populacao($("#nroPredadores").val(), $("#nroPresas").val());
-        this.populacao.gerarPopulacao();
+        //this.populacao.gerarPopulacao();
+        this.populacao.gerarPopulacaoTeste();
         Ambiente.atualizar();
-
-        setTimeout("release()", 500);
+        Ambiente.clonarMapa();
+        setTimeout("release()", 2000);
 	}
 
     this.release = function() {
         if (this.interacoes < this.numeroMaximoInteracoes) {
+            Ambiente.atualizarRastros();
             this.populacao.movimentar();
-            console.log("Atualizando ");
             Ambiente.atualizar();
+            Ambiente.clonarMapa();
             this.interacoes++;
-            setTimeout("release()", 500);
+            setTimeout("release()", 2000);
         }
     }
 }

@@ -1,7 +1,4 @@
 function Animal() {
-	this.fitness;
-	this.sequencia;
-	this.movimentosPossiveis = ["00", "01", "10", "11"];
 	this.posicao = {};
 	this.velocidade = 1;
 	this.duracaoVelocidade = 1;
@@ -18,6 +15,10 @@ function Animal() {
 				return {"linha" : linha, "coluna" : coluna};
 			}
 		}
+	}
+
+	this.getPosicao = function() {
+		return this.posicao;
 	}
 
 	this.setPosicao = function(linha, coluna) {
@@ -93,15 +94,15 @@ function Animal() {
 	}
 
 	this.getCampoPercepcao = function() {
-		var percepcoes = [];
-		percepcoes["cima"] = Ambiente.getPosicaoObjeto(this.moverParaCima());
-		percepcoes["baixo"] = Ambiente.getPosicaoObjeto(this.moverParaBaixo());
-		percepcoes["direita"] = Ambiente.getPosicaoObjeto(this.moverParaDireita());
-		percepcoes["esquerda"] = Ambiente.getPosicaoObjeto(this.moverParaEsquerda());
-		percepcoes["direitaSuperior"] = Ambiente.getPosicaoObjeto(this.moverParaDireitaSuperior());
-		percepcoes["direitaInferior"] = Ambiente.getPosicaoObjeto(this.moverParaDireitaInferior());
-		percepcoes["esquerdaSuperior"] = Ambiente.getPosicaoObjeto(this.moverParaEsquerdaSuperior());
-		percepcoes["esquerdaInferior"] = Ambiente.getPosicaoObjeto(this.moverParaEsquerdaInferior());
+		var percepcoes = {};
+		percepcoes.cima = {"objeto" : Ambiente.getPosicaoObjetoAnterior(this.moverParaCima()), "posicao" : this.moverParaCima()};
+		percepcoes.baixo = {"objeto" : Ambiente.getPosicaoObjetoAnterior(this.moverParaBaixo()), "posicao" : this.moverParaBaixo()};
+		percepcoes.direita = {"objeto" : Ambiente.getPosicaoObjetoAnterior(this.moverParaDireita()), "posicao" : this.moverParaDireita()};
+		percepcoes.esquerda = {"objeto" : Ambiente.getPosicaoObjetoAnterior(this.moverParaEsquerda()), "posicao" : this.moverParaEsquerda()};
+		percepcoes.direitaSuperior = {"objeto" : Ambiente.getPosicaoObjetoAnterior(this.moverParaDireitaSuperior()), "posicao" : this.moverParaDireitaSuperior()};
+		percepcoes.direitaInferior = {"objeto" : Ambiente.getPosicaoObjetoAnterior(this.moverParaDireitaInferior()), "posicao" : this.moverParaDireitaInferior()};
+		percepcoes.esquerdaSuperior = {"objeto" : Ambiente.getPosicaoObjetoAnterior(this.moverParaEsquerdaSuperior()), "posicao" : this.moverParaEsquerdaSuperior()};
+		percepcoes.esquerdaInferior = {"objeto" : Ambiente.getPosicaoObjetoAnterior(this.moverParaEsquerdaInferior()), "posicao" : this.moverParaEsquerdaInferior()};
 		return percepcoes;
 	}
 }

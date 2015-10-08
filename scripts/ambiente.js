@@ -2,6 +2,7 @@ var Ambiente = {
 	nroLinhas: 0,
 	nroColunas: 0,
 	mapa: [],
+	mapaAnterior: [],
 	idCampoTela: "",
 
 	inicializar: function(nroLinhas, nroColunas) {
@@ -31,6 +32,7 @@ var Ambiente = {
 		}
 		html += "</table>";
 		$("#" + this.idCampoTela).html(html);
+		this.clonarMapa();
 	},
 
 	atualizar: function() {
@@ -55,20 +57,32 @@ var Ambiente = {
 		return this.mapa[objeto.linha][objeto.coluna];
 	},
 
+	getPosicaoObjetoAnterior: function(objeto) {
+		return this.mapaAnterior[objeto.linha][objeto.coluna];
+	},
+
+	getAttrAnterior: function(objeto, nomeAttr) {
+		return $("#field_" + objeto.linha + "_" + objeto.coluna).attr(nomeAttr);
+	},
+
 	setPosicao: function(animal) {
 		var posicoes = animal.getPosicao();
+		/*if (animal instanceof Predador) {
+			this.setRastro(posicoes.linha, posicoes.coluna, 10);
+		}*/
 		this.mapa[posicoes.linha][posicoes.coluna] = animal;
 	},
 
 	limparPosicao: function(linha, coluna) {
-		if (this.mapa[linha][coluna] != 0) {
-			$("#field_" + linha + "_" + coluna).removeClass("presa_" + this.mapa[linha][coluna].getNumero());
-			$("#field_" + linha + "_" + coluna).removeClass("predador_" + this.mapa[linha][coluna].getNumero());
+		if ($.isNumeric(linha)) {
+			if (this.mapa[linha][coluna] != 0) {
+				$("#field_" + linha + "_" + coluna).removeClass("presa_" + this.mapa[linha][coluna].getNumero());
+				$("#field_" + linha + "_" + coluna).removeClass("predador_" + this.mapa[linha][coluna].getNumero());
+			}
+			this.mapa[linha][coluna] = 0;
+			$("#field_" + linha + "_" + coluna).html("");
+			$("#field_" + linha + "_" + coluna).removeClass("presa predador");
 		}
-		this.mapa[linha][coluna] = 0;
-		console.info(linha + "_" + coluna);
-		$("#field_" + linha + "_" + coluna).html("");
-		$("#field_" + linha + "_" + coluna).removeClass("presa predador");
 	},
 
 	getHtmlPredador: function() {
@@ -77,5 +91,28 @@ var Ambiente = {
 
 	getHtmlPresa: function() {
 		return "<img src='imagens/presa/1443719659_zebra.png' />";
+	},
+
+	setRastro: function(linha, coluna, intensidade) {
+		$("#field_" + linha + "_" + coluna).attr("rastro_intensidade", intensidade);
+		$("#field_" + linha + "_" + coluna).addClass("rastro rastro_" + intensidade);
+	},
+
+	atualizarRastros: function() {
+		$(".rastro").each(function(key, value) {
+			var rastro_intensidade = $(this).attr("rastro_intensidade");
+			$(this).removeClass("rastro_" + rastro_intensidade);
+			if ((rastro_intensidade - 1) == 0) {
+				$(this).removeClass("rastro");
+				$(this).removeAttr("rastro_intensidade");
+			} else {
+				$(this).addClass("rastro_" + (rastro_intensidade - 1));
+				$(this).attr("rastro_intensidade", (rastro_intensidade - 1));
+			}
+		});
+	},
+
+	clonarMapa: function() {
+		this.mapaAnterior = $.extend(true, [], this.mapa);
 	}
 }
