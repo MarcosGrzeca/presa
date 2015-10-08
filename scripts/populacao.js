@@ -23,12 +23,12 @@ function Populacao(nroPredadores, nroPresas) {
 		this.createPredador(1, 1);
 		this.createPredador(1, 2);
 		this.createPredador(1, 3);
-		this.createPredador(1, 4);
+		this.createPredador(4, 3);
 		this.createPresa(2, 2);
 	};
 
 	this.movimentar = function() {
-		$.each(this.animais, function(key, animal)	 {
+		$.each(this.animais, function(key, animal) {
 			animal.move();
 		});
 	};

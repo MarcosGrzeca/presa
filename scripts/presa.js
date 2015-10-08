@@ -19,21 +19,32 @@ function Presa(numero) {
 	}
 
 	this.move = function() {
-		var movimenta = gerarRandomico(2, 1);
-		//if (movimenta == 2) {
-			var random = gerarRandomico(4, 1);
-			if (random == 4) {
-				var posicoes = this.animal.moverParaDireita();
-			} else if (random == 1) {
-				var posicoes = this.animal.moverParaEsquerda();
-			} else if (random == 2) {
-				var posicoes = this.animal.moverParaCima();
-			} else if (random == 3) {
-				var posicoes = this.animal.moverParaBaixo();
+		var campoPercepcao = this.animal.getCampoPercepcao();
+		var predadores = 0;
+		$.each(campoPercepcao, function(key, value){
+			if (value.objeto instanceof Predador) {
+				predadores++;
 			}
-			var posicoes = this.animal.moverParaBaixo();
-			this.setPosicao(posicoes.linha, posicoes.coluna);
-		//}
+		});
+		if (predadores >= 4) {
+			this.morre();
+		} else {
+			var movimenta = gerarRandomico(2, 1);
+			//if (movimenta == 2) {
+				var random = gerarRandomico(4, 1);
+				if (random == 4) {
+					var posicoes = this.animal.moverParaDireita();
+				} else if (random == 1) {
+					var posicoes = this.animal.moverParaEsquerda();
+				} else if (random == 2) {
+					var posicoes = this.animal.moverParaCima();
+				} else if (random == 3) {
+					var posicoes = this.animal.moverParaBaixo();
+				}
+				//var posicoes = this.animal.moverParaBaixo();
+				this.setPosicao(posicoes.linha, posicoes.coluna);
+			//}
+		}
 	}
 
 	this.setPosicao = function(linha, coluna) {
@@ -42,5 +53,9 @@ function Presa(numero) {
 			this.animal.setPosicao(linha, coluna);
 			Ambiente.setPosicao(this);
 		}
-	}	
+	}
+
+	this.morre = function() {
+		Ambiente.removerAnimal(this);
+	}
 }

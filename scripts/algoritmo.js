@@ -11,6 +11,8 @@ function Algoritmo() {
         this.populacao = new Populacao($("#nroPredadores").val(), $("#nroPresas").val());
         //this.populacao.gerarPopulacao();
         this.populacao.gerarPopulacaoTeste();
+
+        Ambiente.setPopulacao(this.populacao);
         Ambiente.atualizar();
         Ambiente.clonarMapa();
         setTimeout("release()", 2000);

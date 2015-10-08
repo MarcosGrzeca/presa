@@ -79,7 +79,7 @@ function Predador(numero) {
 			$.each(campoPercepcao, function(key, value){
 				var attrRastro = Ambiente.getAttrAnterior(value.posicao, "rastro_intensidade");
 				if (attrRastro > 0) {
-					console.log("TEM RASTRO " + attrRastro);
+					//console.log("TEM RASTRO " + attrRastro);
 					movimentoRealizado = true;
 				}
 			});
@@ -106,7 +106,7 @@ function Predador(numero) {
 			this.animal.setPosicao(linha, coluna);
 			Ambiente.setPosicao(this);
 		} else {
-			console.log("DEU COLISAO");
+			//console.log("DEU COLISAO");
 		}
 	}
 }

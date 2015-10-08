@@ -4,6 +4,7 @@ var Ambiente = {
 	mapa: [],
 	mapaAnterior: [],
 	idCampoTela: "",
+	populacao: "",
 
 	inicializar: function(nroLinhas, nroColunas) {
 		this.nroLinhas = nroLinhas;
@@ -114,5 +115,22 @@ var Ambiente = {
 
 	clonarMapa: function() {
 		this.mapaAnterior = $.extend(true, [], this.mapa);
-	}
+	},
+
+	setPopulacao: function(populacao) {
+		this.populacao = populacao;
+	},
+
+	getPopulacao: function() {
+		return this.populacao;
+	},
+
+	removerAnimal: function(animal) {
+		this.limparPosicao(animal.getPosicao().linha, animal.getPosicao().coluna);
+
+		var index = this.populacao.animais.indexOf(animal);
+		if (index > -1) {
+			this.populacao.animais.splice(index, 1);
+		}
+	},
 }
