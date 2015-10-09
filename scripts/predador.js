@@ -16,8 +16,7 @@ function Predador(numero) {
 		return this.numero;
 	}
 
-	this.move = function() {
-		var campoPercepcao = this.animal.getCampoPercepcao();
+	this.verificarExistenciaPresas = function(campoPercepcao) {
 		var movimentoRealizado = false;
 		(function(Predador) {
 			$.each(campoPercepcao, function(key, value){
@@ -27,55 +26,77 @@ function Predador(numero) {
 					var posicaoPredador = Predador.getPosicao();
 					if (key == "baixo" || key == "direitaInferior" || key == "esquerdaInferior") {
 						var posicoes = Predador.animal.moverParaBaixo();
-						Predador.setPosicao(posicoes.linha, posicoes.coluna);
 					} else if (key == "cima" || key == "direitaSuperior" || key == "esquerdaSuperior") {
 						var posicoes = Predador.animal.moverParaCima();
-						Predador.setPosicao(posicoes.linha, posicoes.coluna);
 					} else if (key == "esquerda") {
 						var posicoes = Predador.animal.moverParaEsquerda();
-						Predador.setPosicao(posicoes.linha, posicoes.coluna);
 					} else if (key == "direita") {
 						var posicoes = Predador.animal.moverParaDireita();
-						Predador.setPosicao(posicoes.linha, posicoes.coluna);
 					}
+					Predador.setPosicao(posicoes.linha, posicoes.coluna);
 					Predador.modoCaca = true;
 					Ambiente.setRastro(posicoes.linha, posicoes.coluna, 5);
 				}
 			});
 		})(this);
+		return movimentoRealizado;
+	}
 
-		if (!movimentoRealizado) {
-			(function(Predador) {
-				var maiorRastro = 0;
-				var keyRastroMaior = null;
-				$.each(campoPercepcao, function(key, value){
-					var attrRastro = Ambiente.getAttrAnterior(value.posicao, "rastro_intensidade");
-					if (attrRastro > maiorRastro) {
-						maiorRastro = attrRastro;
-						keyRastroMaior = key;
-					}
-				});
-
-				if (maiorRastro > 0) {
-					movimentoRealizado = true;
-					if (keyRastroMaior == "baixo" || keyRastroMaior == "direitaInferior" || keyRastroMaior == "esquerdaInferior") {
-						var posicoes = Predador.animal.moverParaBaixo();
-						Predador.setPosicao(posicoes.linha, posicoes.coluna);
-					} else if (keyRastroMaior == "cima" || keyRastroMaior == "direitaSuperior" || keyRastroMaior == "esquerdaSuperior") {
-						var posicoes = Predador.animal.moverParaCima();
-						Predador.setPosicao(posicoes.linha, posicoes.coluna);
-					} else if (keyRastroMaior == "esquerda") {
-						var posicoes = Predador.animal.moverParaEsquerda();
-						Predador.setPosicao(posicoes.linha, posicoes.coluna);
-					} else if (keyRastroMaior == "direita") {
-						var posicoes = Predador.animal.moverParaDireita();
-						Predador.setPosicao(posicoes.linha, posicoes.coluna);
-					}
+	this.verificarExistenciaRastros = function(campoPercepcao) {
+		var movimentoRealizado = false;
+		(function(Predador) {
+			var maiorRastro = 0;
+			var keyRastroMaior = null;
+			$.each(campoPercepcao, function(key, value){
+				var attrRastro = Ambiente.getAttrAnterior(value.posicao, "rastro_intensidade");
+				if (attrRastro > maiorRastro) {
+					maiorRastro = attrRastro;
+					keyRastroMaior = key;
 				}
-			})(this);
+			});
+
+			if (maiorRastro > 0) {
+				movimentoRealizado = true;
+				if (keyRastroMaior == "baixo" || keyRastroMaior == "direitaInferior" || keyRastroMaior == "esquerdaInferior") {
+					var posicoes = Predador.animal.moverParaBaixo();
+				} else if (keyRastroMaior == "cima" || keyRastroMaior == "direitaSuperior" || keyRastroMaior == "esquerdaSuperior") {
+					var posicoes = Predador.animal.moverParaCima();
+				} else if (keyRastroMaior == "esquerda") {
+					var posicoes = Predador.animal.moverParaEsquerda();
+				} else if (keyRastroMaior == "direita") {
+					var posicoes = Predador.animal.moverParaDireita();
+				}
+				Predador.setPosicao(posicoes.linha, posicoes.coluna);
+			}
+		})(this);
+		return movimentoRealizado;
+	}
+
+	this.movimentarAleatoriamente = function() {
+		var random = gerarRandomico(4, 1);
+		if (random == 4) {
+			var posicoes = this.animal.moverParaDireita();
+		} else if (random == 1) {
+			var posicoes = this.animal.moverParaEsquerda();
+		} else if (random == 2) {
+			var posicoes = this.animal.moverParaCima();
+		} else if (random == 3) {
+			var posicoes = this.animal.moverParaBaixo();
+		}
+		this.setPosicao(posicoes.linha, posicoes.coluna);
+	}
+
+	this.move = function() {
+		var campoPercepcao = this.animal.getCampoPercepcao();
+		var movimentoRealizado = this.verificarExistenciaPresas(campoPercepcao);
+		if (!movimentoRealizado) {
+			movimentoRealizado = this.verificarExistenciaRastros(campoPercepcao);
+		}
+		if (!movimentoRealizado) {
+			this.movimentarAleatoriamente();
 		}
 
-		if (!movimentoRealizado) {
+		/*if (!movimentoRealizado) {
 			$.each(campoPercepcao, function(key, value){
 				var attrRastro = Ambiente.getAttrAnterior(value.posicao, "rastro_intensidade");
 				if (attrRastro > 0) {
@@ -83,21 +104,7 @@ function Predador(numero) {
 					movimentoRealizado = true;
 				}
 			});
-		}
-
-		if (!movimentoRealizado) {
-			var random = gerarRandomico(4, 1);
-			if (random == 4) {
-				var posicoes = this.animal.moverParaDireita();
-			} else if (random == 1) {
-				var posicoes = this.animal.moverParaEsquerda();
-			} else if (random == 2) {
-				var posicoes = this.animal.moverParaCima();
-			} else if (random == 3) {
-				var posicoes = this.animal.moverParaBaixo();
-			}
-			this.setPosicao(posicoes.linha, posicoes.coluna);
-		}
+		}*/
 	}
 
 	this.setPosicao = function(linha, coluna) {

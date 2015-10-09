@@ -1,5 +1,4 @@
 .container-fluid {
-	background-color:#FFF; 
 	min-height:600px;
 }
 
@@ -45,8 +44,8 @@
 }
 
 .ambiente td {
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     border: 1px solid #000;
 }
 
@@ -92,4 +91,9 @@
 
 .rastro_1 {
     background-color: #CC9;
+}
+
+.ambiente td {
+    text-align: center;
+    vertical-align: middle;
 }
