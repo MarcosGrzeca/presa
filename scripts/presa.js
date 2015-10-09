@@ -124,6 +124,9 @@ function Presa(numero) {
 			Ambiente.limparPosicao(this.getPosicao().linha, this.getPosicao().coluna);
 			this.animal.setPosicao(linha, coluna);
 			Ambiente.setPosicao(this);
+			return true;
+		} else {
+			return false;
 		}
 	}
 

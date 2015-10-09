@@ -22,20 +22,45 @@ function Predador(numero) {
 			$.each(campoPercepcao, function(key, value){
 				if (value.objeto instanceof Presa) {
 					movimentoRealizado = true;
-					var posicaoPresa = value.objeto.getPosicao();
-					var posicaoPredador = Predador.getPosicao();
-					if (key == "baixo" || key == "direitaInferior" || key == "esquerdaInferior") {
-						var posicoes = Predador.animal.moverParaBaixo();
-					} else if (key == "cima" || key == "direitaSuperior" || key == "esquerdaSuperior") {
-						var posicoes = Predador.animal.moverParaCima();
+					var posicoes = null;
+					if (key == "baixo") {
+						posicoes = Predador.animal.moverParaBaixo();
+					} else if (key == "cima") {
+						posicoes = Predador.animal.moverParaCima();
 					} else if (key == "esquerda") {
-						var posicoes = Predador.animal.moverParaEsquerda();
+						posicoes = Predador.animal.moverParaEsquerda();
 					} else if (key == "direita") {
-						var posicoes = Predador.animal.moverParaDireita();
+						posicoes = Predador.animal.moverParaDireita();
+					} else if (key == "direitaInferior") {
+						if (gerarRandomico(2, 1) == 2) {
+							posicoes = Predador.animal.moverParaDireita()
+						} else {
+							posicoes = Predador.animal.moverParaBaixo();
+						}
+					} else if (key == "esquerdaInferior") {
+						if (gerarRandomico(2, 1) == 2) {
+							posicoes = Predador.animal.moverParaEsquerda();
+						} else {
+							posicoes = Predador.animal.moverParaBaixo();
+						}
+					} else if (key == "direitaSuperior") {
+						if (gerarRandomico(2, 1) == 2) {
+							posicoes = Predador.animal.moverParaDireita();
+						} else {
+							posicoes = Predador.animal.moverParaCima();
+						}
+					} else if (key == "esquerdaSuperior") {
+						if (gerarRandomico(2, 1) == 2) {
+							posicoes = Predador.animal.moverParaEsquerda();
+						} else {
+							posicoes = Predador.animal.moverParaCima();
+						}
 					}
-					Predador.setPosicao(posicoes.linha, posicoes.coluna);
-					Predador.modoCaca = true;
-					Ambiente.setRastro(posicoes.linha, posicoes.coluna, 5);
+					if (posicoes != null) {
+						Predador.setPosicao(posicoes.linha, posicoes.coluna);
+						Predador.modoCaca = true;
+						Ambiente.setRastro(posicoes.linha, posicoes.coluna, 5);
+					}
 				}
 			});
 		})(this);
@@ -57,14 +82,39 @@ function Predador(numero) {
 
 			if (maiorRastro > 0) {
 				movimentoRealizado = true;
+				var posicoes = null;
 				if (keyRastroMaior == "baixo" || keyRastroMaior == "direitaInferior" || keyRastroMaior == "esquerdaInferior") {
-					var posicoes = Predador.animal.moverParaBaixo();
+					posicoes = Predador.animal.moverParaBaixo();
 				} else if (keyRastroMaior == "cima" || keyRastroMaior == "direitaSuperior" || keyRastroMaior == "esquerdaSuperior") {
-					var posicoes = Predador.animal.moverParaCima();
+					posicoes = Predador.animal.moverParaCima();
 				} else if (keyRastroMaior == "esquerda") {
-					var posicoes = Predador.animal.moverParaEsquerda();
+					posicoes = Predador.animal.moverParaEsquerda();
 				} else if (keyRastroMaior == "direita") {
-					var posicoes = Predador.animal.moverParaDireita();
+					posicoes = Predador.animal.moverParaDireita();
+				} else if (key == "direitaInferior") {
+					if (gerarRandomico(2, 1) == 2) {
+						posicoes = Predador.animal.moverParaDireita()
+					} else {
+						posicoes = Predador.animal.moverParaBaixo();
+					}
+				} else if (key == "esquerdaInferior") {
+					if (gerarRandomico(2, 1) == 2) {
+						posicoes = Predador.animal.moverParaEsquerda();
+					} else {
+						posicoes = Predador.animal.moverParaBaixo();
+					}
+				} else if (key == "direitaSuperior") {
+					if (gerarRandomico(2, 1) == 2) {
+						posicoes = Predador.animal.moverParaDireita();
+					} else {
+						posicoes = Predador.animal.moverParaCima();
+					}
+				} else if (key == "esquerdaSuperior") {
+					if (gerarRandomico(2, 1) == 2) {
+						posicoes = Predador.animal.moverParaEsquerda();
+					} else {
+						posicoes = Predador.animal.moverParaCima();
+					}
 				}
 				Predador.setPosicao(posicoes.linha, posicoes.coluna);
 			}
@@ -95,16 +145,6 @@ function Predador(numero) {
 		if (!movimentoRealizado) {
 			this.movimentarAleatoriamente();
 		}
-
-		/*if (!movimentoRealizado) {
-			$.each(campoPercepcao, function(key, value){
-				var attrRastro = Ambiente.getAttrAnterior(value.posicao, "rastro_intensidade");
-				if (attrRastro > 0) {
-					//console.log("TEM RASTRO " + attrRastro);
-					movimentoRealizado = true;
-				}
-			});
-		}*/
 	}
 
 	this.setPosicao = function(linha, coluna) {
@@ -112,8 +152,9 @@ function Predador(numero) {
 			Ambiente.limparPosicao(this.getPosicao().linha, this.getPosicao().coluna);
 			this.animal.setPosicao(linha, coluna);
 			Ambiente.setPosicao(this);
+			return true;
 		} else {
-			//console.log("DEU COLISAO");
+			return false;
 		}
 	}
 }

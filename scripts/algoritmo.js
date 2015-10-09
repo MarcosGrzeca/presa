@@ -1,5 +1,5 @@
 function Algoritmo() {
-	this.numeroMaximoInteracoes = 100;
+	this.numeroMaximoInteracoes = 5000;
 	this.interacoes = 0;
     this.ambiente;
     this.populacao;
