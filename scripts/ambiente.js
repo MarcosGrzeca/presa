@@ -43,7 +43,7 @@ var Ambiente = {
 					$("#field_" + i + "_" + j).html(this.getHtmlPredador());
 					$("#field_" + i + "_" + j).addClass("predador predador_" + this.mapa[i][j].getNumero());
 				} else if (this.mapa[i][j] instanceof Presa) {
-					$("#field_" + i + "_" + j).html(this.getHtmlPresa());
+					$("#field_" + i + "_" + j).html(this.getHtmlPresa(this.mapa[i][j].isModoFuga()));
 					$("#field_" + i + "_" + j).addClass("presa presa_" + this.mapa[i][j].getNumero());
 				}
 			}
@@ -90,8 +90,12 @@ var Ambiente = {
 		return "<img src='imagens/predador/House Lannister-26.png' />";
 	},
 
-	getHtmlPresa: function() {
-		return "<img src='imagens/presa/1443719659_zebra.png' />";
+	getHtmlPresa: function(trocaCor) {
+		var cor = "";
+		if (trocaCor) {
+			cor = "_vermelha";
+		}
+		return "<img src='imagens/presa/1443719659_zebra" + cor + ".png' />";
 	},
 
 	setRastro: function(linha, coluna, intensidade) {

@@ -7,3 +7,7 @@
 
 - Controle de velocidade
 - Predador mais rapido qdo encontra presa, no máximo por 4 iterações e presa é 8
+
+Bugs:
+- Quando pula 2 casas esta dando erro nas bordas
+- Feromonio esta aparecendo na casa da presa quando esta parada

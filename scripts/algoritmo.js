@@ -9,8 +9,8 @@ function Algoritmo() {
         Ambiente.desenhar("espacoAmbiente");
 
         this.populacao = new Populacao($("#nroPredadores").val(), $("#nroPresas").val());
-        //this.populacao.gerarPopulacao();
-        this.populacao.gerarPopulacaoTeste();
+        this.populacao.gerarPopulacao();
+        //this.populacao.gerarPopulacaoTeste();
 
         Ambiente.setPopulacao(this.populacao);
         Ambiente.atualizar();

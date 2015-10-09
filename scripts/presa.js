@@ -4,7 +4,7 @@ function Presa(numero) {
 	this.modoFuga = false;
 	this.qualidade = 1; //-3 a 3
 	this.intensidade = 1; //0 a 3
-	this.numIteracoesLivre = 5; //quantidade de iteracoes ate comecar alterar emocoes
+	this.iteracoesLivre = 2; //quantidade de iteracoes ate comecar alterar emocoes
 	this.iteracoesLivreCount = 0;
 
 	this.gerarPosicaoAleatoria = function() {
@@ -21,31 +21,53 @@ function Presa(numero) {
 	}
 
 	this.move = function() {
+		//console.log(this);
 		var campoPercepcao = this.animal.getCampoPercepcao();
-		var predadores = 0, presas = 0, presa1 = false;
+		var predadores = 0, presas = 0, presasEmFuga = 0;
+		var predador1 = false;
 		$.each(campoPercepcao, function(key, value){
 			if (value.objeto instanceof Predador) {
 				predadores++;
+				predador1 = value.objeto;
 			} else if (value.objeto instanceof Presa) {
 				presas++;
-				presa1 = value.objeto;
+				if (value.objeto.modoFuga) {
+					presasEmFuga++;
+				}
 			}
 		});
 		
 		if (predadores >= 4) {
-			this.morre();
+			//morre
+			return -1;
 		} else {
 			var livre = false;
 			if (this.modoFuga == false) {
 				if (predadores == 0 && presas > 0) {
-					if (presa1.modoFuga == false) { //se tiver mais de uma presa???
-						this.incQualidade(1);
-						livre = true;
+					if (presasEmFuga > 0) {
+						this.decQualidade(presasEmFuga);
+						this.incIntensidade(presasEmFuga);
 					} else {
-						this.decQualidade(1);
-						this.incIntensidade(1);
+						this.incQualidade(presas-presasEmFuga);
+						livre = true;
 					}
 				} else if (predadores == 1) {
+					this.decQualidade(2);
+					this.incIntensidade(2);
+				} else if (predadores > 1) {
+					this.decQualidade(3);
+					this.incIntensidade(3);
+				} else if (presas == 0) {
+					livre = true;
+				}
+			} else {
+				if (predadores == 0 && presas == 0) {
+					livre = true;
+				} else if (presas > 0) {
+					if (presasEmFuga == 0) {
+						livre = true;
+					}
+				} else if (predadores == 1) { // se estiver em modoFuga deve decrementar qualidade senao fica sempre em -2????
 					this.decQualidade(2);
 					this.incIntensidade(2);
 				} else if (predadores > 1) {
@@ -54,32 +76,46 @@ function Presa(numero) {
 				}
 			}
 			if (livre) {
-				this.iteracoesLivreCount--;
+				this.iteracoesLivreCount++;
 			} else {
 				this.iteracoesLivreCount = 0;
 			}
-			if (this.iteracoesLivreCount > this.numIteracoesLivre) {
+			if (this.iteracoesLivreCount > this.iteracoesLivre) {
 				if (this.getQualidade() < 1) {
 					this.incQualidade(1);
 				}
 				this.decIntensidade(1);
 			}
 
-			var movimenta = gerarRandomico(2, 1);
-			//if (movimenta == 2) {
-				var random = gerarRandomico(4, 1);
-				if (random == 4) {
-					var posicoes = this.animal.moverParaDireita();
-				} else if (random == 1) {
-					var posicoes = this.animal.moverParaEsquerda();
-				} else if (random == 2) {
+			if (this.qualidade < 0) {
+				this.modoFuga = true;
+			} else {
+				this.modoFuga = false;
+			}
+
+			if (predadores > 0) {
+				var p = predador1.getPosicao(); //ver para calcular com mais de uma presa
+				if (p.linha > this.animal.linha) {
 					var posicoes = this.animal.moverParaCima();
-				} else if (random == 3) {
+				} else if (p.linha < this.animal.linha) {
 					var posicoes = this.animal.moverParaBaixo();
+				} else if (p.coluna > this.animal.coluna) {
+					var posicoes = this.animal.moverParaEsquerda();
+				} else if (p.coluna < this.animal.coluna) {
+					var posicoes = this.animal.moverParaDireita();
+				} else {
+					var posicoes = this.getRandomPosicao();
 				}
-				//var posicoes = this.animal.moverParaBaixo();
 				this.setPosicao(posicoes.linha, posicoes.coluna);
-			//}
+			//} else if (presasEmFuga > 0) {
+
+			} else {
+				var movimenta = gerarRandomico(2, 1);
+				if (movimenta == 2) {
+					var posicoes = this.getRandomPosicao();
+					this.setPosicao(posicoes.linha, posicoes.coluna);
+				}
+			}
 		}
 	}
 
@@ -89,6 +125,20 @@ function Presa(numero) {
 			this.animal.setPosicao(linha, coluna);
 			Ambiente.setPosicao(this);
 		}
+	}
+
+	this.getRandomPosicao = function() {
+		var random = gerarRandomico(4, 1);
+		if (random == 4) {
+			var posicoes = this.animal.moverParaDireita();
+		} else if (random == 1) {
+			var posicoes = this.animal.moverParaEsquerda();
+		} else if (random == 2) {
+			var posicoes = this.animal.moverParaCima();
+		} else if (random == 3) {
+			var posicoes = this.animal.moverParaBaixo();
+		}
+		return posicoes;
 	}
 
 	this.morre = function() {
@@ -129,5 +179,9 @@ function Presa(numero) {
 		if (this.intensidade < 0) {
 			this.intensidade = 0;
 		}
+	}
+
+	this.isModoFuga = function() {
+		return this.modoFuga;
 	}
 }
