@@ -87,7 +87,7 @@ var Ambiente = {
 	},
 
 	getHtmlPredador: function() {
-		return "<img src='imagens/predador/House Lannister-26.png' />";
+		return "<img src='imagens/predador/leao.png' />";
 	},
 
 	getHtmlPresa: function(trocaCor) {
@@ -95,7 +95,12 @@ var Ambiente = {
 		if (trocaCor) {
 			cor = "_vermelha";
 		}
-		return "<img src='imagens/presa/1443719659_zebra" + cor + ".png' />";
+		//return "<img src='imagens/presa/1443719659_zebra" + cor + ".png' />";
+		if (cor == "_vermelha") {
+			return "<img src='imagens/presa/sheep_onbike.png' />";
+		} else {
+			return "<img src='imagens/presa/sheep.png' />";
+		}
 	},
 
 	setRastro: function(linha, coluna, intensidade) {
