@@ -20,8 +20,17 @@ function Presa(numero) {
 		return this.numero;
 	}
 
+	this.presaMorre = function() {
+		document.getElementById('player').play();
+		var posicao = this.getPosicao();
+		$("#field_" + posicao.linha + "_" + posicao.coluna).addClass("zebra-morrendo");
+		setTimeout(function() {
+			$("#field_" + posicao.linha + "_" + posicao.coluna).removeClass("zebra-morrendo");
+			document.getElementById('player').stop();
+		}, 800);
+	}
+
 	this.move = function() {
-		//console.log(this);
 		var campoPercepcao = this.animal.getCampoPercepcao();
 		var predadores = 0, presas = 0, presasEmFuga = 0;
 		var predador1 = false;
@@ -38,15 +47,7 @@ function Presa(numero) {
 		});
 		
 		if (predadores >= 4) {
-			//morre
-			document.getElementById('player').play();
-
-			var posicao = this.getPosicao();
-			$("#field_" + posicao.linha + "_" + posicao.coluna).addClass("zebra-morrendo");
-			setTimeout(function() {
-				$("#field_" + posicao.linha + "_" + posicao.coluna).removeClass("zebra-morrendo");
-				document.getElementById('player').stop();
-			}, 1000);
+			this.presaMorre();
 			return -1;
 		} else {
 			var livre = false;
@@ -102,6 +103,7 @@ function Presa(numero) {
 			}
 
 			if (predadores > 0) {
+				/*
 				var p = predador1.getPosicao(); //ver para calcular com mais de uma presa
 				if (p.linha > this.animal.linha) {
 					var posicoes = this.animal.moverParaCima();
@@ -114,9 +116,66 @@ function Presa(numero) {
 				} else {
 					var posicoes = this.getRandomPosicao();
 				}
-				this.setPosicao(posicoes.linha, posicoes.coluna);
-			//} else if (presasEmFuga > 0) {
-
+				this.setPosicao(posicoes.linha, posicoes.coluna);*/
+				(function(Presa) {
+					var movimentoRealizado = false;
+					$.each(campoPercepcao, function(key, value){
+						if (!movimentoRealizado) {		
+							if (value.objeto instanceof Predador) {
+								if (key == "cima") {
+									posicoes = Presa.animal.moverParaBaixo();
+								} else if (key == "baixo") {
+									posicoes = Presa.animal.moverParaCima();
+								} else if (key == "direita") {
+									posicoes = Presa.animal.moverParaEsquerda();
+								} else if (key == "esquerda") {
+									posicoes = Presa.animal.moverParaDireita();
+								} else if (key == "esquerdaInferior") {
+									if (gerarRandomico(2, 1) == 2) {
+										posicoes = Presa.animal.moverParaDireita()
+									} else {
+										posicoes = Presa.animal.moverParaCima();
+									}
+								} else if (key == "direitaInferior") {
+									if (gerarRandomico(2, 1) == 2) {
+										posicoes = Presa.animal.moverParaEsquerda();
+									} else {
+										posicoes = Presa.animal.moverParaCima();
+									}
+								} else if (key == "direitaSuperior") {
+									if (gerarRandomico(2, 1) == 2) {
+										posicoes = Presa.animal.moverParaEsquerda();
+									} else {
+										posicoes = Presa.animal.moverParaBaixo();
+									}
+								} else if (key == "esquerdaSuperior") {
+									if (gerarRandomico(2, 1) == 2) {
+										posicoes = Presa.animal.moverParaDireita();
+									} else {
+										posicoes = Presa.animal.moverParaBaixo();
+									}
+								}
+								movimentoRealizado = Presa.setPosicao(posicoes.linha, posicoes.coluna);
+							}
+						}
+					});
+					if (!movimentoRealizado) {
+						posicoes = Presa.animal.moverParaBaixo();
+						movimentoRealizado = Presa.setPosicao(posicoes.linha, posicoes.coluna);
+					}
+					if (!movimentoRealizado) {
+						posicoes = Presa.animal.moverParaCima();
+						movimentoRealizado = Presa.setPosicao(posicoes.linha, posicoes.coluna);
+					}
+					if (!movimentoRealizado) {
+						posicoes = Presa.animal.moverParaDireita();
+						movimentoRealizado = Presa.setPosicao(posicoes.linha, posicoes.coluna);
+					}
+					if (!movimentoRealizado) {
+						posicoes = Presa.animal.moverParaEsquerda();
+						movimentoRealizado = Presa.setPosicao(posicoes.linha, posicoes.coluna);
+					}
+				})(this);
 			} else {
 				var movimenta = gerarRandomico(2, 1);
 				if (movimenta == 2) {
