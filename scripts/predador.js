@@ -60,9 +60,9 @@ function Predador(numero) {
 						var posicaoValida = Predador.setPosicao(posicoes.linha, posicoes.coluna);
 						Predador.modoCaca = true;
 						if (posicaoValida) {
-							Ambiente.setRastro(posicoes.linha, posicoes.coluna, 5);
+							Ambiente.setRastro(posicoes.linha, posicoes.coluna, Ambiente.tempoDuracaoRastroPredadores);
 						} else {
-							Ambiente.setRastro(Predador.getPosicao().linha, Predador.getPosicao().coluna, 5);
+							Ambiente.setRastro(Predador.getPosicao().linha, Predador.getPosicao().coluna, Ambiente.tempoDuracaoRastroPredadores);
 						}
 					}
 				}

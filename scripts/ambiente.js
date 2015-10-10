@@ -5,10 +5,12 @@ var Ambiente = {
 	mapaAnterior: [],
 	idCampoTela: "",
 	populacao: "",
+	tempoDuracaoRastroPredadores: 5,
 
-	inicializar: function(nroLinhas, nroColunas) {
+	inicializar: function(nroLinhas, nroColunas, tempoDuracaoRastroPredadores) {
 		this.nroLinhas = nroLinhas;
 		this.nroColunas = nroColunas;
+		this.tempoDuracaoRastroPredadores = tempoDuracaoRastroPredadores;
 	},
 
 	inicializarMatriz: function() {

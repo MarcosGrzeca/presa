@@ -5,7 +5,7 @@ function Algoritmo() {
     this.simulacaoInterrompida = false;
 
 	this.simular = function() {
-		Ambiente.inicializar($("#nroLinhas").val(), $("#nroColunas").val());
+		Ambiente.inicializar($("#nroLinhas").val(), $("#nroColunas").val(), $("#duracaoRastro").val());
         Ambiente.desenhar("espacoAmbiente");
 
         this.populacao = new Populacao($("#nroPredadores").val(), $("#nroPresas").val());
