@@ -27,7 +27,7 @@ function Presa(numero) {
 		setTimeout(function() {
 			$("#field_" + posicao.linha + "_" + posicao.coluna).removeClass("zebra-morrendo");
 			document.getElementById('player').stop();
-		}, 800);
+		}, 1000);
 	}
 
 	this.move = function() {
