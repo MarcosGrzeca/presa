@@ -40,6 +40,13 @@ function Presa(numero) {
 		if (predadores >= 4) {
 			//morre
 			document.getElementById('player').play();
+
+			var posicao = this.getPosicao();
+			$("#field_" + posicao.linha + "_" + posicao.coluna).addClass("zebra-morrendo");
+			setTimeout(function() {
+				$("#field_" + posicao.linha + "_" + posicao.coluna).removeClass("zebra-morrendo");
+				document.getElementById('player').stop();
+			}, 1000);
 			return -1;
 		} else {
 			var livre = false;
