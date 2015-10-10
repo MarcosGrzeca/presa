@@ -57,9 +57,13 @@ function Predador(numero) {
 						}
 					}
 					if (posicoes != null) {
-						Predador.setPosicao(posicoes.linha, posicoes.coluna);
+						var posicaoValida = Predador.setPosicao(posicoes.linha, posicoes.coluna);
 						Predador.modoCaca = true;
-						Ambiente.setRastro(posicoes.linha, posicoes.coluna, 5);
+						if (posicaoValida) {
+							Ambiente.setRastro(posicoes.linha, posicoes.coluna, 5);
+						} else {
+							Ambiente.setRastro(Predador.getPosicao().linha, Predador.getPosicao().coluna, 5);
+						}
 					}
 				}
 			});

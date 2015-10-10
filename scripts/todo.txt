@@ -10,4 +10,4 @@
 
 Bugs:
 - Quando pula 2 casas esta dando erro nas bordas
-- Feromonio esta aparecendo na casa da presa quando esta parada
+- Feromonio esta aparecendo na casa da presa quando esta parada -- Corrigido
