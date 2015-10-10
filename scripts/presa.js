@@ -39,6 +39,7 @@ function Presa(numero) {
 		
 		if (predadores >= 4) {
 			//morre
+			document.getElementById('player').play();
 			return -1;
 		} else {
 			var livre = false;

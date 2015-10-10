@@ -1,7 +1,7 @@
 var algoritmo;
 
 function release() {
-	algoritmo.release();	
+	algoritmo.release();
 }
 
 function iniciar() {
