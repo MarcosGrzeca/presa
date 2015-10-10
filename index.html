@@ -71,7 +71,16 @@
 			</div>
 		</div>
 		<div id="telaSimulacao" style="display:none;">
-			<div id="espacoAmbiente"></div>
+			<div class="row">
+			  	<div class="col-md-10" id="espacoAmbiente">
+				</div>
+				<div class="col-md-2">
+					<button type="button" class="btn-default btn-primary form-control" id="botaoParar" onclick="pararSimulacao()">Parar Simulação</button>
+					<button type="button" class="btn-default btn-primary form-control hide" id="botaoContinuar" onclick="continuarSimulacao()">Continuar Simulação</button>
+					<br/>
+					<button type="button" class="btn-default btn-primary form-control" onclick="voltarParaTelaInicial();">Voltar</button>
+				</div>
+			</div>
 		</div>
 	</div>
 	<audio src="sons/leao.mp3" id="player"></audio>

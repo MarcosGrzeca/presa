@@ -1,8 +1,8 @@
 function Algoritmo() {
 	this.numeroMaximoInteracoes = 5000;
 	this.interacoes = 0;
-    this.ambiente;
     this.populacao;
+    this.simulacaoInterrompida = false;
 
 	this.simular = function() {
 		Ambiente.inicializar($("#nroLinhas").val(), $("#nroColunas").val());
@@ -19,7 +19,7 @@ function Algoritmo() {
 	}
 
     this.release = function() {
-        if (this.interacoes < this.numeroMaximoInteracoes) {
+        if (this.interacoes < this.numeroMaximoInteracoes && !(this.simulacaoInterrompida)) {
             Ambiente.atualizarRastros();
             this.populacao.movimentar();
             Ambiente.atualizar();
@@ -27,5 +27,14 @@ function Algoritmo() {
             this.interacoes++;
             setTimeout("release()", 2000);
         }
+    }
+
+    this.continuarSimulacao = function() {
+        this.simulacaoInterrompida = false;
+        this.release();
+    }
+
+    this.pararSimulacao = function() {
+        this.simulacaoInterrompida = true;
     }
 }
