@@ -3,11 +3,14 @@
 
 <head>
 	<title>Presa e Predador</title>
+	<link rel="shortcut icon" href="imagens/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="imagens/favicon.ico" type="image/x-icon">
 	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="style/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="style/bootstrap/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="style/jquery-ui/jquery-ui.css">
 	<link rel="stylesheet" href="style/estilo.css">
 </head>
 <body style="background-color:#FFF;">
@@ -79,9 +82,6 @@
 						<option>10</option>
 					</select>
 				</div>
-				<div class="col-md-2">
-					<label>Velocidade - Não funcionando</label>
-				</div>
 			</div>
 
 			<br/>
@@ -100,6 +100,13 @@
 					<button type="button" class="btn-default btn-primary form-control hide" id="botaoContinuar" onclick="continuarSimulacao()">Continuar Simulação</button>
 					<br/>
 					<button type="button" class="btn-default btn-primary form-control" onclick="voltarParaTelaInicial();">Voltar</button>
+					
+					</br>
+					<label for="velocidadeIteracoes" style="white-space:nowrap;">Velocidade:
+	  					<input type="text" id="velocidadeIteracoes" readonly style="border:0; font-weight:bold;">
+  					</label>
+					<div id="slider-velocidade"></div>
+				</div>
 				</div>
 			</div>
 		</div>
@@ -110,6 +117,8 @@
 
 <!-- Latest compiled and minified JavaScript -->
 <script type="text/javascript" src="libs/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="libs/jquery-ui.js"></script>
+
 <script type="text/javascript" src="style/bootstrap/js/bootstrap.min.js"></script>
 
 <script type="text/javascript" src="scripts/index.js"></script>
@@ -121,4 +130,11 @@
 <script type="text/javascript" src="scripts/predador.js"></script>
 <script type="text/javascript" src="scripts/presa.js"></script>
 <script type="text/javascript" src="scripts/animal.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		
+	});
+
+</script>
 </html>

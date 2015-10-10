@@ -5,6 +5,19 @@ function release() {
 }
 
 function iniciar() {
+
+	$("#slider-velocidade").slider({
+		range: "min",
+		min: 1,
+		max: 100,
+		value: 50,
+		slide: function( event, ui ) {
+			$( "#velocidadeIteracoes" ).val( ui.value );
+			algoritmo.setVelocidade(4000 - (ui.value * 40));
+		}
+	});
+	$( "#velocidadeIteracoes" ).val( $( "#slider-velocidade" ).slider( "value" ) );
+
 	$("#telaConfiguracao").hide();
 	$("#telaSimulacao").show();
 

@@ -3,6 +3,8 @@ function Algoritmo() {
 	this.interacoes = 0;
     this.populacao;
     this.simulacaoInterrompida = false;
+    this.velocidade = 1000;
+
 
 	this.simular = function() {
 		Ambiente.inicializar($("#nroLinhas").val(), $("#nroColunas").val(), $("#duracaoRastro").val());
@@ -15,7 +17,7 @@ function Algoritmo() {
         Ambiente.setPopulacao(this.populacao);
         Ambiente.atualizar();
         Ambiente.clonarMapa();
-        setTimeout("release()", 2000);
+        setTimeout("release()", this.velocidade);
 	}
 
     this.release = function() {
@@ -25,7 +27,7 @@ function Algoritmo() {
             Ambiente.atualizar();
             Ambiente.clonarMapa();
             this.interacoes++;
-            setTimeout("release()", 2000);
+            setTimeout("release()", this.velocidade);
         }
     }
 
@@ -36,5 +38,10 @@ function Algoritmo() {
 
     this.pararSimulacao = function() {
         this.simulacaoInterrompida = true;
+    }
+
+    this.setVelocidade = function(velocidade) {
+        this.velocidade = velocidade;
+        console.log(this.velocidade);
     }
 }
