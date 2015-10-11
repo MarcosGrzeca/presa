@@ -42,6 +42,5 @@ function Algoritmo() {
 
     this.setVelocidade = function(velocidade) {
         this.velocidade = velocidade;
-        console.log(this.velocidade);
     }
 }

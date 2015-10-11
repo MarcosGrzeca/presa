@@ -34,17 +34,19 @@ function Presa(numero) {
 		var campoPercepcao = this.animal.getCampoPercepcao();
 		var predadores = 0, presas = 0, presasEmFuga = 0;
 		var predador1 = false;
-		$.each(campoPercepcao, function(key, value){
-			if (value.objeto instanceof Predador) {
-				predadores++;
-				predador1 = value.objeto;
-			} else if (value.objeto instanceof Presa) {
-				presas++;
-				if (value.objeto.modoFuga) {
-					presasEmFuga++;
+		(function(PresaObj) {
+			$.each(campoPercepcao, function(key, value){
+				if (value.objeto instanceof Predador) {
+					predadores++;
+					predador1 = value.objeto;
+				} else if (value.objeto instanceof Presa && value.objeto != PresaObj) {
+					presas++;
+					if (value.objeto.modoFuga) {
+						presasEmFuga++;
+					}
 				}
-			}
-		});
+			});
+		})(this);
 		
 		if (predadores >= 4) {
 			this.presaMorre();
@@ -101,24 +103,10 @@ function Presa(numero) {
 			} else {
 				this.modoFuga = false;
 			}
-
+			
+			var movimentoRealizado = false;
 			if (predadores > 0) {
-				/*
-				var p = predador1.getPosicao(); //ver para calcular com mais de uma presa
-				if (p.linha > this.animal.linha) {
-					var posicoes = this.animal.moverParaCima();
-				} else if (p.linha < this.animal.linha) {
-					var posicoes = this.animal.moverParaBaixo();
-				} else if (p.coluna > this.animal.coluna) {
-					var posicoes = this.animal.moverParaEsquerda();
-				} else if (p.coluna < this.animal.coluna) {
-					var posicoes = this.animal.moverParaDireita();
-				} else {
-					var posicoes = this.getRandomPosicao();
-				}
-				this.setPosicao(posicoes.linha, posicoes.coluna);*/
 				(function(Presa) {
-					var movimentoRealizado = false;
 					$.each(campoPercepcao, function(key, value){
 						if (!movimentoRealizado) {		
 							if (value.objeto instanceof Predador) {
@@ -177,10 +165,16 @@ function Presa(numero) {
 					}
 				})(this);
 			} else {
-				var movimenta = gerarRandomico(2, 1);
-				if (movimenta == 2) {
-					var posicoes = this.getRandomPosicao();
-					this.setPosicao(posicoes.linha, posicoes.coluna);
+				var movimenta = gerarRandomico(3, 1);
+				if (movimenta > 1 || this.modoFuga) {
+					var posicoes;
+					while(true) {
+						posicoes = this.getRandomPosicao();
+						if (this.animal.isMovimentoValido(posicoes)) {
+							break;
+						}
+					}
+					movimentoRealizado = this.setPosicao(posicoes.linha, posicoes.coluna);
 				}
 			}
 		}
@@ -249,6 +243,10 @@ function Presa(numero) {
 		if (this.intensidade < 0) {
 			this.intensidade = 0;
 		}
+	}
+
+	this.getVelocidadeFromEmocao = function() {
+		return this.qualidade - this.intensidade; //ver calculo da emocao para gerar velocidade
 	}
 
 	this.isModoFuga = function() {

@@ -2,6 +2,7 @@ function Animal() {
 	this.posicao = {};
 	this.velocidade = 1;
 	this.duracaoVelocidade = 1;
+	this.movimentosAnteriores = [];
 	
 	this.gerarPosicaoAleatoria = function() {
 		var posicaoInvalida = true;
@@ -22,6 +23,7 @@ function Animal() {
 	}
 
 	this.setPosicao = function(linha, coluna) {
+		this.addMovimentoAnterior(this.posicao);
 		this.posicao = {"linha" : linha, "coluna" : coluna};
 	}
 
@@ -104,5 +106,26 @@ function Animal() {
 		percepcoes.esquerdaSuperior = {"objeto" : Ambiente.getPosicaoObjetoAnterior(this.moverParaEsquerdaSuperior()), "posicao" : this.moverParaEsquerdaSuperior()};
 		percepcoes.esquerdaInferior = {"objeto" : Ambiente.getPosicaoObjetoAnterior(this.moverParaEsquerdaInferior()), "posicao" : this.moverParaEsquerdaInferior()};
 		return percepcoes;
+	}
+
+	this.addMovimentoAnterior = function(posicao) {
+		if (this.movimentosAnteriores.length > 9) {
+			this.movimentosAnteriores.shift();
+		}
+		this.movimentosAnteriores.push(posicao);
+	}
+
+	this.getPosicaoAnterior = function() {
+		return this.movimentosAnteriores[this.movimentosAnteriores.length-1];
+	}
+
+	this.isMovimentoValido = function(posicao, numero_casas) { //verificar se andar mais de uma casa
+		if (this.movimentosAnteriores.length > 0) {
+			var posicaoAnterior = this.movimentosAnteriores[this.movimentosAnteriores.length-1];
+			if (posicao.linha == posicaoAnterior.linha && posicao.coluna == posicaoAnterior.coluna) {
+				return false;
+			}
+		}
+		return true;
 	}
 }
