@@ -32,12 +32,20 @@ function Populacao(nroPredadores, nroPresas) {
 		$.each(this.animais, function(key, animal) {
 			status = animal.move();
 			if (animal instanceof Presa) {
-				if (animal.modoFuga) {
+				var velocidade = animal.getVelocidadeFromEmocao();
+				console.log(velocidade);
+				for (var i = 0; i < velocidade; i++) {
 					status = animal.move();
 					if (status == -1) { //morre
 						mortos.push(animal);
 					}
 				}
+				//if (animal.modoFuga) {
+				//	status = animal.move();
+				//	if (status == -1) { //morre
+				//		mortos.push(animal);
+				//	}
+				//}
 			}
 			if (status == -1) { //morre
 				mortos.push(animal);

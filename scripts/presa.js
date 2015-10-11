@@ -264,7 +264,7 @@ function Presa(numero) {
 			intens = 1;
 		}
 		var res = Math.sqrt(qualid * intens);
-		return Math.round(res);
+		return Math.round(res) - 1;
 	}
 
 	this.isModoFuga = function() {
