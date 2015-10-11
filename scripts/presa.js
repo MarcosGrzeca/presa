@@ -246,7 +246,25 @@ function Presa(numero) {
 	}
 
 	this.getVelocidadeFromEmocao = function() {
-		return this.qualidade - this.intensidade; //ver calculo da emocao para gerar velocidade
+		/*
+		1 = 1
+		2 = 1.4
+		3 = 1.7
+		4 = 2
+		6 = 2.4
+		8 = 2.8
+		9 = 3
+		*/
+		var qualid = Math.abs(this.qualidade);
+		var intens = Math.abs(this.intensidade);
+		if (qualid == 0) {
+			qualid = 1;
+		}
+		if (intens == 0) {
+			intens = 1;
+		}
+		var res = Math.sqrt(qualid * intens);
+		return Math.round(res);
 	}
 
 	this.isModoFuga = function() {
