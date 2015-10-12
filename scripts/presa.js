@@ -7,6 +7,7 @@ function Presa(numero) {
 	this.iteracoesLivre = 2; //quantidade de iteracoes ate comecar alterar emocoes
 	this.iteracoesLivreCount = 0;
 	this.passosRealizados = 0;
+	this.iteracoesFuga = 0;
 
 	this.gerarPosicaoAleatoria = function() {
 		this.animal.gerarPosicaoAleatoria();
@@ -22,7 +23,9 @@ function Presa(numero) {
 	}
 
 	this.getVelocidade = function() {
-		//return this.animal.getVelocidade();
+		if (this.iteracoesFuga > 8) {
+			return 1;
+		}
 		return this.getVelocidadeFromEmocao();
 	}
 
@@ -55,15 +58,17 @@ function Presa(numero) {
 		}, 1000);
 	}
 
-	this.move = function() {
+	this.move = function(indice) {
+		if (this.modoFuga && indice == 0) {
+			this.iteracoesFuga++;
+		}
+		console.log(this.iteracoesFuga);
 		var campoPercepcao = this.animal.getCampoPercepcao();
 		var predadores = 0, presas = 0, presasEmFuga = 0;
-		var predador1 = false;
 		(function(PresaObj) {
 			$.each(campoPercepcao, function(key, value){
 				if (value.objeto instanceof Predador) {
 					predadores++;
-					predador1 = value.objeto;
 				} else if (value.objeto instanceof Presa && value.objeto != PresaObj) {
 					presas++;
 					if (value.objeto.modoFuga) {
@@ -127,6 +132,7 @@ function Presa(numero) {
 				this.modoFuga = true;
 			} else {
 				this.modoFuga = false;
+				this.iteracoesFuga = 0;
 			}
 			
 			var movimentoRealizado = false;
