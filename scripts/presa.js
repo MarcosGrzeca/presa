@@ -6,6 +6,7 @@ function Presa(numero) {
 	this.intensidade = 1; //0 a 3
 	this.iteracoesLivre = 2; //quantidade de iteracoes ate comecar alterar emocoes
 	this.iteracoesLivreCount = 0;
+	this.passosRealizados = 0;
 
 	this.gerarPosicaoAleatoria = function() {
 		this.animal.gerarPosicaoAleatoria();
@@ -20,13 +21,37 @@ function Presa(numero) {
 		return this.numero;
 	}
 
+	this.getVelocidade = function() {
+		//return this.animal.getVelocidade();
+		return this.getVelocidadeFromEmocao();
+	}
+
+	this.setVelocidade = function(velocidade) {
+		this.animal.setVelocidade(velocidade);
+	}
+
+	this.getDuracaoVelocidade = function() {
+		return this.animal.getDuracaoVelocidade();
+	}
+
+	this.setDuracaoVelocidade = function(duracaoVelocidade) {
+		this.animal.setDuracaoVelocidade(duracaoVelocidade);
+	}
+	this.setPassosRealizados = function(passosRealizados) {
+		this.passosRealizados = passosRealizados;
+	}
+	
+
 	this.presaMorre = function() {
 		document.getElementById('player').play();
 		var posicao = this.getPosicao();
 		$("#field_" + posicao.linha + "_" + posicao.coluna).addClass("zebra-morrendo");
 		setTimeout(function() {
 			$("#field_" + posicao.linha + "_" + posicao.coluna).removeClass("zebra-morrendo");
-			document.getElementById('player').stop();
+			try {
+				document.getElementById('player').stop();
+			} catch (err) {
+			}
 		}, 1000);
 	}
 
@@ -110,6 +135,7 @@ function Presa(numero) {
 					$.each(campoPercepcao, function(key, value){
 						if (!movimentoRealizado) {		
 							if (value.objeto instanceof Predador) {
+								var movimento = key;
 								if (key == "cima") {
 									posicoes = Presa.animal.moverParaBaixo();
 								} else if (key == "baixo") {
@@ -120,70 +146,87 @@ function Presa(numero) {
 									posicoes = Presa.animal.moverParaDireita();
 								} else if (key == "esquerdaInferior") {
 									if (gerarRandomico(2, 1) == 2) {
-										posicoes = Presa.animal.moverParaDireita()
+										posicoes = Presa.animal.moverParaDireita();
+										movimento = "direita";
 									} else {
 										posicoes = Presa.animal.moverParaCima();
+										movimento = "cima";
 									}
 								} else if (key == "direitaInferior") {
 									if (gerarRandomico(2, 1) == 2) {
 										posicoes = Presa.animal.moverParaEsquerda();
+										movimento = "esquerda";
 									} else {
 										posicoes = Presa.animal.moverParaCima();
+										movimento = "cima";
 									}
 								} else if (key == "direitaSuperior") {
 									if (gerarRandomico(2, 1) == 2) {
 										posicoes = Presa.animal.moverParaEsquerda();
+										movimento = "esquerda";
 									} else {
 										posicoes = Presa.animal.moverParaBaixo();
+										movimento = "baixo";
 									}
 								} else if (key == "esquerdaSuperior") {
 									if (gerarRandomico(2, 1) == 2) {
 										posicoes = Presa.animal.moverParaDireita();
+										movimento = "direita";
 									} else {
 										posicoes = Presa.animal.moverParaBaixo();
+										movimento = "baixo";
 									}
 								}
-								movimentoRealizado = Presa.setPosicao(posicoes.linha, posicoes.coluna);
+								movimentoRealizado = Presa.setPosicao(posicoes.linha, posicoes.coluna, movimento);
 							}
 						}
 					});
 					if (!movimentoRealizado) {
 						posicoes = Presa.animal.moverParaBaixo();
-						movimentoRealizado = Presa.setPosicao(posicoes.linha, posicoes.coluna);
+						movimentoRealizado = Presa.setPosicao(posicoes.linha, posicoes.coluna, "baixo");
 					}
 					if (!movimentoRealizado) {
 						posicoes = Presa.animal.moverParaCima();
-						movimentoRealizado = Presa.setPosicao(posicoes.linha, posicoes.coluna);
+						movimentoRealizado = Presa.setPosicao(posicoes.linha, posicoes.coluna, "cima");
 					}
 					if (!movimentoRealizado) {
 						posicoes = Presa.animal.moverParaDireita();
-						movimentoRealizado = Presa.setPosicao(posicoes.linha, posicoes.coluna);
+						movimentoRealizado = Presa.setPosicao(posicoes.linha, posicoes.coluna, "direita");
 					}
 					if (!movimentoRealizado) {
 						posicoes = Presa.animal.moverParaEsquerda();
-						movimentoRealizado = Presa.setPosicao(posicoes.linha, posicoes.coluna);
+						movimentoRealizado = Presa.setPosicao(posicoes.linha, posicoes.coluna, "esquerda");
 					}
 				})(this);
 			} else {
 				var movimenta = gerarRandomico(3, 1);
 				if (movimenta > 1 || this.modoFuga) {
-					var posicoes;
+					var movimento;
 					while(true) {
-						posicoes = this.getRandomPosicao();
-						if (this.animal.isMovimentoValido(posicoes)) {
+						movimento = this.getRandomPosicao();
+						if (this.animal.isMovimentoValido(movimento.posicao)) {
 							break;
 						}
 					}
-					movimentoRealizado = this.setPosicao(posicoes.linha, posicoes.coluna);
+					movimentoRealizado = this.setPosicao(movimento.posicao.linha, movimento.posicao.coluna, movimento.movimento);
 				}
 			}
 		}
+		this.passosRealizados++;
+		if (this.passosRealizados < this.getVelocidade()) {
+			return 1;
+		} else {
+			return 0;
+		}
 	}
 
-	this.setPosicao = function(linha, coluna) {
+	this.setPosicao = function(linha, coluna, movimento) {
+		if (!movimento) {
+			movimento = "";
+		}
 		if (Ambiente.getPosicao(linha, coluna) == 0) {
 			Ambiente.limparPosicao(this.getPosicao().linha, this.getPosicao().coluna);
-			this.animal.setPosicao(linha, coluna);
+			this.animal.setPosicao(linha, coluna, movimento);
 			Ambiente.setPosicao(this);
 			return true;
 		} else {
@@ -192,17 +235,22 @@ function Presa(numero) {
 	}
 
 	this.getRandomPosicao = function() {
+		var movimento;
 		var random = gerarRandomico(4, 1);
 		if (random == 4) {
 			var posicoes = this.animal.moverParaDireita();
+			movimento = "direita";
 		} else if (random == 1) {
 			var posicoes = this.animal.moverParaEsquerda();
+			movimento = "esquerda";
 		} else if (random == 2) {
 			var posicoes = this.animal.moverParaCima();
+			movimento = "cima";
 		} else if (random == 3) {
 			var posicoes = this.animal.moverParaBaixo();
+			movimento = "baixo";
 		}
-		return posicoes;
+		return {"posicao" : posicoes, "movimento" : movimento};
 	}
 
 	this.morre = function() {

@@ -11,3 +11,10 @@
 Bugs:
 - Quando pula 2 casas esta dando erro nas bordas
 - Feromonio esta aparecendo na casa da presa quando esta parada -- Corrigido
+
+
+- Fila por velocidades (exec velo 1, 2 e 3). A cada velocidade atualiza ambiente
+- Cálculo versão inicial (perseguir presa)
+- IteracoesCaca - decrementado só uma vez
+- Rastro - Verificar Rastro
+- Cálculo da emoção (OK)

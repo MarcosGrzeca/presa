@@ -3,6 +3,10 @@ function Populacao(nroPredadores, nroPresas) {
 	this.nroPresas = nroPresas;
 	this.animais = [];
 	this.contAnimais = 1;
+
+	this.getAnimais = function() {
+		return this.animais;
+	}
 	
 	this.gerarPopulacao = function() {
 		for (var i = 0; i < nroPresas; i++) {
@@ -17,43 +21,43 @@ function Populacao(nroPredadores, nroPresas) {
 			this.animais.push(predador);
 			this.contAnimais++;
 		}
+	//	this.gerarPopulacaoTeste();
 	};
 
 	this.gerarPopulacaoTeste = function() {
-		this.createPresa(2, 2);
+		this.createPresa(2, 1);
 		this.createPredador(1, 1);
-		//this.createPredador(1, 2);
+		this.createPredador(1, 2);
 		//this.createPredador(1, 3);
 		//this.createPredador(3, 3);
 	};
 
 	this.movimentar = function() {
 		var mortos = [], status = 0;
-		$.each(this.animais, function(key, animal) {
-			status = animal.move();
-			if (animal instanceof Presa) {
-				var velocidade = animal.getVelocidadeFromEmocao();
-				console.log(velocidade);
-				for (var i = 0; i < velocidade; i++) {
-					status = animal.move();
-					if (status == -1) { //morre
-						mortos.push(animal);
-					}
+		var animaisNaFila = this.animais;
+		var indice = 0;
+		while (animaisNaFila.length > 0) {
+			var animais = $.extend(true, [], animaisNaFila);
+			var animaisNaFila = [];
+			$.each(animais, function(key, animal) {
+				status = animal.move(indice);
+				if (status == 1) {
+					animaisNaFila.push(animal);
+				} else if (status == -1) { //morre
+					mortos.push(animal);
+				} else {
+					//animal.incrementarIteracao();
+					animal.setPassosRealizados(0);
 				}
-				//if (animal.modoFuga) {
-				//	status = animal.move();
-				//	if (status == -1) { //morre
-				//		mortos.push(animal);
-				//	}
-				//}
-			}
-			if (status == -1) { //morre
-				mortos.push(animal);
-			}
-		});
-		$.each(mortos, function(key, animal) {
-			animal.morre();
-		});
+			});
+			$.each(mortos, function(key, animal) {
+				animal.morre();
+			});
+			Ambiente.atualizar();
+        	Ambiente.clonarMapa();
+        	indice++;
+		}
+		//debugger;
 	};
 
 	this.createPredador = function(linha, coluna) {

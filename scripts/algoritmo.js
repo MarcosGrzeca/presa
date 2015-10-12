@@ -5,6 +5,10 @@ function Algoritmo() {
     this.simulacaoInterrompida = false;
     this.velocidade = 1000;
 
+    this.getPopulacao = function() {
+        return this.populacao;
+    }
+
 
 	this.simular = function() {
 		Ambiente.inicializar($("#nroLinhas").val(), $("#nroColunas").val(), $("#duracaoRastro").val());
@@ -19,6 +23,7 @@ function Algoritmo() {
         Ambiente.clonarMapa();
         setTimeout("release()", this.velocidade);
 	}
+
 
     this.release = function() {
         if (this.interacoes < this.numeroMaximoInteracoes && !(this.simulacaoInterrompida)) {

@@ -70,9 +70,6 @@ var Ambiente = {
 
 	setPosicao: function(animal) {
 		var posicoes = animal.getPosicao();
-		/*if (animal instanceof Predador) {
-			this.setRastro(posicoes.linha, posicoes.coluna, 10);
-		}*/
 		this.mapa[posicoes.linha][posicoes.coluna] = animal;
 	},
 
@@ -105,7 +102,12 @@ var Ambiente = {
 		}*/
 	},
 
-	setRastro: function(linha, coluna, intensidade) {
+	setRastro: function(linha, coluna, intensidade, numeroPredador) {
+		if (!numeroPredador) {
+			numeroPredador = "";
+		} else {
+			$("#field_" + linha + "_" + coluna).attr("numero_predador", numeroPredador);
+		}
 		$("#field_" + linha + "_" + coluna).attr("rastro_intensidade", intensidade);
 		$("#field_" + linha + "_" + coluna).addClass("rastro rastro_" + intensidade);
 	},
@@ -117,6 +119,7 @@ var Ambiente = {
 			if ((rastro_intensidade - 1) == 0) {
 				$(this).removeClass("rastro");
 				$(this).removeAttr("rastro_intensidade");
+				$(this).removeAttr("numero_predador");
 			} else {
 				$(this).addClass("rastro_" + (rastro_intensidade - 1));
 				$(this).attr("rastro_intensidade", (rastro_intensidade - 1));
