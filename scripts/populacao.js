@@ -9,7 +9,7 @@ function Populacao(nroPredadores, nroPresas) {
 	}
 	
 	this.gerarPopulacao = function() {
-		for (var i = 0; i < nroPresas; i++) {
+		/*for (var i = 0; i < nroPresas; i++) {
 			var presa = new Presa(this.contAnimais);
 			presa.gerarPosicaoAleatoria();
 			this.animais.push(presa);
@@ -20,8 +20,8 @@ function Populacao(nroPredadores, nroPresas) {
 			predador.gerarPosicaoAleatoria();
 			this.animais.push(predador);
 			this.contAnimais++;
-		}
-		//this.gerarPopulacaoTeste();
+		}*/
+		this.gerarPopulacaoTeste();
 	};
 
 	this.gerarPopulacaoTeste = function() {
@@ -29,6 +29,7 @@ function Populacao(nroPredadores, nroPresas) {
 		this.createPredador(1, 1);
 		this.createPredador(1, 2);
 		this.createPredador(3, 2);
+		this.createPredador(0, 0);
 		//this.createPredador(1, 3);
 		//this.createPredador(3, 3);
 	};
@@ -40,7 +41,7 @@ function Populacao(nroPredadores, nroPresas) {
 		while (animaisNaFila.length > 0) {
 			var animais = $.extend(true, [], animaisNaFila);
 			var animaisNaFila = [];
-			$.each(animais, function(key, animal) {
+			/*$.each(animais, function(key, animal) {
 				status = animal.move(indice);
 				if (status == 1) {
 					animaisNaFila.push(animal);
@@ -50,7 +51,32 @@ function Populacao(nroPredadores, nroPresas) {
 					//animal.incrementarIteracao();
 					animal.setPassosRealizados(0);
 				}
-			});
+			});*/
+			
+			while (animais.length > 0) {
+				var random = gerarRandomico(animais.length, 0);
+				console.log(random);
+				var animal = animais[random];
+				console.log(animal);
+				status = animal.move(indice);
+				if (status == 1) {
+					animaisNaFila.push(animal);
+				} else if (status == -1) { //morre
+					mortos.push(animal);
+				} else {
+					//animal.incrementarIteracao();
+					animal.setPassosRealizados(0);
+				} 
+				//delete animais[random];
+				console.log(animais);
+				
+				animais.slice(random, 1);
+				console.log(animais);
+				console.log(animais.length);
+			//	debugger;
+			}
+			//debugger;
+
 			$.each(mortos, function(key, animal) {
 				animal.morre();
 			});
