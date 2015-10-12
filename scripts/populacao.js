@@ -21,13 +21,14 @@ function Populacao(nroPredadores, nroPresas) {
 			this.animais.push(predador);
 			this.contAnimais++;
 		}
-	//	this.gerarPopulacaoTeste();
+		//this.gerarPopulacaoTeste();
 	};
 
 	this.gerarPopulacaoTeste = function() {
 		this.createPresa(2, 1);
 		this.createPredador(1, 1);
 		this.createPredador(1, 2);
+		this.createPredador(3, 2);
 		//this.createPredador(1, 3);
 		//this.createPredador(3, 3);
 	};

@@ -5,6 +5,7 @@ function Predador(numero) {
 	this.iteracoesCaca = 0;
 	this.presaCacada = false;
 	this.presaAlvo = null;
+	this.passosRealizados = 0;
 
 	this.gerarPosicaoAleatoria = function() {
 		this.animal.gerarPosicaoAleatoria();
@@ -165,9 +166,9 @@ function Predador(numero) {
 				Predador.iteracoesCaca++;
 			}*/
 
-			console.log(Predador.iteracoesCaca);
 			if (Predador.iteracoesCaca > 4) {
 				Predador.setVelocidade(1);
+				Predador.modoCaca = false;
 			}
 			
 			if (posicoes != null) {
@@ -291,7 +292,7 @@ function Predador(numero) {
 		var campoPercepcao = this.animal.getCampoPercepcao();
 		var movimentoRealizado = this.verificarExistenciaPresas(campoPercepcao);
 		if (!movimentoRealizado) {
-			if (this.modoCaca && this.iteracoesCaca >= 8) {
+			if (this.modoCaca && this.iteracoesCaca > 4) {
 				this.modoCaca = false;
 				this.iteracoesCaca = 0;
 			}
