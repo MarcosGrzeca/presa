@@ -62,7 +62,6 @@ function Presa(numero) {
 		if (this.modoFuga && indice == 0) {
 			this.iteracoesFuga++;
 		}
-		console.log(this.iteracoesFuga);
 		var campoPercepcao = this.animal.getCampoPercepcao();
 		var predadores = 0, presas = 0, presasEmFuga = 0;
 		(function(PresaObj) {
