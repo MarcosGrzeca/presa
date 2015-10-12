@@ -33,6 +33,8 @@ function Algoritmo() {
             Ambiente.clonarMapa();
             this.interacoes++;
             setTimeout("release()", this.velocidade);
+        } else if (!this.simulacaoInterrompida) {
+            alert("O limite de iterações foi atingido.");
         }
     }
 

@@ -3,8 +3,6 @@ function Predador(numero) {
 	this.numero = numero;
 	this.modoCaca = false;
 	this.iteracoesCaca = 0;
-	this.presaCacada = false;
-	this.presaAlvo = null;
 	this.passosRealizados = 0;
 
 	this.gerarPosicaoAleatoria = function() {
@@ -45,73 +43,9 @@ function Predador(numero) {
 		(function(Predador) {
 			var posicoes = null;
 			var movimento;
-			/*if (Predador.presaCacada != false && Predador.iteracoesCaca < 4) {
-				movimentoRealizado = true;
-				posicoes = Predador.presaCacada.animal.getPosicaoAnterior();
-			} else if (Predador.iteracoesCaca >= 4) {
-				Predador.presaCacada = false;
-			} else {
-				if (Predador.modoCaca) {
-					Predador.presaAlvo.get
-				} else {
-					$.each(campoPercepcao, function(key, value){
-						if (value.objeto instanceof Presa) {
-							Predador.setVelocidade(value.objeto.getVelocidade());
-							Predador.presaAlvo = value.objeto;
-							movimentoRealizado = true;
-							movimento = key;
-							if (key == "baixo") {
-								posicoes = Predador.animal.moverParaBaixo();
-							} else if (key == "cima") {
-								posicoes = Predador.animal.moverParaCima();
-							} else if (key == "esquerda") {
-								posicoes = Predador.animal.moverParaEsquerda();
-							} else if (key == "direita") {
-								posicoes = Predador.animal.moverParaDireita();
-							} else if (key == "direitaInferior") {
-								if (gerarRandomico(2, 1) == 2) {
-									posicoes = Predador.animal.moverParaDireita();
-									movimento = "direita";
-								} else {
-									posicoes = Predador.animal.moverParaBaixo();
-									movimento = "baixo";
-								}
-							} else if (key == "esquerdaInferior") {
-								if (gerarRandomico(2, 1) == 2) {
-									posicoes = Predador.animal.moverParaEsquerda();
-									movimento = "esquerda";
-								} else {
-									posicoes = Predador.animal.moverParaBaixo();
-									movimento = "baixo";
-								}
-							} else if (key == "direitaSuperior") {
-								if (gerarRandomico(2, 1) == 2) {
-									posicoes = Predador.animal.moverParaDireita();
-									movimento = "direita";
-								} else {
-									posicoes = Predador.animal.moverParaCima();
-									movimento = "cima";
-								}
-							} else if (key == "esquerdaSuperior") {
-								if (gerarRandomico(2, 1) == 2) {
-									posicoes = Predador.animal.moverParaEsquerda();
-									movimento = "esquerda";
-								} else {
-									posicoes = Predador.animal.moverParaCima();
-									movimento = "cima";
-								}
-							}
-							Predador.iteracoesCaca = 0;
-							Predador.presaCacada = value.objeto;
-						}
-					});
-				}
-			}*/
-
-			$.each(campoPercepcao, function(key, value){
-				if (value.objeto instanceof Presa) {
-					Predador.setVelocidade(value.objeto.getVelocidade());
-					Predador.presaAlvo = value.objeto;
+			$.each(campoPercepcao, function(key, presa){
+				if (presa.objeto instanceof Presa && posicoes == null) {
+					Predador.setVelocidade(presa.objeto.getVelocidade());
 					movimentoRealizado = true;
 					movimento = key;
 					if (key == "baixo") {
@@ -157,18 +91,14 @@ function Predador(numero) {
 					}
 					if (!Predador.modoCaca) {
 						Predador.iteracoesCaca = 0;
-						Predador.presaCacada = value.objeto;
 					}
 				}
 			});
 			
-			/*if (Predador.modoCaca) {
-				Predador.iteracoesCaca++;
-			}*/
-
 			if (Predador.iteracoesCaca > 4) {
 				Predador.setVelocidade(1);
 				Predador.modoCaca = false;
+				Predador.iteracoesCaca = 0;
 			}
 			
 			if (posicoes != null) {
@@ -250,17 +180,14 @@ function Predador(numero) {
 				} else {
 					movimentoRealizado = false;
 				}*/
-				Predador.setPosicao(posicoes.linha, posicoes.coluna, movimento);
-				//Predador.setVelocidade()
-				
-				//.forEach(function(name){
-				//var populacao = algoritmo.getPopulacao();
-				algoritmo.getPopulacao().getAnimais().forEach(function(animal) {
-					if (animal.numero == numeroPredador) {
-						Predador.setVelocidade(animal.getVelocidade());
-					}
-				});
-
+				movimentoRealizado = Predador.setPosicao(posicoes.linha, posicoes.coluna, movimento);
+				if (movimentoRealizado) {
+					algoritmo.getPopulacao().getAnimais().forEach(function(animal) {
+						if (animal.numero == numeroPredador) {
+							Predador.setVelocidade(animal.getVelocidade());
+						}
+					});
+				}
 			}
 		})(this);
 		return movimentoRealizado;

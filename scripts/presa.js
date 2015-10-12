@@ -44,7 +44,6 @@ function Presa(numero) {
 		this.passosRealizados = passosRealizados;
 	}
 	
-
 	this.presaMorre = function() {
 		document.getElementById('player').play();
 		var posicao = this.getPosicao();
