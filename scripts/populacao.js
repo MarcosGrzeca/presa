@@ -9,7 +9,7 @@ function Populacao(nroPredadores, nroPresas) {
 	}
 	
 	this.gerarPopulacao = function() {
-		/*for (var i = 0; i < nroPresas; i++) {
+		for (var i = 0; i < nroPresas; i++) {
 			var presa = new Presa(this.contAnimais);
 			presa.gerarPosicaoAleatoria();
 			this.animais.push(presa);
@@ -20,8 +20,8 @@ function Populacao(nroPredadores, nroPresas) {
 			predador.gerarPosicaoAleatoria();
 			this.animais.push(predador);
 			this.contAnimais++;
-		}*/	
-		this.gerarPopulacaoTeste();
+		}	
+		//this.gerarPopulacaoTeste();
 	};
 
 	this.gerarPopulacaoTeste = function() {
