@@ -6,23 +6,31 @@
 	<link rel="shortcut icon" href="imagens/favicon.ico" type="image/x-icon">
 	<link rel="icon" href="imagens/favicon.ico" type="image/x-icon">
 	<meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="style/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="style/bootstrap/css/bootstrap-theme.min.css">
 	<link rel="stylesheet" href="style/jquery-ui/jquery-ui.css">
 	<link rel="stylesheet" href="style/estilo.css">
 </head>
-<body style="background-color:#FFF;">
+<body>
+	<!--<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">Presa x Predador</a>
+			</div>
+		</div>
+	</nav>-->
 	<div class="container-fluid">
-		<center>
-			<h1>Presa e Predador</h1>
-		</center>
-
-		<br/>
 		<div id="telaConfiguracao">
 			<div class="row">
-			  	<div class="col-md-2">
+				<div class="jumbotron">
+					<h1>Presa x Predador</h1>
+					<p>Preencha os campos abaixo para simular um ambiente de competitividade entre presas (zebras) e predadores (leões).</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-2">
 					<label>Nº de Linhas</label>
 					<input type="text" id="nroLinhas" value="15" class="form-control" />
 				</div>
@@ -57,16 +65,6 @@
 						<option>10</option>
 					</select>
 				</div>
-			  	<div class="col-md-2">
-					<label>Comportamento das presas</label>
-					<select id="comportamentoPresas" class="form-control">
-						<option value="0">Aleatório</option>
-						<option value="1" selected="selected">Linear</option>
-					</select>
-				</div>
-			</div>
-			<br/>
-			<div class="row">
 				<div class="col-md-2">
 					<label>Duração do rastro</label>
 					<select id="duracaoRastro" class="form-control">
@@ -82,36 +80,47 @@
 						<option>10</option>
 					</select>
 				</div>
+				<div class="col-md-2">
+					<label>Comportamento das presas</label>
+					<select id="comportamentoPresas" class="form-control">
+						<option value="0">Aleatório</option>
+						<option value="1" selected="selected">Linear</option>
+					</select>
+				</div>	
 			</div>
-
 			<br/>
 			<div class="row">
-			  	<div class="col-md-3">
-					<input type="button" onclick="iniciar()" value="Simular ambiente" class="form-control btn btn-primary">
+				<div class="col-md-2">
+					<input type="button" onclick="iniciar()" value="Simular Ambiente" class=" btn btn-lg btn-success ">
 				</div>
 			</div>
 		</div>
 		<div id="telaSimulacao" style="display:none;">
 			<div class="row">
-			  	<div class="col-md-10" id="espacoAmbiente">
+				<div class="jumbotron">
+					<h1>Presa x Predador</h1>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-10" id="espacoAmbiente">
 				</div>
 				<div class="col-md-2">
 					<button type="button" class="btn-default btn-primary form-control" id="botaoParar" onclick="pararSimulacao()">Parar Simulação</button>
 					<button type="button" class="btn-default btn-primary form-control hide" id="botaoContinuar" onclick="continuarSimulacao()">Continuar Simulação</button>
 					<br/>
 					<button type="button" class="btn-default btn-primary form-control" onclick="voltarParaTelaInicial();">Voltar</button>
-					
-					</br>
-					<label for="velocidadeIteracoes" style="white-space:nowrap;">Velocidade:
-	  					<input type="text" id="velocidadeIteracoes" readonly style="border:0; font-weight:bold;">
-  					</label>
-					<div id="slider-velocidade"></div>
-				</div>
-				</div>
+
+				</br>
+				<label for="velocidadeIteracoes" style="white-space:nowrap;">Velocidade:
+					<input type="text" id="velocidadeIteracoes" readonly style="border:0; font-weight:bold;">
+				</label>
+				<div id="slider-velocidade"></div>
 			</div>
 		</div>
 	</div>
-	<audio src="sons/leao.mp3" id="player"></audio>
+</div>
+</div>
+<audio src="sons/leao.mp3" id="player"></audio>
 </body>
 
 
