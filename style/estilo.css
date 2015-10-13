@@ -49,8 +49,24 @@ body {
 	border-right: 1px solid #000; 
 }
 
-.ambiente {
+/*.ambiente {
     background-image: url("../imagens/gramado2.png");
+}*/
+
+.ambiente {
+  position: relative;
+}
+
+.ambiente::after {
+  content: "";
+  background: url("../imagens/terra.jpg");
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;   
 }
 
 .ambiente td {
@@ -66,49 +82,48 @@ body {
 }
 
 .rastro_10 {
-    background-color: #CC0;
+    background-color: rgba(204,204,85, 1);
 }
 
 .rastro_9 {
-    background-color: #CC1;   
+    background-color: rgba(204,204,85, 0.9);
 }
 
 .rastro_8 {
-    background-color: #CC2;
+    background-color: rgba(204,204,85, 0.85);
 }
 
 .rastro_7 {
-    background-color: #CC3;
+    background-color: rgba(204,204,85, 0.8);
 }
 
 .rastro_6 {
-    background-color: #CC4;
+    background-color: rgba(204,204,85, 0.75);
 }
 
 .rastro_5 {
-    background-color: #CC5;
+    background-color: rgba(204,204,85, 0.7);
 }
 
 .rastro_4 {
-    background-color: #CC6;
+    background-color: rgba(204,204,85, 0.65);
 }
 
 .rastro_3 {
-    background-color: #CC7;
+    background-color: rgba(204,204,85, 0.60);
 }
 
 .rastro_2 {
-    background-color: #CC8;
+    background-color: rgba(204,204,85, 0.55);
 }
 
 .rastro_1 {
-    background-color: #CC9;
+    background-color: rgba(204,204,85, 0.50);
 }
 
 .zebra-morrendo {
     background-color: rgba(255,0,0,0.4);    
 }
-
 
 .btn-default {
     text-shadow: none !important;
