@@ -9,13 +9,13 @@ function Populacao(nroPredadores, nroPresas) {
 	}
 	
 	this.gerarPopulacao = function() {
-		for (var i = 0; i < nroPresas; i++) {
+		for (var i = 0; i < this.nroPresas; i++) {
 			var presa = new Presa(this.contAnimais);
 			presa.gerarPosicaoAleatoria();
 			this.animais.push(presa);
 			this.contAnimais++;
 		}
-		for (var i = 0; i < nroPredadores; i++) {
+		for (var i = 0; i < this.nroPredadores; i++) {
 			var predador = new Predador(this.contAnimais);
 			predador.gerarPosicaoAleatoria();
 			this.animais.push(predador);
@@ -75,9 +75,16 @@ function Populacao(nroPredadores, nroPresas) {
 				animais.splice(random, 1);
 			}
 		*/
-			$.each(mortos, function(key, animal) {
-				animal.morre();
-			});
+			(function(Populacao) {
+				$.each(mortos, function(key, animal) {
+					animal.morre();
+					if (animal instanceof Presa) {
+						Populacao.nroPresas--;
+					} else if (animal instanceof Predador) {
+						Populacao.nroPredadores--;
+					}
+				});
+			})(this);
 			Ambiente.atualizar();
         	Ambiente.clonarMapa();
         	indice++;

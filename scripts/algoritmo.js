@@ -32,6 +32,9 @@ function Algoritmo() {
             Ambiente.atualizar();
             Ambiente.clonarMapa();
             this.interacoes++;
+            $('#iteracoes_qdte').val(this.interacoes);
+            $('#predadores_qdte').val(this.populacao.nroPredadores);
+            $('#presas_qdte').val(this.populacao.nroPresas);
             setTimeout("release()", this.velocidade);
         } else if (!this.simulacaoInterrompida) {
             alert("O limite de iterações foi atingido.");
