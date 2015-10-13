@@ -33,8 +33,9 @@ function Algoritmo() {
             Ambiente.clonarMapa();
             this.interacoes++;
             $('#iteracoes_qdte').val(this.interacoes);
-            $('#predadores_qdte').val(this.populacao.nroPredadores);
-            $('#presas_qdte').val(this.populacao.nroPresas);
+            var nro = this.populacao.getNroAnimais();
+            $('#predadores_qdte').val(nro.predadores);
+            $('#presas_qdte').val(nro.presas);
             setTimeout("release()", this.velocidade);
         } else if (!this.simulacaoInterrompida) {
             alert("O limite de iterações foi atingido.");

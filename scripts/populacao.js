@@ -75,16 +75,9 @@ function Populacao(nroPredadores, nroPresas) {
 				animais.splice(random, 1);
 			}
 		*/
-			(function(Populacao) {
-				$.each(mortos, function(key, animal) {
-					animal.morre();
-					if (animal instanceof Presa) {
-						Populacao.nroPresas--;
-					} else if (animal instanceof Predador) {
-						Populacao.nroPredadores--;
-					}
-				});
-			})(this);
+			$.each(mortos, function(key, animal) {
+				animal.morre();
+			});
 			Ambiente.atualizar();
         	Ambiente.clonarMapa();
         	indice++;
@@ -107,5 +100,17 @@ function Populacao(nroPredadores, nroPresas) {
 		presa.setPosicao(linha, coluna);
 		this.animais.push(presa);
 		this.contAnimais++;		
+	};
+
+	this.getNroAnimais = function() {
+		var presas = 0, predadores = 0;
+		$.each(this.animais, function(key, animal) {
+			if (animal instanceof Presa) {
+				presas++;
+			} else if (animal instanceof Predador) {
+				predadores++;
+			}
+		});
+		return {"presas" : presas, "predadores" : predadores};
 	};
 }

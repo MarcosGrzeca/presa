@@ -20,6 +20,6 @@ Bugs:
 - Cálculo da emoção (OK)
 - Comportamento linear para a presa - Feito
 
-- Exibir iteracoes e quantidade de animais, presa e predadores
+- Exibir iteracoes e quantidade de animais, presa e predadores - Feito
 - Maior numero de presas e predadores - Feito
 - Ajustar velocidade de execucao
