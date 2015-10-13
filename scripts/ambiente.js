@@ -29,7 +29,7 @@ var Ambiente = {
 		for (i = 0; i < this.nroLinhas; i++) {
 			html += "<tr>";
 			for (j = 0; j < this.nroColunas; j++) {
-				html += "<td id='field_" + i + "_" + j + "'></td>"; 
+				html += "<td id='field_" + i + "_" + j + "' onclick='alert(" + i + " + " + j + ")'></td>"; 
 			}
 			html += "</tr>";
 		}
