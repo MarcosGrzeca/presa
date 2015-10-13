@@ -130,7 +130,7 @@
 					<span class="algoritmoParado hide">
 						<button type="button" class="btn-default btn-success form-control" id="botaoContinuar" onclick="continuarSimulacao()">Continuar Simulação</button>
 						<br/>
-						<button type="button" class="btn-default form-control" onclick="adicionarAgente()">Adicionar Agente</button>
+						<button type="button" class="btn-default form-control" onclick="abrirPopupAdicionarAgente()">Adicionar Agente</button>
 					</span>
 					<br/>
 					<button type="button" class="btn-default form-control" onclick="voltarParaTelaInicial();">Voltar</button>
@@ -139,6 +139,43 @@
 		</div>
 	</div>
 </div>
+</div><!-- Button trigger modal -->
+<!--<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+  Launch demo modal
+</button>
+-->
+<div class="modal fade" id="modalAdicionarAgente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Adicionar Agente</h4>
+      </div>
+      <div class="modal-body">
+      	<div class="row">
+      		<div class="col-md-4">
+      			<label for="novoAgente">Animal</label>
+		        <select id="novoAgente" name="novoAgente" class="form-control">
+		        	<option value="predador">Predador</option>
+		        	<option value="presa">Presa</option>
+		        </select>
+		    </div>
+		    <div class="col-md-4">
+		    	<label for="novaLinha">Linha</label>
+		        <select id="novaLinha" name="novaLinha" class="form-control"></select>
+		    </div>
+		    <div class="col-md-4">
+		    	<label for="novaColuna">Coluna</label>
+		        <select id="novaColuna" name="novaColuna" class="form-control"></select>
+		    </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+      	<button type="button" class="btn btn-success" onclick="adicionarAgente()">Adicionar Agente</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
 </div>
 <audio src="sons/leao.mp3" id="player"></audio>
 </body>
