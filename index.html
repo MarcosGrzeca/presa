@@ -95,19 +95,19 @@
 				</div>
 			</div>
 		</div>
-		<div id="telaSimulacao" style="display:none; padding-top:60px">
+		<div id="telaSimulacao" style="display:none; padding-top:10px">
 			<div class="row">
 				<div class="col-md-10" id="espacoAmbiente">
 				</div>
-				<div class="col-md-2">
-					<button type="button" class="btn-default btn-primary form-control" id="botaoParar" onclick="pararSimulacao()">Parar Simulação</button>
-					<button type="button" class="btn-default btn-primary form-control hide" id="botaoContinuar" onclick="continuarSimulacao()">Continuar Simulação</button>
+				<div class="col-md-2 well">
+					<button type="button" class="btn-default btn-success form-control" id="botaoParar" onclick="pararSimulacao()">Parar Simulação</button>
+					<button type="button" class="btn-default btn-success form-control hide" id="botaoContinuar" onclick="continuarSimulacao()">Continuar Simulação</button>
 					<br/>
-					<button type="button" class="btn-default btn-primary form-control" onclick="voltarParaTelaInicial();">Voltar</button>
+					<button type="button" class="btn-default btn-success form-control" onclick="voltarParaTelaInicial();">Voltar</button>
 
 				</br>
 				<label for="velocidadeIteracoes" style="white-space:nowrap;">Velocidade:
-					<input type="text" id="velocidadeIteracoes" readonly style="border:0; font-weight:bold;">
+					<input type="text" id="velocidadeIteracoes" readonly style="font-weight:bold;" class="form-control">
 				</label>
 				<div id="slider-velocidade"></div>
 			</div>
