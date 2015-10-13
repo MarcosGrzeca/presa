@@ -5,7 +5,6 @@ body {
 
 .container-fluid {
 	min-height:600px;
-    padding-top:50px;
 }
 
 .bs-callout-info {
@@ -130,7 +129,6 @@ body {
 }
 
 .navbar {
-    border-bottom: #e8e8e8;
     background-image: linear-gradient(to bottom,#e8e8e8 0,#f5f5f5 100%);
 }
 
