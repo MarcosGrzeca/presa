@@ -28,10 +28,10 @@ function Populacao(nroPredadores, nroPresas) {
 		this.createPresa(2, 1);
 		this.createPredador(1, 1);
 		this.createPredador(1, 2);
-		//this.createPredador(3, 2);
-		//this.createPredador(0, 0);
-		//this.createPredador(1, 3);
-		//this.createPredador(3, 3);
+		this.createPredador(3, 2);
+		this.createPredador(0, 0);
+		this.createPredador(1, 3);
+		this.createPredador(3, 3);
 	};
 
 	this.movimentar = function() {
@@ -86,7 +86,6 @@ function Populacao(nroPredadores, nroPresas) {
 			algoritmo.pararSimulacao();
 			alert("Todas as presas foram capturadas");
 		}
-		//debugger;
 	};
 
 	this.createPredador = function(linha, coluna) {

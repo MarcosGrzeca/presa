@@ -160,4 +160,8 @@ function Animal() {
 		}
 		return true;
 	}
+
+	this.getMovimentos = function() {
+		return this.movimentosAnteriores;
+	}
 }
