@@ -128,3 +128,12 @@ body {
 .btn-default {
     text-shadow: none !important;
 }
+
+.navbar {
+    /*border-bottom: none;*/
+    background-image: linear-gradient(to bottom,#e8e8e8 0,#f5f5f5 100%);
+}
+
+.navbar-brand{
+   color: #000 !important;
+}

@@ -5,7 +5,6 @@ function release() {
 }
 
 function iniciar() {
-
 	$("#slider-velocidade").slider({
 		range: "min",
 		min: 1,
@@ -41,20 +40,6 @@ function voltarParaTelaInicial() {
 	algoritmo.pararSimulacao();
 	$("#telaConfiguracao").show();
 	$("#telaSimulacao").hide();
-}
-
-function teste() {
-	var teste = [1, 2, 3, 4, 5];
-	var indice = 0;
-	while (teste.length > 0 && indice < 10) {
-		var random = gerarRandomico(teste.length, 0);
-		console.log(random);
-		console.log(teste);
-		teste.splice(random, 1);
-		console.info(teste);	
-		console.log("TAMANHO " + teste.length);
-		indice++;
-	}
 }
 
 function abrirPopupAdicionarAgente() {
