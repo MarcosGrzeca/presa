@@ -2,14 +2,14 @@
 - Animais devem se movimentar de acordo com o ambiente (considerar velocidade) - Marcos
 - Fuga da presa (Predador e ferromonio)- Marcos
 - Controle de colisão - Feito
-- Cálculo da qualidade e quantidade de movimento - Bruno
-- Capturar presas - Bruno
+- Cálculo da qualidade e quantidade de movimento - Bruno - Feito
+- Capturar presas - Bruno - Feito
 
-- Controle de velocidade
-- Predador mais rapido qdo encontra presa, no máximo por 4 iterações e presa é 8
+- Controle de velocidade - Feito
+- Predador mais rapido qdo encontra presa, no máximo por 4 iterações e presa é 8 - Feito
 
 Bugs:
-- Quando pula 2 casas esta dando erro nas bordas
+- Quando pula 2 casas esta dando erro nas bordas - Corrigido
 - Feromonio esta aparecendo na casa da presa quando esta parada -- Corrigido
 
 
@@ -18,3 +18,5 @@ Bugs:
 - IteracoesCaca - decrementado só uma vez
 - Rastro - Verificar Rastro - OK
 - Cálculo da emoção (OK)
+
+- Comportamento linear para a presa
