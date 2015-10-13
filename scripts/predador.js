@@ -209,7 +209,7 @@ function Predador(numero) {
 				break;
 			}
 		}
-		this.setPosicao(posicoes.linha, posicoes.coluna);
+		return this.setPosicao(posicoes.linha, posicoes.coluna);
 	}
 
 	this.move = function(indice) {
@@ -226,7 +226,7 @@ function Predador(numero) {
 			movimentoRealizado = this.verificarExistenciaRastros(campoPercepcao);
 		}
 		if (!movimentoRealizado) {
-			this.movimentarAleatoriamente();
+			movimentoRealizado = this.movimentarAleatoriamente();
 		}
 		this.passosRealizados++;
 		if (this.passosRealizados < this.getVelocidade()) {

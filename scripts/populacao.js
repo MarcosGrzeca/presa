@@ -38,6 +38,7 @@ function Populacao(nroPredadores, nroPresas) {
 		var mortos = [], status = 0;
 		var animaisNaFila = this.animais;
 		var indice = 0;
+		var temPresa = false;
 		while (animaisNaFila.length > 0) {
 			var animais = $.extend(true, [], animaisNaFila);
 			var animaisNaFila = [];
@@ -56,12 +57,16 @@ function Populacao(nroPredadores, nroPresas) {
 			while (animais.length > 0) {
 				var random = gerarRandomico(animais.length, 0);
 				var animal = animais[random];
+				if (animal instanceof Presa) {
+					temPresa = true;
+				}
 				status = animal.move(indice);
 				if (status == 1) {
 					animaisNaFila.push(animal);
 				} else if (status == -1) { //morre
 					mortos.push(animal);
 				} else {
+					//animal.incrementarIteracao();
 					animal.setPassosRealizados(0);
 				} 
 				animais.splice(random, 1);
@@ -74,7 +79,10 @@ function Populacao(nroPredadores, nroPresas) {
         	Ambiente.clonarMapa();
         	indice++;
 		}
-		//debugger;
+		if (!temPresa) {
+			algoritmo.pararSimulacao();
+			alert("Todas as presas foram capturadas");
+		}
 	};
 
 	this.createPredador = function(linha, coluna) {
