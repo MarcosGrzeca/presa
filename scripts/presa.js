@@ -63,11 +63,11 @@ function Presa(numero) {
 		var livre = false;
 		if (this.modoFuga == false) {
 			if (predadores == 0 && presas > 0) {
+				this.incQualidade(presas-presasEmFuga);
 				if (presasEmFuga > 0) {
 					this.decQualidade(presasEmFuga);
 					this.incIntensidade(presasEmFuga);
 				} else {
-					this.incQualidade(presas-presasEmFuga);
 					livre = true;
 				}
 			} else if (predadores == 1) {
