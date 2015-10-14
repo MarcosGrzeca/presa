@@ -112,7 +112,7 @@ function Presa(numero) {
 			this.modoFuga = false;
 			this.iteracoesFuga = 0;
 		}
-		
+		console.log(this.qualidade + " - " + this.intensidade + " - " + this.getVelocidadeFromEmocao());
 	}
 
 	this.move = function(indice) {
@@ -347,7 +347,7 @@ function Presa(numero) {
 			intens = 1;
 		}
 		var res = Math.sqrt(qualid * intens);
-		return Math.round(res) - 1;
+		return Math.round(res);
 	}
 
 	this.isModoFuga = function() {
