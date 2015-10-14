@@ -10,6 +10,7 @@ Este projeto simula uma ambiente de disputa entre Presas (Zebras) e Predadores (
 
 ##Como testar?
 Para testar a simulação, basta acessar o link [Presa x Predador](http://marcosgrzeca.github.io/presa/) ou leia o QRCode abaixo:
+
 ![QRCode](http://marcosgrzeca.github.io/presa/imagens/qrcode.png)
 
 
