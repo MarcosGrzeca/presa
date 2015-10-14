@@ -7,12 +7,20 @@ function release() {
 function iniciar() {
 	$("#slider-velocidade").slider({
 		range: "min",
-		min: 1,
+		min: 0,
 		max: 100,
-		value: 50,
+		value: 30,
 		slide: function( event, ui ) {
 			$( "#velocidadeIteracoes" ).val( ui.value );
-			algoritmo.setVelocidade(4000 - (ui.value * 40));
+      var v = 0;
+      if (ui.value >= 60) {
+        v = Math.sqrt(40, 2)*10 - Math.sqrt((ui.value - 60), 2)*10;
+      } else if (ui.value >= 40) {
+        v = Math.sqrt(60, 2)*40 - Math.sqrt((ui.value - 40), 2)*45;
+      } else {
+        v = 3000 - (ui.value * 66);
+      }
+			algoritmo.setVelocidade(Math.round(v));
 		}
 	});
 	$( "#velocidadeIteracoes" ).val( $( "#slider-velocidade" ).slider( "value" ) );

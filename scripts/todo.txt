@@ -22,4 +22,4 @@ Bugs:
 
 - Exibir iteracoes e quantidade de animais, presa e predadores - Feito
 - Maior numero de presas e predadores - Feito
-- Ajustar velocidade de execucao
+- Ajustar velocidade de execucao - Feito

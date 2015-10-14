@@ -112,7 +112,6 @@ function Presa(numero) {
 			this.modoFuga = false;
 			this.iteracoesFuga = 0;
 		}
-		console.log(this.qualidade + " - " + this.intensidade + " - " + this.getVelocidadeFromEmocao());
 	}
 
 	this.move = function(indice) {
