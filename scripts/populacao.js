@@ -20,8 +20,7 @@ function Populacao(nroPredadores, nroPresas) {
 			predador.gerarPosicaoAleatoria();
 			this.animais.push(predador);
 			this.contAnimais++;
-		}	
-		//this.gerarPopulacaoTeste();
+		}
 	};
 
 	this.gerarPopulacaoTeste = function() {
@@ -52,29 +51,10 @@ function Populacao(nroPredadores, nroPresas) {
 				} else if (status == -1) { //morre
 					mortos.push(animal);
 				} else {
-					//animal.incrementarIteracao();
 					animal.setPassosRealizados(0);
 				}
 			});
 			
-			/*while (animais.length > 0) {
-				var random = gerarRandomico(animais.length, 0);
-				var animal = animais[random];
-				if (animal instanceof Presa) {
-					temPresa = true;
-				}
-				status = animal.move(indice);
-				if (status == 1) {
-					animaisNaFila.push(animal);
-				} else if (status == -1) { //morre
-					mortos.push(animal);
-				} else {
-					//animal.incrementarIteracao();
-					animal.setPassosRealizados(0);
-				} 
-				animais.splice(random, 1);
-			}
-		*/
 			$.each(mortos, function(key, animal) {
 				animal.morre();
 			});
@@ -84,7 +64,6 @@ function Populacao(nroPredadores, nroPresas) {
 		}
 		if (!temPresa) {
 			algoritmo.pararSimulacao();
-			alert("Todas as presas foram capturadas");
             abrirPopupGrafico();
 		}
 	};

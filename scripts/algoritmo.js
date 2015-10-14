@@ -43,7 +43,7 @@ function Algoritmo() {
             setTimeout("release()", this.velocidade);
         } else if (!this.simulacaoInterrompida) {
             abrirPopupGrafico();
-            alert("O limite de iterações foi atingido.");
+            $('#tituloGrafico').html("O limite de iterações foi atingido.");
         }
     }
 

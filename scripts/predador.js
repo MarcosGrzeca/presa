@@ -175,11 +175,6 @@ function Predador(numero) {
 						movimento = "cima";
 					}
 				}
-				/*if (Predador.animal.isMovimentoValido(posicoes)) {
-					Predador.setPosicao(posicoes.linha, posicoes.coluna, movimento);
-				} else {
-					movimentoRealizado = false;
-				}*/
 				movimentoRealizado = Predador.setPosicao(posicoes.linha, posicoes.coluna, movimento);
 				if (movimentoRealizado) {
 					algoritmo.getPopulacao().getAnimais().forEach(function(animal) {
