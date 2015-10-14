@@ -76,3 +76,61 @@ function adicionarAgente()  {
 		alert('A posição indicada já possui um animal');
 	}
 }
+
+function abrirPopupGrafico() {
+	$('#modalGrafico').modal("show");
+	var numIteracoes = [];
+	for (i = 0; i < algoritmo.interacoes; i++) {
+		numIteracoes.push(i+1);
+	}
+	$('#grafico').highcharts({
+        chart: {
+            type: 'area'
+        },
+        title: {
+            text: 'Resultado'
+        },
+        subtitle: {
+            text: ''
+        },
+        xAxis: {
+            categories: numIteracoes,
+            tickmarkPlacement: 'on',
+            title: {
+                enabled: false
+            }
+        },
+        yAxis: {
+            title: {
+                text: 'Animais'
+            },
+            labels: {
+                formatter: function () {
+                    return this.value / 1000;
+                }
+            }
+        },
+        tooltip: {
+            shared: true,
+            valueSuffix: ''
+        },
+        plotOptions: {
+            area: {
+                stacking: 'normal',
+                lineColor: '#666666',
+                lineWidth: 1,
+                marker: {
+                    lineWidth: 1,
+                    lineColor: '#666666'
+                }
+            }
+        },
+        series: [{
+            name: 'Presas',
+            data: algoritmo.presasIteracoes
+        },{
+            name: 'Predadores',
+            data: algoritmo.predadoresIteracoes
+        }]
+    });
+}

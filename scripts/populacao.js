@@ -85,6 +85,7 @@ function Populacao(nroPredadores, nroPresas) {
 		if (!temPresa) {
 			algoritmo.pararSimulacao();
 			alert("Todas as presas foram capturadas");
+            abrirPopupGrafico();
 		}
 	};
 

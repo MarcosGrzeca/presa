@@ -4,6 +4,8 @@ function Algoritmo() {
     this.populacao;
     this.simulacaoInterrompida = false;
     this.velocidade = 1000;
+    this.presasIteracoes = [];
+    this.predadoresIteracoes = [];
 
     this.getPopulacao = function() {
         return this.populacao;
@@ -34,10 +36,13 @@ function Algoritmo() {
             this.interacoes++;
             $('#iteracoes_qdte').val(this.interacoes);
             var nro = this.populacao.getNroAnimais();
+            this.predadoresIteracoes.push(nro.predadores);
             $('#predadores_qdte').val(nro.predadores);
+            this.presasIteracoes.push(nro.presas);
             $('#presas_qdte').val(nro.presas);
             setTimeout("release()", this.velocidade);
         } else if (!this.simulacaoInterrompida) {
+            abrirPopupGrafico();
             alert("O limite de iterações foi atingido.");
         }
     }

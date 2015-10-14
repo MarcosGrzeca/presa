@@ -134,6 +134,8 @@
 						<button type="button" class="btn-default form-control" onclick="abrirPopupAdicionarAgente()">Adicionar Agente</button>
 					</span>
 					<br/>
+					<button type="button" class="btn-default form-control" onclick="abrirPopupGrafico();">Gráfico</button>
+					<br/>
 					<button type="button" class="btn-default form-control" onclick="voltarParaTelaInicial();">Voltar</button>
 				</br>
 			</div>
@@ -178,6 +180,13 @@
     </div>
   </div>
 </div>
+<div class="modal fade" id="modalGrafico" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+		<div id="grafico" style="height: 400px; margin: 0 auto"></div>
+    </div>
+  </div>
+</div>
 <audio src="sons/leao.mp3" id="player"></audio>
 </body>
 
@@ -198,10 +207,13 @@
 <script type="text/javascript" src="scripts/presa.js"></script>
 <script type="text/javascript" src="scripts/animal.js"></script>
 
+
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
+
 <script type="text/javascript">
 	$(document).ready(function(){
 		
 	});
-
 </script>
 </html>
