@@ -84,6 +84,46 @@ function abrirPopupGrafico() {
 		numIteracoes.push(i+1);
 	}
 	$('#grafico').highcharts({
+        title: {
+            text: 'Resultado',
+            x: -20 //center
+        },
+        subtitle: {
+            text: '',
+            x: -20
+        },
+        xAxis: {
+            categories: numIteracoes
+        },
+        yAxis: {
+            title: {
+                text: 'Quantidade de animais'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            valueSuffix: ''
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        series: [{
+            name: 'Presas',
+            data: algoritmo.presasIteracoes
+        },{
+            name: 'Predadores',
+            data: algoritmo.predadoresIteracoes
+        }]
+    });
+
+	/*.highcharts({
         chart: {
             type: 'area'
         },
@@ -106,7 +146,7 @@ function abrirPopupGrafico() {
             },
             labels: {
                 formatter: function () {
-                    return this.value / 1000;
+                    return this.value;
                 }
             }
         },
@@ -132,5 +172,5 @@ function abrirPopupGrafico() {
             name: 'Predadores',
             data: algoritmo.predadoresIteracoes
         }]
-    });
+    });*/
 }
