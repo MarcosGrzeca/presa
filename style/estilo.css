@@ -58,8 +58,8 @@ body {
 
 .ambiente::after {
   content: "";
-  background: url("../imagens/area.jpg");
-  opacity: 0.5;
+  background: url("../imagens/terra4.jpg");
+  opacity: 0.6;
   top: 0;
   left: 0;
   bottom: 0;
