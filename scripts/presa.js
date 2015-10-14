@@ -338,7 +338,7 @@ function Presa(numero) {
 		8 = 2.8
 		9 = 3
 		*/
-		var qualid = Math.abs(this.qualidade);
+		/*var qualid = Math.abs(this.qualidade);
 		var intens = Math.abs(this.intensidade);
 		if (qualid == 0) {
 			qualid = 1;
@@ -347,6 +347,13 @@ function Presa(numero) {
 			intens = 1;
 		}
 		var res = Math.sqrt(qualid * intens);
+
+		(qualidade  * -1) + (intesidade)
+		*/
+		var res = ((this.qualidade * -1) + this.intensidade) /2;
+		if (res < 1) {
+			res = 1;
+		}
 		return Math.round(res);
 	}
 

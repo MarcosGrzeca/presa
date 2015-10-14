@@ -141,7 +141,7 @@ function Animal() {
 	}
 
 	this.addMovimentoAnterior = function(posicao, movimento) {
-		if (this.movimentosAnteriores.length > 9) {
+		if (this.movimentosAnteriores.length > 19) {
 			this.movimentosAnteriores.shift();
 		}
 		this.movimentosAnteriores.push({"posicao" : posicao, "movimento" : movimento});

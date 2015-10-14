@@ -224,7 +224,7 @@ function Predador(numero) {
 
 		var movimentoRealizado = false;
 		var todosMovimentosIguais = true;
-		if (this.animal.getMovimentos().length == 10) {
+		if (this.animal.getMovimentos().length == 20) {
 			var movimentoAnterior = this.animal.getMovimentos()[0].movimento;
 			this.animal.getMovimentos().forEach(function(movimento) {
 				if (movimento.movimento != movimentoAnterior) {
