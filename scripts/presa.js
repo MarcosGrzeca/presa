@@ -59,6 +59,62 @@ function Presa(numero) {
 		}, 1000);
 	}
 
+	this.calculaEmocao = function(predadores, presas, presasEmFuga) {
+		var livre = false;
+		if (this.modoFuga == false) {
+			if (predadores == 0 && presas > 0) {
+				if (presasEmFuga > 0) {
+					this.decQualidade(presasEmFuga);
+					this.incIntensidade(presasEmFuga);
+				} else {
+					this.incQualidade(presas-presasEmFuga);
+					livre = true;
+				}
+			} else if (predadores == 1) {
+				this.decQualidade(2);
+				this.incIntensidade(2);
+			} else if (predadores > 1) {
+				this.decQualidade(3);
+				this.incIntensidade(3);
+			} else if (presas == 0) {
+				livre = true;
+			}
+		} else {
+			if (predadores == 0 && presas == 0) {
+				livre = true;
+			} else if (presas > 0) {
+				if (presasEmFuga == 0) {
+					livre = true;
+				}
+			} else if (predadores == 1) { // se estiver em modoFuga deve decrementar qualidade senao fica sempre em -2????
+				this.decQualidade(2);
+				this.incIntensidade(2);
+			} else if (predadores > 1) {
+				this.decQualidade(3);
+				this.incIntensidade(3);
+			}
+		}
+		if (livre) {
+			this.iteracoesLivreCount++;
+		} else {
+			this.iteracoesLivreCount = 0;
+		}
+		if (this.iteracoesLivreCount > this.iteracoesLivre) {
+			if (this.getQualidade() < 1) {
+				this.incQualidade(1);
+			}
+			this.decIntensidade(1);
+		}
+
+		if (this.qualidade < 0) {
+			this.modoFuga = true;
+		} else {
+			this.modoFuga = false;
+			this.iteracoesFuga = 0;
+		}
+		
+	}
+
 	this.move = function(indice) {
 		if (this.modoFuga && indice == 0) {
 			this.iteracoesFuga++;
@@ -82,59 +138,8 @@ function Presa(numero) {
 			this.presaMorre();
 			return -1;
 		} else {
-			var livre = false;
-			if (this.modoFuga == false) {
-				if (predadores == 0 && presas > 0) {
-					if (presasEmFuga > 0) {
-						this.decQualidade(presasEmFuga);
-						this.incIntensidade(presasEmFuga);
-					} else {
-						this.incQualidade(presas-presasEmFuga);
-						livre = true;
-					}
-				} else if (predadores == 1) {
-					this.decQualidade(2);
-					this.incIntensidade(2);
-				} else if (predadores > 1) {
-					this.decQualidade(3);
-					this.incIntensidade(3);
-				} else if (presas == 0) {
-					livre = true;
-				}
-			} else {
-				if (predadores == 0 && presas == 0) {
-					livre = true;
-				} else if (presas > 0) {
-					if (presasEmFuga == 0) {
-						livre = true;
-					}
-				} else if (predadores == 1) { // se estiver em modoFuga deve decrementar qualidade senao fica sempre em -2????
-					this.decQualidade(2);
-					this.incIntensidade(2);
-				} else if (predadores > 1) {
-					this.decQualidade(3);
-					this.incIntensidade(3);
-				}
-			}
-			if (livre) {
-				this.iteracoesLivreCount++;
-			} else {
-				this.iteracoesLivreCount = 0;
-			}
-			if (this.iteracoesLivreCount > this.iteracoesLivre) {
-				if (this.getQualidade() < 1) {
-					this.incQualidade(1);
-				}
-				this.decIntensidade(1);
-			}
+			this.calculaEmocao(predadores, presas, presasEmFuga);
 
-			if (this.qualidade < 0) {
-				this.modoFuga = true;
-			} else {
-				this.modoFuga = false;
-				this.iteracoesFuga = 0;
-			}
-			
 			var movimentoRealizado = false;
 			if (predadores > 0) {
 				(function(Presa) {
