@@ -5,6 +5,13 @@ function release() {
 }
 
 function iniciar() {
+	var ambientet = parseInt($("#nroLinhas").val()) * parseInt($("#nroColunas").val());
+	var somapp = parseInt($("#nroPredadores").val()) + parseInt($("#nroPresas").val());
+	if (ambientet <= somapp) {
+        alert('Número de presas e predadores maior que tamnho do ambiente');
+        return;
+    }
+
 	$("#slider-velocidade").slider({
 		range: "min",
 		min: 0,
