@@ -154,7 +154,7 @@ function Predador(numero) {
 				movimentoRealizado = true;
 				var posicaoMovimento = Predador.movimentarPredador(keyRastroMaior);
 				var movimento = posicaoMovimento.movimento;
-				var posicoes = posicaoMovimento.posicoes;	
+				var posicoes = posicaoMovimento.posicoes;
 				movimentoRealizado = Predador.setPosicao(posicoes.linha, posicoes.coluna, movimento);
 				if (movimentoRealizado) {
 					algoritmo.getPopulacao().getAnimais().forEach(function(animal) {

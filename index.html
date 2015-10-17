@@ -71,7 +71,7 @@
 					</select>
 				</div>
 				<div class="col-md-2">
-					<label>Duração do rastro</label>
+					<label>Duração do Rastro</label>
 					<select id="duracaoRastro" class="form-control">
 						<option>1</option>
 						<option>2</option>
@@ -86,12 +86,22 @@
 					</select>
 				</div>
 				<div class="col-md-2">
-					<label>Comportamento das presas</label>
+					<label>Comportamento das Presas</label>
 					<select id="comportamentoPresas" class="form-control">
 						<option value="0" selected="selected">Aleatório</option>
 						<option value="1">Linear</option>
 					</select>
 				</div>	
+			</div>
+			<br/>
+			<div class="row">
+				<div class="col-md-4">
+					<label>Motivação das Presas</label>
+					<select id="motivacaoPresas" class="form-control">
+						<option value="C" selected="selected">Com representação de estado emocional</option>
+						<option value="S">Sem representação de estado emocional</option>
+					</select>
+				</div>
 			</div>
 			<br/>
 			<div class="row">
@@ -197,7 +207,6 @@
 </div>
 <audio src="sons/leao.mp3" id="player"></audio>
 </body>
-
 
 <!-- libs -->
 <script type="text/javascript" src="libs/jquery-1.11.3.min.js"></script>

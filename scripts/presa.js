@@ -94,6 +94,10 @@ function Presa(numero) {
 	}
 
 	this.getVelocidadeFromEmocao = function() {
+		//Opção para não considerar as emoções da presa
+		if ($("#motivacaoPresas").val() == "S") {
+			return 1;
+		}
 		/*
 		1 = 1
 		2 = 1.4
@@ -267,7 +271,9 @@ function Presa(numero) {
 			this.presaMorre();
 			return -1;
 		} else {
-			this.calcularEmocao(predadores, presas, presasEmFuga);
+			if ($("#motivacaoPresas").val() != "S") {
+				this.calcularEmocao(predadores, presas, presasEmFuga);
+			}
 
 			var movimentoRealizado = false;
 			if (predadores > 0) {
