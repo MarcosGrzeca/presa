@@ -23,3 +23,6 @@ Bugs:
 - Exibir iteracoes e quantidade de animais, presa e predadores - Feito
 - Maior numero de presas e predadores - Feito
 - Ajustar velocidade de execucao - Feito
+
+
+--Versao sem emoção (Label: Opção Motivação (Com/Sem representação de estado emocional ))

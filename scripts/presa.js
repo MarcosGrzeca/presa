@@ -20,6 +20,20 @@ function Presa(numero) {
 		return this.animal.posicao;
 	}
 
+	this.setPosicao = function(linha, coluna, movimento) {
+		if (!movimento) {
+			movimento = "";
+		}
+		if (Ambiente.getPosicao(linha, coluna) == 0) {
+			Ambiente.limparPosicao(this.getPosicao().linha, this.getPosicao().coluna);
+			this.animal.setPosicao(linha, coluna, movimento);
+			Ambiente.setPosicao(this);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	this.getNumero = function() {
 		return this.numero;
 	}
@@ -42,6 +56,76 @@ function Presa(numero) {
 	this.setDuracaoVelocidade = function(duracaoVelocidade) {
 		this.animal.setDuracaoVelocidade(duracaoVelocidade);
 	}
+
+	this.getQualidade = function() {
+		return this.qualidade;
+	}
+
+	this.incQualidade = function(n) {
+		this.qualidade += n;
+		if (this.qualidade > 3) {
+			this.qualidade = 3;
+		}
+	}
+
+	this.decQualidade = function(n) {
+		this.qualidade -= n;
+		if (this.qualidade < -3) {
+			this.qualidade = -3;
+		}
+	}
+
+	this.getIntensidade = function() {
+		return this.intensidade;
+	}
+
+	this.incIntensidade = function(n) {
+		this.intensidade += n;
+		if (this.intensidade > 3) {
+			this.intensidade = 3;
+		}
+	}
+
+	this.decIntensidade = function(n) {
+		this.intensidade -= n;
+		if (this.intensidade < 0) {
+			this.intensidade = 0;
+		}
+	}
+
+	this.getVelocidadeFromEmocao = function() {
+		/*
+		1 = 1
+		2 = 1.4
+		3 = 1.7
+		4 = 2
+		6 = 2.4
+		8 = 2.8
+		9 = 3
+		*/
+		/*var qualid = Math.abs(this.qualidade);
+		var intens = Math.abs(this.intensidade);
+		if (qualid == 0) {
+			qualid = 1;
+		}
+		if (intens == 0) {
+			intens = 1;
+		}
+		var res = Math.sqrt(qualid * intens);
+
+		(qualidade  * -1) + (intesidade)
+		*/
+		var res = ((this.qualidade * -1) + this.intensidade) /2;
+		if (res < 1) {
+			res = 1;
+		}
+		return Math.round(res);
+	}
+
+	this.isModoFuga = function() {
+		return this.modoFuga;
+	}
+
 	this.setPassosRealizados = function(passosRealizados) {
 		this.passosRealizados = passosRealizados;
 	}
@@ -59,7 +143,7 @@ function Presa(numero) {
 		}, 1000);
 	}
 
-	this.calculaEmocao = function(predadores, presas, presasEmFuga) {
+	this.calcularEmocao = function(predadores, presas, presasEmFuga) {
 		var livre = false;
 		if (this.modoFuga == false) {
 			if (predadores == 0 && presas > 0) {
@@ -114,6 +198,52 @@ function Presa(numero) {
 		}
 	}
 
+	this.movimentarPresa = function(key) {
+		var movimento = key;
+		if (key == "cima") {
+			posicoes = this.animal.moverParaBaixo();
+		} else if (key == "baixo") {
+			posicoes = this.animal.moverParaCima();
+		} else if (key == "direita") {
+			posicoes = this.animal.moverParaEsquerda();
+		} else if (key == "esquerda") {
+			posicoes = this.animal.moverParaDireita();
+		} else if (key == "esquerdaInferior") {
+			if (gerarRandomico(2, 1) == 2) {
+				posicoes = this.animal.moverParaDireita();
+				movimento = "direita";
+			} else {
+				posicoes = this.animal.moverParaCima();
+				movimento = "cima";
+			}
+		} else if (key == "direitaInferior") {
+			if (gerarRandomico(2, 1) == 2) {
+				posicoes = this.animal.moverParaEsquerda();
+				movimento = "esquerda";
+			} else {
+				posicoes = this.animal.moverParaCima();
+				movimento = "cima";
+			}
+		} else if (key == "direitaSuperior") {
+			if (gerarRandomico(2, 1) == 2) {
+				posicoes = this.animal.moverParaEsquerda();
+				movimento = "esquerda";
+			} else {
+				posicoes = this.animal.moverParaBaixo();
+				movimento = "baixo";
+			}
+		} else if (key == "esquerdaSuperior") {
+			if (gerarRandomico(2, 1) == 2) {
+				posicoes = this.animal.moverParaDireita();
+				movimento = "direita";
+			} else {
+				posicoes = this.animal.moverParaBaixo();
+				movimento = "baixo";
+			}
+		}
+		return {"posicoes": posicoes, "movimento": movimento}
+	}
+
 	this.move = function(indice) {
 		if (this.modoFuga && indice == 0) {
 			this.iteracoesFuga++;
@@ -137,7 +267,7 @@ function Presa(numero) {
 			this.presaMorre();
 			return -1;
 		} else {
-			this.calculaEmocao(predadores, presas, presasEmFuga);
+			this.calcularEmocao(predadores, presas, presasEmFuga);
 
 			var movimentoRealizado = false;
 			if (predadores > 0) {
@@ -145,67 +275,21 @@ function Presa(numero) {
 					$.each(campoPercepcao, function(key, value){
 						if (!movimentoRealizado) {		
 							if (value.objeto instanceof Predador) {
-								var movimento = key;
-								if (key == "cima") {
-									posicoes = Presa.animal.moverParaBaixo();
-								} else if (key == "baixo") {
-									posicoes = Presa.animal.moverParaCima();
-								} else if (key == "direita") {
-									posicoes = Presa.animal.moverParaEsquerda();
-								} else if (key == "esquerda") {
-									posicoes = Presa.animal.moverParaDireita();
-								} else if (key == "esquerdaInferior") {
-									if (gerarRandomico(2, 1) == 2) {
-										posicoes = Presa.animal.moverParaDireita();
-										movimento = "direita";
-									} else {
-										posicoes = Presa.animal.moverParaCima();
-										movimento = "cima";
-									}
-								} else if (key == "direitaInferior") {
-									if (gerarRandomico(2, 1) == 2) {
-										posicoes = Presa.animal.moverParaEsquerda();
-										movimento = "esquerda";
-									} else {
-										posicoes = Presa.animal.moverParaCima();
-										movimento = "cima";
-									}
-								} else if (key == "direitaSuperior") {
-									if (gerarRandomico(2, 1) == 2) {
-										posicoes = Presa.animal.moverParaEsquerda();
-										movimento = "esquerda";
-									} else {
-										posicoes = Presa.animal.moverParaBaixo();
-										movimento = "baixo";
-									}
-								} else if (key == "esquerdaSuperior") {
-									if (gerarRandomico(2, 1) == 2) {
-										posicoes = Presa.animal.moverParaDireita();
-										movimento = "direita";
-									} else {
-										posicoes = Presa.animal.moverParaBaixo();
-										movimento = "baixo";
-									}
-								}
+								var movimentacao = Presa.movimentarPresa(key);
+								var posicoes = movimentacao.posicoes;
+								var movimento = movimentacao.movimento;
 								movimentoRealizado = Presa.setPosicao(posicoes.linha, posicoes.coluna, movimento);
 							}
 						}
 					});
 					if (!movimentoRealizado) {
-						posicoes = Presa.animal.moverParaBaixo();
-						movimentoRealizado = Presa.setPosicao(posicoes.linha, posicoes.coluna, "baixo");
-					}
-					if (!movimentoRealizado) {
-						posicoes = Presa.animal.moverParaCima();
-						movimentoRealizado = Presa.setPosicao(posicoes.linha, posicoes.coluna, "cima");
-					}
-					if (!movimentoRealizado) {
-						posicoes = Presa.animal.moverParaDireita();
-						movimentoRealizado = Presa.setPosicao(posicoes.linha, posicoes.coluna, "direita");
-					}
-					if (!movimentoRealizado) {
-						posicoes = Presa.animal.moverParaEsquerda();
-						movimentoRealizado = Presa.setPosicao(posicoes.linha, posicoes.coluna, "esquerda");
+						var indice = 0;
+						while (indice < 10 && !movimentoRealizado) {
+							movimentacao = Presa.getRandomPosicao();
+							posicoes = movimentacao.posicao;
+							movimento = movimentacao.movimento;
+							movimentoRealizado = Presa.setPosicao(posicoes.linha, posicoes.coluna, movimento);
+						}
 					}
 				})(this);
 			} else {
@@ -250,20 +334,6 @@ function Presa(numero) {
 		}
 	}
 
-	this.setPosicao = function(linha, coluna, movimento) {
-		if (!movimento) {
-			movimento = "";
-		}
-		if (Ambiente.getPosicao(linha, coluna) == 0) {
-			Ambiente.limparPosicao(this.getPosicao().linha, this.getPosicao().coluna);
-			this.animal.setPosicao(linha, coluna, movimento);
-			Ambiente.setPosicao(this);
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	this.getRandomPosicao = function() {
 		var random = gerarRandomico(4, 1);
 		return this.getMovimento(random);
@@ -289,74 +359,5 @@ function Presa(numero) {
 
 	this.morre = function() {
 		Ambiente.removerAnimal(this);
-	}
-
-	this.getQualidade = function() {
-		return this.qualidade;
-	}
-
-	this.getIntensidade = function() {
-		return this.intensidade;
-	}
-
-	this.incQualidade = function(n) {
-		this.qualidade += n;
-		if (this.qualidade > 3) {
-			this.qualidade = 3;
-		}
-	}
-
-	this.decQualidade = function(n) {
-		this.qualidade -= n;
-		if (this.qualidade < -3) {
-			this.qualidade = -3;
-		}
-	}
-
-	this.incIntensidade = function(n) {
-		this.intensidade += n;
-		if (this.intensidade > 3) {
-			this.intensidade = 3;
-		}
-	}
-
-	this.decIntensidade = function(n) {
-		this.intensidade -= n;
-		if (this.intensidade < 0) {
-			this.intensidade = 0;
-		}
-	}
-
-	this.getVelocidadeFromEmocao = function() {
-		/*
-		1 = 1
-		2 = 1.4
-		3 = 1.7
-		4 = 2
-		6 = 2.4
-		8 = 2.8
-		9 = 3
-		*/
-		/*var qualid = Math.abs(this.qualidade);
-		var intens = Math.abs(this.intensidade);
-		if (qualid == 0) {
-			qualid = 1;
-		}
-		if (intens == 0) {
-			intens = 1;
-		}
-		var res = Math.sqrt(qualid * intens);
-
-		(qualidade  * -1) + (intesidade)
-		*/
-		var res = ((this.qualidade * -1) + this.intensidade) /2;
-		if (res < 1) {
-			res = 1;
-		}
-		return Math.round(res);
-	}
-
-	this.isModoFuga = function() {
-		return this.modoFuga;
 	}
 }

@@ -14,6 +14,20 @@ function Predador(numero) {
 		return this.animal.posicao;
 	}
 
+	this.setPosicao = function(linha, coluna, movimento) {
+		if (!movimento) {
+			movimento = "";
+		}
+		if (Ambiente.getPosicao(linha, coluna) == 0) {
+			Ambiente.limparPosicao(this.getPosicao().linha, this.getPosicao().coluna);
+			this.animal.setPosicao(linha, coluna, movimento);
+			Ambiente.setPosicao(this);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	this.getNumero = function() {
 		return this.numero;
 	}
@@ -38,6 +52,52 @@ function Predador(numero) {
 		this.passosRealizados = passosRealizados;
 	}
 
+	this.movimentarPredador = function(keyMovimento) {
+		var movimento = keyMovimento;
+		if (keyMovimento == "baixo") {
+			posicoes = this.animal.moverParaBaixo();
+		} else if (keyMovimento == "cima") {
+			posicoes = this.animal.moverParaCima();
+		} else if (keyMovimento == "esquerda") {
+			posicoes = this.animal.moverParaEsquerda();
+		} else if (keyMovimento == "direita") {
+			posicoes = this.animal.moverParaDireita();
+		} else if (keyMovimento == "direitaInferior") {
+			if (gerarRandomico(2, 1) == 2) {
+				posicoes = this.animal.moverParaDireita();
+				movimento = "direita";
+			} else {
+				posicoes = this.animal.moverParaBaixo();
+				movimento = "baixo";
+			}
+		} else if (keyMovimento == "esquerdaInferior") {
+			if (gerarRandomico(2, 1) == 2) {
+				posicoes = this.animal.moverParaEsquerda();
+				movimento = "esquerda";
+			} else {
+				posicoes = this.animal.moverParaBaixo();
+				movimento = "baixo";
+			}
+		} else if (keyMovimento == "direitaSuperior") {
+			if (gerarRandomico(2, 1) == 2) {
+				posicoes = this.animal.moverParaDireita();
+				movimento = "direita";
+			} else {
+				posicoes = this.animal.moverParaCima();
+				movimento = "cima";
+			}
+		} else if (keyMovimento == "esquerdaSuperior") {
+			if (gerarRandomico(2, 1) == 2) {
+				posicoes = this.animal.moverParaEsquerda();
+				movimento = "esquerda";
+			} else {
+				posicoes = this.animal.moverParaCima();
+				movimento = "cima";
+			}
+		}
+		return {"posicoes": posicoes, "movimento": movimento}
+	}
+
 	this.verificarExistenciaPresas = function(campoPercepcao) {
 		var movimentoRealizado = false;
 		(function(Predador) {
@@ -47,48 +107,9 @@ function Predador(numero) {
 				if (presa.objeto instanceof Presa && posicoes == null) {
 					Predador.setVelocidade(presa.objeto.getVelocidade());
 					movimentoRealizado = true;
-					movimento = key;
-					if (key == "baixo") {
-						posicoes = Predador.animal.moverParaBaixo();
-					} else if (key == "cima") {
-						posicoes = Predador.animal.moverParaCima();
-					} else if (key == "esquerda") {
-						posicoes = Predador.animal.moverParaEsquerda();
-					} else if (key == "direita") {
-						posicoes = Predador.animal.moverParaDireita();
-					} else if (key == "direitaInferior") {
-						if (gerarRandomico(2, 1) == 2) {
-							posicoes = Predador.animal.moverParaDireita();
-							movimento = "direita";
-						} else {
-							posicoes = Predador.animal.moverParaBaixo();
-							movimento = "baixo";
-						}
-					} else if (key == "esquerdaInferior") {
-						if (gerarRandomico(2, 1) == 2) {
-							posicoes = Predador.animal.moverParaEsquerda();
-							movimento = "esquerda";
-						} else {
-							posicoes = Predador.animal.moverParaBaixo();
-							movimento = "baixo";
-						}
-					} else if (key == "direitaSuperior") {
-						if (gerarRandomico(2, 1) == 2) {
-							posicoes = Predador.animal.moverParaDireita();
-							movimento = "direita";
-						} else {
-							posicoes = Predador.animal.moverParaCima();
-							movimento = "cima";
-						}
-					} else if (key == "esquerdaSuperior") {
-						if (gerarRandomico(2, 1) == 2) {
-							posicoes = Predador.animal.moverParaEsquerda();
-							movimento = "esquerda";
-						} else {
-							posicoes = Predador.animal.moverParaCima();
-							movimento = "cima";
-						}
-					}
+					var posicaoMovimento = Predador.movimentarPredador(key);
+					movimento = posicaoMovimento.movimento;
+					posicoes = posicaoMovimento.posicoes;
 					if (!Predador.modoCaca) {
 						Predador.iteracoesCaca = 0;
 					}
@@ -122,59 +143,18 @@ function Predador(numero) {
 			var numeroPredador = -1;
 				
 			$.each(campoPercepcao, function(key, value){
-				var attrRastro = Ambiente.getAttrAnterior(value.posicao, "rastro_intensidade");
-				var numeroPredador = Ambiente.getAttrAnterior(value.posicao, "numero_predador");
+				var attrRastro = Ambiente.getAtributoDaPosicao(value.posicao, "rastro_intensidade");
+				var numeroPredador = Ambiente.getAtributoDaPosicao(value.posicao, "numero_predador");
 				if (attrRastro > maiorRastro && (numeroPredador != Predador.numero)) {
 					maiorRastro = attrRastro;
 					keyRastroMaior = key;
 				}
 			});
-
 			if (maiorRastro > 0) {
 				movimentoRealizado = true;
-				var posicoes = null;
-				var movimento = keyRastroMaior;
-				if (keyRastroMaior == "baixo") {
-					posicoes = Predador.animal.moverParaBaixo();
-				} else if (keyRastroMaior == "cima") {
-					posicoes = Predador.animal.moverParaCima();
-				} else if (keyRastroMaior == "esquerda") {
-					posicoes = Predador.animal.moverParaEsquerda();
-				} else if (keyRastroMaior == "direita") {
-					posicoes = Predador.animal.moverParaDireita();
-				} else if (keyRastroMaior == "direitaInferior") {
-					if (gerarRandomico(2, 1) == 2) {
-						posicoes = Predador.animal.moverParaDireita();
-						movimento = "direita";
-					} else {
-						posicoes = Predador.animal.moverParaBaixo();
-						movimento = "baixo";
-					}
-				} else if (keyRastroMaior == "esquerdaInferior") {
-					if (gerarRandomico(2, 1) == 2) {
-						posicoes = Predador.animal.moverParaEsquerda();
-						movimento = "esquerda";
-					} else {
-						posicoes = Predador.animal.moverParaBaixo();
-						movimento = "baixo";
-					}
-				} else if (keyRastroMaior == "direitaSuperior") {
-					if (gerarRandomico(2, 1) == 2) {
-						posicoes = Predador.animal.moverParaDireita();
-						movimento = "direita";
-					} else {
-						posicoes = Predador.animal.moverParaCima();
-						movimento = "cima";
-					}
-				} else if (keyRastroMaior == "esquerdaSuperior") {
-					if (gerarRandomico(2, 1) == 2) {
-						posicoes = Predador.animal.moverParaEsquerda();
-						movimento = "esquerda";
-					} else {
-						posicoes = Predador.animal.moverParaCima();
-						movimento = "cima";
-					}
-				}
+				var posicaoMovimento = Predador.movimentarPredador(keyRastroMaior);
+				var movimento = posicaoMovimento.movimento;
+				var posicoes = posicaoMovimento.posicoes;	
 				movimentoRealizado = Predador.setPosicao(posicoes.linha, posicoes.coluna, movimento);
 				if (movimentoRealizado) {
 					algoritmo.getPopulacao().getAnimais().forEach(function(animal) {
@@ -218,6 +198,9 @@ function Predador(numero) {
 		}
 
 		var movimentoRealizado = false;
+		/* 
+			Impedir que o Predador realize 20 vezes o mesmo movimento, evitando "DeadLocks"
+		*/
 		var todosMovimentosIguais = true;
 		if (this.animal.getMovimentos().length == 20) {
 			var movimentoAnterior = this.animal.getMovimentos()[0].movimento;
@@ -246,25 +229,14 @@ function Predador(numero) {
 		if (!movimentoRealizado) {
 			movimentoRealizado = this.movimentarAleatoriamente();
 		}
+		/*
+			Quando o Predador ainda possui movimentos que devem ser realizados dentro da iteração, é retornado o valor 1
+		*/
 		this.passosRealizados++;
 		if (this.passosRealizados < this.getVelocidade()) {
 			return 1;
 		} else {
 			return 0;
-		}
-	}
-
-	this.setPosicao = function(linha, coluna, movimento) {
-		if (!movimento) {
-			movimento = "";
-		}
-		if (Ambiente.getPosicao(linha, coluna) == 0) {
-			Ambiente.limparPosicao(this.getPosicao().linha, this.getPosicao().coluna);
-			this.animal.setPosicao(linha, coluna, movimento);
-			Ambiente.setPosicao(this);
-			return true;
-		} else {
-			return false;
 		}
 	}
 }

@@ -1,42 +1,55 @@
 var algoritmo;
 
-function release() {
-	algoritmo.release();
+function iniciar() {
+  //Validação para verificar se número de presas e predadores não é maior que o ambiente
+  var ambientet = parseInt($("#nroLinhas").val()) * parseInt($("#nroColunas").val());
+  var somapp = parseInt($("#nroPredadores").val()) + parseInt($("#nroPresas").val());
+  if (ambientet <= somapp) {
+    alert('Número de presas e predadores maior que tamnho do ambiente');
+    return;
+  }
+  
+  //Botão de controle de velocidade de execução
+  $("#slider-velocidade").slider({
+    range: "min",
+    min: 0,
+    max: 100,
+    value: 30,
+    slide: function( event, ui ) {
+      $("#velocidadeIteracoes").val(ui.value);
+      calcularVelocidadeSimulacao(ui.value);
+    } 
+  });
+  $("#velocidadeIteracoes").val($("#slider-velocidade").slider("value"));
+
+  ocultarTelaConfiguracoes();
+
+  //Início da simulação
+  algoritmo = new Algoritmo();
+  algoritmo.simular();
 }
 
-function iniciar() {
-	var ambientet = parseInt($("#nroLinhas").val()) * parseInt($("#nroColunas").val());
-	var somapp = parseInt($("#nroPredadores").val()) + parseInt($("#nroPresas").val());
-	if (ambientet <= somapp) {
-        alert('Número de presas e predadores maior que tamnho do ambiente');
-        return;
-    }
+function ocultarTelaConfiguracoes() {
+  $("#telaConfiguracao").hide();
+  $("#telaSimulacao").show();
+}
 
-	$("#slider-velocidade").slider({
-		range: "min",
-		min: 0,
-		max: 100,
-		value: 30,
-		slide: function( event, ui ) {
-			$( "#velocidadeIteracoes" ).val( ui.value );
-      var v = 0;
-      if (ui.value >= 60) {
-        v = Math.sqrt(40, 2)*10 - Math.sqrt((ui.value - 60), 2)*10;
-      } else if (ui.value >= 40) {
-        v = Math.sqrt(60, 2)*40 - Math.sqrt((ui.value - 40), 2)*45;
-      } else {
-        v = 3000 - (ui.value * 66);
-      }
-			algoritmo.setVelocidade(Math.round(v));
-		}
-	});
-	$( "#velocidadeIteracoes" ).val( $( "#slider-velocidade" ).slider( "value" ) );
+function exibirTelaConfiguracoes() {
+  algoritmo.pararSimulacao();
+  $("#telaConfiguracao").show();
+  $("#telaSimulacao").hide();
+}
 
-	$("#telaConfiguracao").hide();
-	$("#telaSimulacao").show();
-
-	algoritmo = new Algoritmo();
-	algoritmo.simular();
+function calcularVelocidadeSimulacao(velocidade) {
+  var v = 0;
+  if (velocidade >= 60) {
+    v = Math.sqrt(40, 2)*10 - Math.sqrt((velocidade - 60), 2)*10;
+  } else if (velocidade >= 40) {
+    v = Math.sqrt(60, 2)*40 - Math.sqrt((velocidade - 40), 2)*45;
+  } else {
+    v = 3000 - (velocidade * 66);
+  }
+  algoritmo.setVelocidade(Math.round(v));
 }
 
 function continuarSimulacao() {
@@ -51,28 +64,22 @@ function pararSimulacao() {
 	$(".algoritmoParado").removeClass("hide");				
 }
 
-function voltarParaTelaInicial() {
-	algoritmo.pararSimulacao();
-	$("#telaConfiguracao").show();
-	$("#telaSimulacao").hide();
-}
-
 function abrirPopupAdicionarAgente() {
 	$('#modalAdicionarAgente').modal("show").on('shown.bs.modal', function (e) {
-  		var html = "";
-  		for (i = 1; i <= $("#nroLinhas").val(); i++) {
-  			html += "<option value='" + (i -1) + "'>" + i + "</option>";
-  		}
-  		$("#novaLinha").html(html);
-  		$("#novaLinha").val(0);
+    var html = "";
+    for (i = 1; i <= $("#nroLinhas").val(); i++) {
+     html += "<option value='" + (i -1) + "'>" + i + "</option>";
+   }
+   $("#novaLinha").html(html);
+   $("#novaLinha").val(0);
 
-  		var html = "";
-  		for (i = 1; i <= $("#nroColunas").val(); i++) {
-  			html += "<option value='" + (i -1) + "'>" + i + "</option>";
-  		}
-  		$("#novaColuna").html(html);
-  		$("#novaColuna").val(0);
-	})
+   var html = "";
+   for (i = 1; i <= $("#nroColunas").val(); i++) {
+     html += "<option value='" + (i -1) + "'>" + i + "</option>";
+   }
+   $("#novaColuna").html(html);
+   $("#novaColuna").val(0);
+ })
 }
 
 function adicionarAgente()  {
@@ -95,47 +102,50 @@ function adicionarAgente()  {
 function abrirPopupGrafico() {
 	$('#modalGrafico').modal("show");
 	var numIteracoes = [];
-	for (i = 0; i < algoritmo.interacoes; i++) {
+	for (i = 0; i < algoritmo.iteracoes; i++) {
 		numIteracoes.push(i+1);
 	}
 	$('#grafico').highcharts({
+    title: {
+      text: 'Resultado',
+        x: -20 //center
+      },
+      subtitle: {
+        text: '',
+        x: -20
+      },
+      xAxis: {
+        categories: numIteracoes
+      },
+      yAxis: {
         title: {
-            text: 'Resultado',
-            x: -20 //center
+          text: 'Quantidade de animais'
         },
-        subtitle: {
-            text: '',
-            x: -20
-        },
-        xAxis: {
-            categories: numIteracoes
-        },
-        yAxis: {
-            title: {
-                text: 'Quantidade de animais'
-            },
-            plotLines: [{
-                value: 0,
-                width: 1,
-                color: '#808080'
-            }]
-        },
-        tooltip: {
-            valueSuffix: ''
-        },
-        legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'middle',
-            borderWidth: 0
-        },
-        series: [{
-            name: 'Presas',
-            data: algoritmo.presasIteracoes
-        },{
-            name: 'Predadores',
-            data: algoritmo.predadoresIteracoes
+        plotLines: [{
+          value: 0,
+          width: 1,
+          color: '#808080'
         }]
-    });
+      },
+      tooltip: {
+        valueSuffix: ''
+      },
+      legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'middle',
+        borderWidth: 0
+      },
+      series: [{
+        name: 'Presas',
+        data: algoritmo.presasIteracoes
+      },{
+        name: 'Predadores',
+        data: algoritmo.predadoresIteracoes
+      }]
+  });
+}
 
+function gerarRandomico(limiteSuperior, limiteInferior) {
+  return Math.floor((Math.random() * limiteSuperior) + limiteInferior);
 }

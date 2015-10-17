@@ -23,7 +23,7 @@ var Ambiente = {
 	},
 
 	desenhar: function(idCampo) {
-		this.idCampoTela = idCampo;		
+		this.idCampoTela = idCampo;
 		this.inicializarMatriz();
 		var html = "<table class='ambiente'>";
 		for (i = 0; i < this.nroLinhas; i++) {
@@ -56,21 +56,26 @@ var Ambiente = {
 		return this.mapa[linha][coluna];
 	},
 
-	getPosicaoObjeto: function(objeto) {
-		return this.mapa[objeto.linha][objeto.coluna];
-	},
-
-	getPosicaoObjetoAnterior: function(objeto) {
-		return this.mapaAnterior[objeto.linha][objeto.coluna];
-	},
-
-	getAttrAnterior: function(objeto, nomeAttr) {
-		return $("#field_" + objeto.linha + "_" + objeto.coluna).attr(nomeAttr);
-	},
-
 	setPosicao: function(animal) {
 		var posicoes = animal.getPosicao();
 		this.mapa[posicoes.linha][posicoes.coluna] = animal;
+	},
+
+	getPosicaoObjeto: function(objeto) {
+		//Esta função é semelhante a getPosicao, porém recebe como parâmetro um objeto contendo um atributo linha e outro coluna
+		return getPosicao([objeto.linha][objeto.coluna]);
+	},
+
+	getPosicaoObjetoNoMapaAnterior: function(objeto) {
+		return this.mapaAnterior[objeto.linha][objeto.coluna];
+	},
+
+	getAtributoDaPosicao: function(objeto, nomeAttr) {
+		return $("#field_" + objeto.linha + "_" + objeto.coluna).attr(nomeAttr);
+	},
+
+	setAtributoDaPosicao: function(linha, coluna, atributo, valorAtributo) {
+		$("#field_" + linha + "_" + coluna).attr(atributo, valorAtributo);
 	},
 
 	limparPosicao: function(linha, coluna) {
@@ -95,20 +100,15 @@ var Ambiente = {
 			cor = "_vermelha";
 		}
 		return "<img src='imagens/presa/1443719659_zebra" + cor + ".png' />";
-		/*if (cor == "_vermelha") {
-			return "<img src='imagens/presa/sheep_onbike.png' />";
-		} else {
-			return "<img src='imagens/presa/sheep.png' />";
-		}*/
 	},
 
 	setRastro: function(linha, coluna, intensidade, numeroPredador) {
 		if (!numeroPredador) {
 			numeroPredador = "";
 		} else {
-			$("#field_" + linha + "_" + coluna).attr("numero_predador", numeroPredador);
+			this.setAtributoDaPosicao(linha, coluna, "numero_predador", numeroPredador);
 		}
-		$("#field_" + linha + "_" + coluna).attr("rastro_intensidade", intensidade);
+		this.setAtributoDaPosicao(linha, coluna, "rastro_intensidade", intensidade);
 		$("#field_" + linha + "_" + coluna).addClass("rastro rastro_" + intensidade);
 	},
 
@@ -131,12 +131,12 @@ var Ambiente = {
 		this.mapaAnterior = $.extend(true, [], this.mapa);
 	},
 
-	setPopulacao: function(populacao) {
-		this.populacao = populacao;
-	},
-
 	getPopulacao: function() {
 		return this.populacao;
+	},
+	
+	setPopulacao: function(populacao) {
+		this.populacao = populacao;
 	},
 
 	removerAnimal: function(animal) {

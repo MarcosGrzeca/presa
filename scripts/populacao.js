@@ -8,6 +8,20 @@ function Populacao(nroPredadores, nroPresas) {
 		return this.animais;
 	}
 	
+	this.createPredador = function(linha, coluna) {
+		var predador = new Predador(this.contAnimais);
+		predador.setPosicao(linha, coluna);
+		this.animais.push(predador);
+		this.contAnimais++;		
+	};
+
+	this.createPresa = function(linha, coluna) {
+		var presa = new Presa(this.contAnimais);
+		presa.setPosicao(linha, coluna);
+		this.animais.push(presa);
+		this.contAnimais++;		
+	};
+
 	this.gerarPopulacao = function() {
 		for (var i = 0; i < this.nroPresas; i++) {
 			var presa = new Presa(this.contAnimais);
@@ -23,6 +37,9 @@ function Populacao(nroPredadores, nroPresas) {
 		}
 	};
 
+	/* 	Instruções
+		Método utilizado apenas para testes durante o desenvolvimento
+	*/
 	this.gerarPopulacaoTeste = function() {
 		this.createPresa(2, 1);
 		this.createPredador(1, 1);
@@ -34,10 +51,16 @@ function Populacao(nroPredadores, nroPresas) {
 	};
 
 	this.movimentar = function() {
-		var mortos = [], status = 0;
+		var zebrasMortas = [], status = 0;
 		var animaisNaFila = this.animais;
 		var indice = 0;
 		var temPresa = false;
+
+		/*	Instruções
+			Os animais com velocidade superior a 1, executam 1 movimento e são armazenados em uma lista para 
+			que possam ser executados novamente na mesma iteração.
+		*/
+
 		while (animaisNaFila.length > 0) {
 			var animais = $.extend(true, [], animaisNaFila);
 			var animaisNaFila = [];
@@ -45,17 +68,23 @@ function Populacao(nroPredadores, nroPresas) {
 				if (animal instanceof Presa) {
 					temPresa = true;
 				}
+				/*
+					Status
+					-1 - Animal morreu
+					0 - Não tem outra movimento dentro desta iteração
+					1 - Possui movimentos que devem ser realizados nesta iteração
+				*/
 				status = animal.move(indice);
 				if (status == 1) {
 					animaisNaFila.push(animal);
 				} else if (status == -1) { //morre
-					mortos.push(animal);
+					zebrasMortas.push(animal);
 				} else {
 					animal.setPassosRealizados(0);
 				}
 			});
 			
-			$.each(mortos, function(key, animal) {
+			$.each(zebrasMortas, function(key, animal) {
 				animal.morre();
 			});
 			Ambiente.atualizar();
@@ -66,20 +95,6 @@ function Populacao(nroPredadores, nroPresas) {
 			algoritmo.pararSimulacao();
             abrirPopupGrafico();
 		}
-	};
-
-	this.createPredador = function(linha, coluna) {
-		var predador = new Predador(this.contAnimais);
-		predador.setPosicao(linha, coluna);
-		this.animais.push(predador);
-		this.contAnimais++;		
-	};
-
-	this.createPresa = function(linha, coluna) {
-		var presa = new Presa(this.contAnimais);
-		presa.setPosicao(linha, coluna);
-		this.animais.push(presa);
-		this.contAnimais++;		
 	};
 
 	this.getNroAnimais = function() {

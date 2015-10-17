@@ -78,6 +78,11 @@ function Animal() {
 		}
 	}
 
+	/*	INSTRUÇÕES
+		Os quatro movimentos abaixo não podem ser executados em apenas uma iteração, visto que o animal não se move nas diagonais. 
+		Mas as funções são utilizadas para obter a percepção do animal nas diagonais
+	*/
+
 	this.moverParaDireitaSuperior = function() {
 		var pos = this.moverParaDireita();
 		if (pos.linha == 0) {
@@ -116,27 +121,14 @@ function Animal() {
 
 	this.getCampoPercepcao = function() {
 		var percepcoes = {};
-		percepcoes.cima = {"objeto" : Ambiente.getPosicaoObjetoAnterior(this.moverParaCima()), "posicao" : this.moverParaCima()};
-		percepcoes.baixo = {"objeto" : Ambiente.getPosicaoObjetoAnterior(this.moverParaBaixo()), "posicao" : this.moverParaBaixo()};
-		percepcoes.direita = {"objeto" : Ambiente.getPosicaoObjetoAnterior(this.moverParaDireita()), "posicao" : this.moverParaDireita()};
-		percepcoes.esquerda = {"objeto" : Ambiente.getPosicaoObjetoAnterior(this.moverParaEsquerda()), "posicao" : this.moverParaEsquerda()};
-		percepcoes.direitaSuperior = {"objeto" : Ambiente.getPosicaoObjetoAnterior(this.moverParaDireitaSuperior()), "posicao" : this.moverParaDireitaSuperior()};
-		percepcoes.direitaInferior = {"objeto" : Ambiente.getPosicaoObjetoAnterior(this.moverParaDireitaInferior()), "posicao" : this.moverParaDireitaInferior()};
-		percepcoes.esquerdaSuperior = {"objeto" : Ambiente.getPosicaoObjetoAnterior(this.moverParaEsquerdaSuperior()), "posicao" : this.moverParaEsquerdaSuperior()};
-		percepcoes.esquerdaInferior = {"objeto" : Ambiente.getPosicaoObjetoAnterior(this.moverParaEsquerdaInferior()), "posicao" : this.moverParaEsquerdaInferior()};
-		return percepcoes;
-	}
-
-	this.getCampoPercepcaoAtual = function() {
-		var percepcoes = {};
-		percepcoes.cima = {"objeto" : Ambiente.getPosicaoObjeto(this.moverParaCima()), "posicao" : this.moverParaCima()};
-		percepcoes.baixo = {"objeto" : Ambiente.getPosicaoObjeto(this.moverParaBaixo()), "posicao" : this.moverParaBaixo()};
-		percepcoes.direita = {"objeto" : Ambiente.getPosicaoObjeto(this.moverParaDireita()), "posicao" : this.moverParaDireita()};
-		percepcoes.esquerda = {"objeto" : Ambiente.getPosicaoObjeto(this.moverParaEsquerda()), "posicao" : this.moverParaEsquerda()};
-		percepcoes.direitaSuperior = {"objeto" : Ambiente.getPosicaoObjeto(this.moverParaDireitaSuperior()), "posicao" : this.moverParaDireitaSuperior()};
-		percepcoes.direitaInferior = {"objeto" : Ambiente.getPosicaoObjeto(this.moverParaDireitaInferior()), "posicao" : this.moverParaDireitaInferior()};
-		percepcoes.esquerdaSuperior = {"objeto" : Ambiente.getPosicaoObjeto(this.moverParaEsquerdaSuperior()), "posicao" : this.moverParaEsquerdaSuperior()};
-		percepcoes.esquerdaInferior = {"objeto" : Ambiente.getPosicaoObjeto(this.moverParaEsquerdaInferior()), "posicao" : this.moverParaEsquerdaInferior()};
+		percepcoes.cima = {"objeto" : Ambiente.getPosicaoObjetoNoMapaAnterior(this.moverParaCima()), "posicao" : this.moverParaCima()};
+		percepcoes.baixo = {"objeto" : Ambiente.getPosicaoObjetoNoMapaAnterior(this.moverParaBaixo()), "posicao" : this.moverParaBaixo()};
+		percepcoes.direita = {"objeto" : Ambiente.getPosicaoObjetoNoMapaAnterior(this.moverParaDireita()), "posicao" : this.moverParaDireita()};
+		percepcoes.esquerda = {"objeto" : Ambiente.getPosicaoObjetoNoMapaAnterior(this.moverParaEsquerda()), "posicao" : this.moverParaEsquerda()};
+		percepcoes.direitaSuperior = {"objeto" : Ambiente.getPosicaoObjetoNoMapaAnterior(this.moverParaDireitaSuperior()), "posicao" : this.moverParaDireitaSuperior()};
+		percepcoes.direitaInferior = {"objeto" : Ambiente.getPosicaoObjetoNoMapaAnterior(this.moverParaDireitaInferior()), "posicao" : this.moverParaDireitaInferior()};
+		percepcoes.esquerdaSuperior = {"objeto" : Ambiente.getPosicaoObjetoNoMapaAnterior(this.moverParaEsquerdaSuperior()), "posicao" : this.moverParaEsquerdaSuperior()};
+		percepcoes.esquerdaInferior = {"objeto" : Ambiente.getPosicaoObjetoNoMapaAnterior(this.moverParaEsquerdaInferior()), "posicao" : this.moverParaEsquerdaInferior()};
 		return percepcoes;
 	}
 

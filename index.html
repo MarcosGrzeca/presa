@@ -25,11 +25,11 @@
 			<div class="row">
 				<div class="col-md-2">
 					<label>Nº de Linhas</label>
-					<input type="text" id="nroLinhas" value="30" class="form-control" />
+					<input type="text" id="nroLinhas" value="15" class="form-control" />
 				</div>
 				<div class="col-md-2">
 					<label>Nº de Colunas</label>
-					<input type="text" id="nroColunas" value="30" class="form-control" />
+					<input type="text" id="nroColunas" value="15" class="form-control" />
 				</div>
 				<div class="col-md-2">
 					<label>Nº de Predadores</label>
@@ -136,56 +136,52 @@
 					<br/>
 					<button type="button" class="btn-default form-control" onclick="abrirPopupGrafico();">Gráfico</button>
 					<br/>
-					<button type="button" class="btn-default form-control" onclick="voltarParaTelaInicial();">Voltar</button>
+					<button type="button" class="btn-default form-control" onclick="exibirTelaConfiguracoes();">Voltar</button>
 				</br>
 			</div>
 		</div>
 	</div>
 </div>
-</div><!-- Button trigger modal -->
-<!--<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-  Launch demo modal
-</button>
--->
+</div>
 <div class="modal fade" id="modalAdicionarAgente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Adicionar Agente</h4>
-      </div>
-      <div class="modal-body">
-      	<div class="row">
-      		<div class="col-md-4">
-      			<label for="novoAgente">Animal</label>
-		        <select id="novoAgente" name="novoAgente" class="form-control">
-		        	<option value="predador">Predador</option>
-		        	<option value="presa">Presa</option>
-		        </select>
-		    </div>
-		    <div class="col-md-4">
-		    	<label for="novaLinha">Linha</label>
-		        <select id="novaLinha" name="novaLinha" class="form-control"></select>
-		    </div>
-		    <div class="col-md-4">
-		    	<label for="novaColuna">Coluna</label>
-		        <select id="novaColuna" name="novaColuna" class="form-control"></select>
-		    </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-      	<button type="button" class="btn btn-success" onclick="adicionarAgente()">Adicionar Agente</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-      </div>
-    </div>
-  </div>
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">Adicionar Agente</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-4">
+						<label for="novoAgente">Animal</label>
+						<select id="novoAgente" name="novoAgente" class="form-control">
+							<option value="predador">Predador</option>
+							<option value="presa">Presa</option>
+						</select>
+					</div>
+					<div class="col-md-4">
+						<label for="novaLinha">Linha</label>
+						<select id="novaLinha" name="novaLinha" class="form-control"></select>
+					</div>
+					<div class="col-md-4">
+						<label for="novaColuna">Coluna</label>
+						<select id="novaColuna" name="novaColuna" class="form-control"></select>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" onclick="adicionarAgente()">Adicionar Agente</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+			</div>
+		</div>
+	</div>
 </div>
 <div class="modal" id="modalGrafico" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
-		  <div class="modal-header">
-	        <h4 class="modal-title" id="tituloGrafico">Todas as presas foram capturadas</h4>
-	      </div>
+			<div class="modal-header">
+				<h4 class="modal-title" id="tituloGrafico">Todas as presas foram capturadas</h4>
+			</div>
 			<div class="modal-body">
 				<div class="row">
 					<div class="col-md-12">
@@ -203,29 +199,20 @@
 </body>
 
 
-<!-- Latest compiled and minified JavaScript -->
+<!-- libs -->
 <script type="text/javascript" src="libs/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="libs/jquery-ui.js"></script>
-
 <script type="text/javascript" src="style/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="libs/highcharts.js"></script>
+<script type="text/javascript" src="libs/exporting.js"></script>
 
+<!-- scripts -->
 <script type="text/javascript" src="scripts/index.js"></script>
 <script type="text/javascript" src="scripts/ambiente.js"></script>
-
-<script type="text/javascript" src="scripts/functions.js"></script>
 <script type="text/javascript" src="scripts/populacao.js"></script>
 <script type="text/javascript" src="scripts/algoritmo.js"></script>
 <script type="text/javascript" src="scripts/predador.js"></script>
 <script type="text/javascript" src="scripts/presa.js"></script>
 <script type="text/javascript" src="scripts/animal.js"></script>
 
-
-<script src="libs/highcharts.js"></script>
-<script src="libs/exporting.js"></script>
-
-<script type="text/javascript">
-	$(document).ready(function(){
-		
-	});
-</script>
 </html>

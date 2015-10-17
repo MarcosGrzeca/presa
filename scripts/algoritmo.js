@@ -1,9 +1,9 @@
 function Algoritmo() {
-	this.numeroMaximoInteracoes = 5000;
-	this.interacoes = 0;
+	this.numeroMaximoIteracoes = 5000;
+	this.iteracoes = 0;
     this.populacao;
     this.simulacaoInterrompida = false;
-    this.velocidade = 1000;
+    this.velocidadeSimulacao = 1000;
     this.presasIteracoes = [];
     this.predadoresIteracoes = [];
 
@@ -11,6 +11,9 @@ function Algoritmo() {
         return this.populacao;
     }
 
+    this.setVelocidade = function(velocidade) {
+        this.velocidadeSimulacao = velocidade;
+    }
 
 	this.simular = function() {
 		Ambiente.inicializar($("#nroLinhas").val(), $("#nroColunas").val(), $("#duracaoRastro").val());
@@ -18,45 +21,43 @@ function Algoritmo() {
 
         this.populacao = new Populacao($("#nroPredadores").val(), $("#nroPresas").val());
         this.populacao.gerarPopulacao();
-        //this.populacao.gerarPopulacaoTeste();
-
         Ambiente.setPopulacao(this.populacao);
+
         Ambiente.atualizar();
         Ambiente.clonarMapa();
-        setTimeout("release()", this.velocidade);
+        setTimeout("algoritmo.atualizar()", this.velocidadeSimulacao);
 	}
 
-
-    this.release = function() {
-        if (this.interacoes < this.numeroMaximoInteracoes && !(this.simulacaoInterrompida)) {
+    this.atualizar = function() {
+        if (this.iteracoes < this.numeroMaximoIteracoes && !(this.simulacaoInterrompida)) {
             Ambiente.atualizarRastros();
             this.populacao.movimentar();
             Ambiente.atualizar();
             Ambiente.clonarMapa();
-            this.interacoes++;
-            $('#iteracoes_qdte').val(this.interacoes);
-            var nro = this.populacao.getNroAnimais();
-            this.predadoresIteracoes.push(nro.predadores);
-            $('#predadores_qdte').val(nro.predadores);
-            this.presasIteracoes.push(nro.presas);
-            $('#presas_qdte').val(nro.presas);
-            setTimeout("release()", this.velocidade);
+            this.iteracoes++;
+            this.atualizarNumerosTela();
+            setTimeout("algoritmo.atualizar()", this.velocidadeSimulacao);
         } else if (!this.simulacaoInterrompida) {
             abrirPopupGrafico();
             $('#tituloGrafico').html("O limite de iterações foi atingido.");
         }
     }
 
+    this.atualizarNumerosTela = function() {
+        $('#iteracoes_qdte').val(this.iteracoes);
+        var nro = this.populacao.getNroAnimais();
+        this.predadoresIteracoes.push(nro.predadores);
+        $('#predadores_qdte').val(nro.predadores);
+        this.presasIteracoes.push(nro.presas);
+        $('#presas_qdte').val(nro.presas);
+    }
+
     this.continuarSimulacao = function() {
         this.simulacaoInterrompida = false;
-        this.release();
+        this.atualizar();
     }
 
     this.pararSimulacao = function() {
         this.simulacaoInterrompida = true;
-    }
-
-    this.setVelocidade = function(velocidade) {
-        this.velocidade = velocidade;
     }
 }
