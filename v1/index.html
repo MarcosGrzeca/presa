@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Presa e Predador</title>
+	<link rel="shortcut icon" href="imagens/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="imagens/favicon.ico" type="image/x-icon">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="style/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="style/bootstrap/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="style/jquery-ui/jquery-ui.css">
+	<link rel="stylesheet" href="style/estilo.css">
+</head>
+<body>
+	<div class="container-fluid">
+		<div id="telaConfiguracao">
+			<div class="row">
+				<div class="jumbotron">
+					<h1>Presa x Predador</h1>
+					<p>Preencha os campos abaixo para simular um ambiente de competitividade entre presas (zebras) e predadores (leões).</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-2">
+					<label>Nº de Linhas</label>
+					<input type="text" id="nroLinhas" value="30" class="form-control" />
+				</div>
+				<div class="col-md-2">
+					<label>Nº de Colunas</label>
+					<input type="text" id="nroColunas" value="30" class="form-control" />
+				</div>
+				<div class="col-md-2">
+					<label>Nº de Predadores</label>
+					<select id="nroPredadores" class="form-control">
+						<option>4</option>
+						<option>5</option>
+						<option>6</option>
+						<option>7</option>
+						<option selected="selected">8</option>
+						<option>9</option>
+						<option>10</option>
+						<option>20</option>
+						<option>30</option>
+						<option>50</option>
+						<option>100</option>
+						<option>200</option>
+						<option>300</option>
+						<option>400</option>
+					</select>
+				</div>
+				<div class="col-md-2">
+					<label>Nº de Presas</label>
+					<select id="nroPresas" class="form-control">
+						<option>1</option>
+						<option selected="selected">2</option>
+						<option>3</option>
+						<option>4</option>
+						<option>5</option>
+						<option>6</option>
+						<option>7</option>
+						<option>8</option>
+						<option>9</option>
+						<option>10</option>
+						<option>20</option>
+						<option>30</option>
+						<option>40</option>
+						<option>50</option>
+						<option>100</option>
+					</select>
+				</div>
+				<div class="col-md-2">
+					<label>Duração do rastro</label>
+					<select id="duracaoRastro" class="form-control">
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+						<option selected="selected">5</option>
+						<option>6</option>
+						<option>7</option>
+						<option>8</option>
+						<option>9</option>
+						<option>10</option>
+					</select>
+				</div>
+				<div class="col-md-2">
+					<label>Comportamento das presas</label>
+					<select id="comportamentoPresas" class="form-control">
+						<option value="0" selected="selected">Aleatório</option>
+						<option value="1">Linear</option>
+					</select>
+				</div>	
+			</div>
+			<br/>
+			<div class="row">
+				<div class="col-md-2">
+					<button type="button" onclick="iniciar()" class=" btn btn-lg btn-success ">Simular Ambiente »</button> 
+				</div>
+			</div>
+		</div>
+		<div id="telaSimulacao" style="display:none; padding-top:60px">
+			<nav class="navbar navbar-inverse navbar-fixed-top">
+				<div class="container">
+					<div class="navbar-header">
+						<a class="navbar-brand" href="">Presa x Predador</a>
+					</div>
+				</div>
+			</nav>
+
+			<div class="row">
+				<div class="col-md-10 table-responsive" id="espacoAmbiente">
+				</div>
+				<div class="col-md-2 well">
+					<label for="iteracoes_qdte" style="white-space:nowrap;">Iterações:
+						<input type="text" id="iteracoes_qdte" readonly class="form-control" value="0">
+					</label>
+					<label for="predadores_qdte" style="white-space:nowrap;">Predadores:
+						<input type="text" id="predadores_qdte" readonly class="form-control" value="0">
+					</label>
+					<label for="presas_qdte" style="white-space:nowrap;">Presas:
+						<input type="text" id="presas_qdte" readonly class="form-control" value="0">
+					</label>
+					<label for="velocidadeIteracoes" style="white-space:nowrap;">Velocidade:
+						<input type="text" id="velocidadeIteracoes" readonly style="font-weight:bold;" class="form-control">
+					</label>
+					<div id="slider-velocidade"></div>
+					<br/>
+					<button type="button" class="btn-default btn-danger form-control" id="botaoParar" onclick="pararSimulacao()">Pausar Simulação</button>
+					<span class="algoritmoParado hide">
+						<button type="button" class="btn-default btn-success form-control" id="botaoContinuar" onclick="continuarSimulacao()">Continuar Simulação</button>
+						<br/>
+						<button type="button" class="btn-default form-control" onclick="abrirPopupAdicionarAgente()">Adicionar Agente</button>
+					</span>
+					<br/>
+					<button type="button" class="btn-default form-control" onclick="abrirPopupGrafico();">Gráfico</button>
+					<br/>
+					<button type="button" class="btn-default form-control" onclick="voltarParaTelaInicial();">Voltar</button>
+				</br>
+			</div>
+		</div>
+	</div>
+</div>
+</div><!-- Button trigger modal -->
+<!--<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+  Launch demo modal
+</button>
+-->
+<div class="modal fade" id="modalAdicionarAgente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Adicionar Agente</h4>
+      </div>
+      <div class="modal-body">
+      	<div class="row">
+      		<div class="col-md-4">
+      			<label for="novoAgente">Animal</label>
+		        <select id="novoAgente" name="novoAgente" class="form-control">
+		        	<option value="predador">Predador</option>
+		        	<option value="presa">Presa</option>
+		        </select>
+		    </div>
+		    <div class="col-md-4">
+		    	<label for="novaLinha">Linha</label>
+		        <select id="novaLinha" name="novaLinha" class="form-control"></select>
+		    </div>
+		    <div class="col-md-4">
+		    	<label for="novaColuna">Coluna</label>
+		        <select id="novaColuna" name="novaColuna" class="form-control"></select>
+		    </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+      	<button type="button" class="btn btn-success" onclick="adicionarAgente()">Adicionar Agente</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal" id="modalGrafico" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+	        <h4 class="modal-title" id="tituloGrafico">Todas as presas foram capturadas</h4>
+	      </div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-12">
+						<div id="grafico" style="height: 400px; margin: 0 auto"></div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+			</div>
+		</div>
+	</div>
+</div>
+<audio src="sons/leao.mp3" id="player"></audio>
+</body>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script type="text/javascript" src="libs/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="libs/jquery-ui.js"></script>
+
+<script type="text/javascript" src="style/bootstrap/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="scripts/index.js"></script>
+<script type="text/javascript" src="scripts/ambiente.js"></script>
+
+<script type="text/javascript" src="scripts/functions.js"></script>
+<script type="text/javascript" src="scripts/populacao.js"></script>
+<script type="text/javascript" src="scripts/algoritmo.js"></script>
+<script type="text/javascript" src="scripts/predador.js"></script>
+<script type="text/javascript" src="scripts/presa.js"></script>
+<script type="text/javascript" src="scripts/animal.js"></script>
+
+
+<script src="libs/highcharts.js"></script>
+<script src="libs/exporting.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		
+	});
+</script>
+</html>

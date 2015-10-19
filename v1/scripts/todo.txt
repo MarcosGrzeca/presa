@@ -1,0 +1,25 @@
+- Matriz de ferromonios (feito)
+- Animais devem se movimentar de acordo com o ambiente (considerar velocidade) - Marcos
+- Fuga da presa (Predador e ferromonio)- Marcos
+- Controle de colisão - Feito
+- Cálculo da qualidade e quantidade de movimento - Bruno - Feito
+- Capturar presas - Bruno - Feito
+
+- Controle de velocidade - Feito
+- Predador mais rapido qdo encontra presa, no máximo por 4 iterações e presa é 8 - Feito
+
+Bugs:
+- Quando pula 2 casas esta dando erro nas bordas - Corrigido
+- Feromonio esta aparecendo na casa da presa quando esta parada -- Corrigido
+
+
+- Fila por velocidades (exec velo 1, 2 e 3). A cada velocidade atualiza ambiente - OK
+- Cálculo versão inicial (perseguir presa)
+- IteracoesCaca - decrementado só uma vez
+- Rastro - Verificar Rastro - OK
+- Cálculo da emoção (OK)
+- Comportamento linear para a presa - Feito
+
+- Exibir iteracoes e quantidade de animais, presa e predadores - Feito
+- Maior numero de presas e predadores - Feito
+- Ajustar velocidade de execucao - Feito
