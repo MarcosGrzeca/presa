@@ -13,7 +13,9 @@ $(document).ready(function() {
 });
 
 function verificarSimulacao() {
-	simulacao.verificarSeAcabou();
+	if (modoSimulacao) {
+		simulacao.verificarSeAcabou();
+	}
 }
 
 function Simulacao() {
