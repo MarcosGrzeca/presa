@@ -3,15 +3,19 @@ var timeVerificar;
 var simulacao;
 
 $(document).ready(function() {
-	simulacao = new Simulacao();
-	simulacao.configurar();
-	simulacao.iniciar();
 	timeVerificar = setInterval(
      				function() {
      					verificarSimulacao()
      				}, 3000);
 });
 
+
+function iniciarSimulacao() {
+	modoSimulacao = true;
+	simulacao = new Simulacao();
+	simulacao.configurar();
+	simulacao.iniciar();
+}
 function verificarSimulacao() {
 	if (modoSimulacao) {
 		simulacao.verificarSeAcabou();
