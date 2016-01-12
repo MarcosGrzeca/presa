@@ -60,4 +60,9 @@ function Algoritmo() {
     this.pararSimulacao = function() {
         this.simulacaoInterrompida = true;
     }
+
+    this.getNumeroPresas = function() {
+        var nro = this.populacao.getNroAnimais();
+        return nro.presas;
+    }
 }
