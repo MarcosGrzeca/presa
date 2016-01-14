@@ -41,7 +41,7 @@ function Simulacao() {
 		$("#nroLinhas").val(15);
 		$("#nroColunas").val(15);
 		$("#nroPredadores").val(10);
-		$("#nroPresas").val(4);
+		$("#nroPresas").val(10);
 	}
 
 	this.iniciar = function() {
