@@ -289,12 +289,13 @@ function Presa(numero) {
 						}
 					});
 					if (!movimentoRealizado) {
-						var indice = 0;
-						while (indice < 10 && !movimentoRealizado) {
+						var indiceE = 0;
+						while (indiceE < 10 && !movimentoRealizado) {
 							movimentacao = Presa.getRandomPosicao();
 							posicoes = movimentacao.posicao;
 							movimento = movimentacao.movimento;
 							movimentoRealizado = Presa.setPosicao(posicoes.linha, posicoes.coluna, movimento);
+							indiceE++;
 						}
 					}
 				})(this);
