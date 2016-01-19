@@ -46,7 +46,7 @@ function Simulacao() {
 
 	this.iniciar = function() {
 		iniciar();
-		algoritmo.setVelocidade(100);
+		algoritmo.setVelocidade(16);
 		$("#velocidadeIteracoes").val(100);
 		this.testesRealizados++;
 	}
