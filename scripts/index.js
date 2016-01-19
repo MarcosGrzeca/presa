@@ -27,6 +27,9 @@ function iniciar() {
   //Início da simulação
   algoritmo = new Algoritmo();
   algoritmo.simular();
+  if (modoSimulacao) {
+    algoritmo.setVelocidade(16);
+  }
 }
 
 function ocultarTelaConfiguracoes() {
@@ -100,50 +103,52 @@ function adicionarAgente()  {
 }
 
 function abrirPopupGrafico() {
-	$('#modalGrafico').modal("show");
-	var numIteracoes = [];
-	for (i = 0; i < algoritmo.iteracoes; i++) {
-		numIteracoes.push(i+1);
-	}
-	$('#grafico').highcharts({
-    title: {
-      text: 'Resultado',
-        x: -20 //center
-      },
-      subtitle: {
-        text: '',
-        x: -20
-      },
-      xAxis: {
-        categories: numIteracoes
-      },
-      yAxis: {
-        title: {
-          text: 'Quantidade de animais'
+  if (!modoSimulacao) {
+  	$('#modalGrafico').modal("show");
+  	var numIteracoes = [];
+  	for (i = 0; i < algoritmo.iteracoes; i++) {
+  		numIteracoes.push(i+1);
+  	}
+  	$('#grafico').highcharts({
+      title: {
+        text: 'Resultado',
+          x: -20 //center
         },
-        plotLines: [{
-          value: 0,
-          width: 1,
-          color: '#808080'
+        subtitle: {
+          text: '',
+          x: -20
+        },
+        xAxis: {
+          categories: numIteracoes
+        },
+        yAxis: {
+          title: {
+            text: 'Quantidade de animais'
+          },
+          plotLines: [{
+            value: 0,
+            width: 1,
+            color: '#808080'
+          }]
+        },
+        tooltip: {
+          valueSuffix: ''
+        },
+        legend: {
+          layout: 'vertical',
+          align: 'right',
+          verticalAlign: 'middle',
+          borderWidth: 0
+        },
+        series: [{
+          name: 'Presas',
+          data: algoritmo.presasIteracoes
+        },{
+          name: 'Predadores',
+          data: algoritmo.predadoresIteracoes
         }]
-      },
-      tooltip: {
-        valueSuffix: ''
-      },
-      legend: {
-        layout: 'vertical',
-        align: 'right',
-        verticalAlign: 'middle',
-        borderWidth: 0
-      },
-      series: [{
-        name: 'Presas',
-        data: algoritmo.presasIteracoes
-      },{
-        name: 'Predadores',
-        data: algoritmo.predadoresIteracoes
-      }]
-  });
+    });
+  }
 }
 
 function gerarRandomico(limiteSuperior, limiteInferior) {
