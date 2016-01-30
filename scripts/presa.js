@@ -135,6 +135,9 @@ function Presa(numero) {
 	}
 	
 	this.presaMorre = function() {
+		if (modoSimulacao) {
+			iteracoesPresasCapturadas.push(algoritmo.iteracoes);
+		}
 		document.getElementById('player').play();
 		var posicao = this.getPosicao();
 		$("#field_" + posicao.linha + "_" + posicao.coluna).addClass("zebra-morrendo");

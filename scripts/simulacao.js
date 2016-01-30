@@ -1,6 +1,7 @@
 var modoSimulacao = false;
 var timeVerificar;
 var simulacao;
+var iteracoesPresasCapturadas = [];
 
 $(document).ready(function() {
 	timeVerificar = setInterval(
@@ -23,16 +24,27 @@ function verificarSimulacao() {
 }
 
 function Simulacao() {
-	this.numeroTestes = 1000;
+	this.numeroTestes = 100;
 	this.testesRealizados = 0;
 	this.resultado = [];
 
 	this.verificarSeAcabou = function() {
 	    if ((algoritmo.iteracoes >= algoritmo.numeroMaximoIteracoes) || algoritmo.simulacaoInterrompida) {
-	    	var res = {"todasPresasCapturadas" : (algoritmo.getNumeroPresas() == 0), "iteracoes" : algoritmo.iteracoes};
+
+	    	if (algoritmo.getNumeroPresas() != 0) {
+		    	var i;
+		    	for (i = (parseInt($("#nroPresas").val()) - algoritmo.getNumeroPresas()); i < $("#nroPresas").val(); i++) {
+		    		iteracoesPresasCapturadas.push("");		
+		    	}
+		    }
+	    	var res = (this.resultado.length  + 1) + "," + (algoritmo.getNumeroPresas() == 0) + "," + $("#nroPredadores").val() + "," + $("#nroPresas").val() + "," +  ($("#motivacaoPresas").val() == "C") + "," + iteracoesPresasCapturadas.join() + ";";
 	    	this.resultado.push(res);
 	    	if (this.testesRealizados < this.numeroTestes) {
 	    		this.iniciar();
+	    	} else {
+	    		alert("SimulacaoFinalizada");
+	    		console.log(JSON.stringify(this.resultado));
+	    		clearTimeout(timeVerificar);
 	    	}
 	    }
 	}

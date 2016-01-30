@@ -16,6 +16,8 @@ function Algoritmo() {
     }
 
 	this.simular = function() {
+        delete iteracoesPresasCapturadas;
+        iteracoesPresasCapturadas = [];
 		Ambiente.inicializar($("#nroLinhas").val(), $("#nroColunas").val(), $("#duracaoRastro").val());
         Ambiente.desenhar("espacoAmbiente");
 
