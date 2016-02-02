@@ -37,14 +37,14 @@ function Simulacao() {
 		    		iteracoesPresasCapturadas.push("");		
 		    	}
 		    }
-	    	var res = (this.resultado.length  + 1) + "," + (algoritmo.getNumeroPresas() == 0) + "," + $("#nroPredadores").val() + "," + $("#nroPresas").val() + "," +  ($("#motivacaoPresas").val() == "C") + "," + iteracoesPresasCapturadas.join() + ";";
+	    	var res = (this.resultado.length  + 101) + "," + (algoritmo.getNumeroPresas() == 0) + "," + $("#nroPredadores").val() + "," + $("#nroPresas").val() + "," +  ($("#motivacaoPresas").val() == "C") + "," + iteracoesPresasCapturadas.join() + ";";
 	    	this.resultado.push(res);
 	    	if (this.testesRealizados < this.numeroTestes) {
 	    		this.iniciar();
 	    	} else {
-	    		alert("SimulacaoFinalizada");
 	    		console.log(JSON.stringify(this.resultado));
 	    		clearTimeout(timeVerificar);
+	    		alert("SimulacaoFinalizada");
 	    	}
 	    }
 	}
@@ -54,6 +54,7 @@ function Simulacao() {
 		$("#nroColunas").val(15);
 		$("#nroPredadores").val(10);
 		$("#nroPresas").val(10);
+		$("#motivacaoPresas").val("S");
 	}
 
 	this.iniciar = function() {
