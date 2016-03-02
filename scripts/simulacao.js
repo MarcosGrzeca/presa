@@ -37,9 +37,10 @@ function Simulacao() {
 		    		iteracoesPresasCapturadas.push("");		
 		    	}
 		    }
-	    	var res = (this.resultado.length  + 101) + "," + (algoritmo.getNumeroPresas() == 0) + "," + $("#nroPredadores").val() + "," + $("#nroPresas").val() + "," +  ($("#motivacaoPresas").val() == "C") + "," + iteracoesPresasCapturadas.join() + ";";
+	    	var res = (this.resultado.length  + 202) + "," + (algoritmo.getNumeroPresas() == 0) + "," + $("#nroPredadores").val() + "," + $("#nroPresas").val() + "," +  ($("#motivacaoPresas").val() == "C") + "," + iteracoesPresasCapturadas.join() + ";";
 	    	this.resultado.push(res);
 	    	if (this.testesRealizados < this.numeroTestes) {
+	    		console.info(JSON.stringify(simulacao.resultado));
 	    		this.iniciar();
 	    	} else {
 	    		console.log(JSON.stringify(this.resultado));
