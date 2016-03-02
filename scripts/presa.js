@@ -39,7 +39,7 @@ function Presa(numero) {
 	}
 
 	this.getVelocidade = function() {
-		if (this.iteracoesFuga > 8) {
+		if (this.iteracoesFuga > 12) {
 			return 1;
 		}
 		return this.getVelocidadeFromEmocao();

@@ -220,7 +220,7 @@ function Predador(numero) {
 			movimentoRealizado = this.verificarExistenciaPresas(campoPercepcao);
 		}
 		if (!movimentoRealizado) {
-			if (this.modoCaca && this.iteracoesCaca > 4) {
+			if (this.modoCaca && this.iteracoesCaca > 2) {
 				this.modoCaca = false;
 				this.iteracoesCaca = 0;
 			}

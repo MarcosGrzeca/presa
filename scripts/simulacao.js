@@ -51,10 +51,10 @@ function Simulacao() {
 	}
 
 	this.configurar = function() {
-		$("#nroLinhas").val(15);
-		$("#nroColunas").val(15);
+		$("#nroLinhas").val(30);
+		$("#nroColunas").val(30);
 		$("#nroPredadores").val(10);
-		$("#nroPresas").val(10);
+		$("#nroPresas").val(3);
 		$("#motivacaoPresas").val("S");
 	}
 
