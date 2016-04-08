@@ -37,7 +37,7 @@ function Simulacao() {
 		    		iteracoesPresasCapturadas.push("");		
 		    	}
 		    }
-	    	var res = (this.resultado.length  + 202) + "," + (algoritmo.getNumeroPresas() == 0) + "," + $("#nroPredadores").val() + "," + $("#nroPresas").val() + "," +  ($("#motivacaoPresas").val() == "C") + "," + iteracoesPresasCapturadas.join() + ";";
+	    	var res = (this.resultado.length  + 101) + "," + (algoritmo.getNumeroPresas() == 0) + "," + $("#nroPredadores").val() + "," + $("#nroPresas").val() + "," +  ($("#motivacaoPresas").val() == "C") + "," + iteracoesPresasCapturadas.join() + ";";
 	    	this.resultado.push(res);
 	    	if (this.testesRealizados < this.numeroTestes) {
 	    		console.info(JSON.stringify(simulacao.resultado));
@@ -51,17 +51,17 @@ function Simulacao() {
 	}
 
 	this.configurar = function() {
-		$("#nroLinhas").val(30);
-		$("#nroColunas").val(30);
-		$("#nroPredadores").val(10);
-		$("#nroPresas").val(3);
+		$("#nroLinhas").val(15);
+		$("#nroColunas").val(15);
+		$("#nroPredadores").val(8);
+		$("#nroPresas").val(10);
 		$("#motivacaoPresas").val("S");
 	}
 
 	this.iniciar = function() {
 		iniciar();
 		$("#velocidadeIteracoes").val(100);
-		algoritmo.setVelocidade(16);
+		algoritmo.setVelocidade(30);
 		this.testesRealizados++;
 	}
 }

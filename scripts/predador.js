@@ -159,7 +159,7 @@ function Predador(numero) {
 				if (movimentoRealizado) {
 					algoritmo.getPopulacao().getAnimais().forEach(function(animal) {
 						if (animal.numero == numeroPredador) {
-							Predador.setVelocidade(animal.getVelocidade());
+							//Predador.setVelocidade(animal.getVelocidade());
 						}
 					});
 				}
@@ -220,7 +220,7 @@ function Predador(numero) {
 			movimentoRealizado = this.verificarExistenciaPresas(campoPercepcao);
 		}
 		if (!movimentoRealizado) {
-			if (this.modoCaca && this.iteracoesCaca > 2) {
+			if (this.modoCaca && this.iteracoesCaca > 4) {
 				this.modoCaca = false;
 				this.iteracoesCaca = 0;
 			}
