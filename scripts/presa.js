@@ -10,6 +10,15 @@ function Presa(numero) {
 	this.iteracoesFuga = 0;
 	this.iteracoesLinear = 0;
 	this.movimentoLinear = 0;
+	this.possuiEmocao = true;
+
+	this.getEmocao = function() {
+		return this.possuiEmocao;
+	}
+
+	this.setEmocao = function(possuiEmocao) {
+		this.possuiEmocao = possuiEmocao;
+	}
 
 	this.gerarPosicaoAleatoria = function() {
 		this.animal.gerarPosicaoAleatoria();
@@ -95,7 +104,8 @@ function Presa(numero) {
 
 	this.getVelocidadeFromEmocao = function() {
 		//Opção para não considerar as emoções da presa
-		if ($("#motivacaoPresas").val() == "S") {
+		//if ($("#motivacaoPresas").val() == "S") {
+		if (!this.possuiEmocao) {
 			return 1;
 		}
 		/*
@@ -138,6 +148,7 @@ function Presa(numero) {
 		if (modoSimulacao) {
 			iteracoesPresasCapturadas.push(algoritmo.iteracoes);
 		}
+		console.log(this.possuiEmocao);
 		document.getElementById('player').play();
 		var posicao = this.getPosicao();
 		$("#field_" + posicao.linha + "_" + posicao.coluna).addClass("zebra-morrendo");
@@ -274,10 +285,9 @@ function Presa(numero) {
 			this.presaMorre();
 			return -1;
 		} else {
-			if ($("#motivacaoPresas").val() != "S") {
+			if (this.possuiEmocao) {
 				this.calcularEmocao(predadores, presas, presasEmFuga);
 			}
-
 			var movimentoRealizado = false;
 			if (predadores > 0) {
 				(function(Presa) {
