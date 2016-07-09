@@ -27,9 +27,11 @@ function Populacao(nroPredadores, nroPresas) {
 			var presa = new Presa(this.contAnimais);
 			presa.gerarPosicaoAleatoria();
 			if (i % 2) {
+				//presa.setEmocao(false);
+			}
+			if ($("#motivacaoPresas").val() == "S") {
 				presa.setEmocao(false);
 			}
-
 			this.animais.push(presa);
 			this.contAnimais++;
 		}

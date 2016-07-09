@@ -55,13 +55,13 @@ function Simulacao() {
 		$("#nroColunas").val(15);
 		$("#nroPredadores").val(8);
 		$("#nroPresas").val(10);
-		$("#motivacaoPresas").val("S");
+		$("#motivacaoPresas").val("C");
 	}
 
 	this.iniciar = function() {
 		iniciar();
 		$("#velocidadeIteracoes").val(100);
-		algoritmo.setVelocidade(30);
+		algoritmo.setVelocidade(10);
 		this.testesRealizados++;
 	}
 }

@@ -105,7 +105,11 @@ function Predador(numero) {
 			var movimento;
 			$.each(campoPercepcao, function(key, presa){
 				if (presa.objeto instanceof Presa && posicoes == null) {
-					Predador.setVelocidade(presa.objeto.getVelocidade());
+					if (presa.objeto.getVelocidade() == presa.objeto.getVelocidadeMaxima()) {
+						Predador.setVelocidade(presa.objeto.getVelocidade() - 1);
+					} else {
+						Predador.setVelocidade(presa.objeto.getVelocidade());
+					}
 					movimentoRealizado = true;
 					var posicaoMovimento = Predador.movimentarPredador(key);
 					movimento = posicaoMovimento.movimento;
@@ -159,7 +163,7 @@ function Predador(numero) {
 				if (movimentoRealizado) {
 					algoritmo.getPopulacao().getAnimais().forEach(function(animal) {
 						if (animal.numero == numeroPredador) {
-							//Predador.setVelocidade(animal.getVelocidade());
+							Predador.setVelocidade(animal.getVelocidade());
 						}
 					});
 				}

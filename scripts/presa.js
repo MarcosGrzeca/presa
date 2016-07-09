@@ -148,7 +148,6 @@ function Presa(numero) {
 		if (modoSimulacao) {
 			iteracoesPresasCapturadas.push(algoritmo.iteracoes);
 		}
-		console.log(this.possuiEmocao);
 		document.getElementById('player').play();
 		var posicao = this.getPosicao();
 		$("#field_" + posicao.linha + "_" + posicao.coluna).addClass("zebra-morrendo");
@@ -379,5 +378,9 @@ function Presa(numero) {
 
 	this.morre = function() {
 		Ambiente.removerAnimal(this);
+	}
+
+	this.getVelocidadeMaxima = function() {
+		return 3;
 	}
 }
