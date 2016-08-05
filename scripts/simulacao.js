@@ -2,6 +2,7 @@ var modoSimulacao = false;
 var timeVerificar;
 var simulacao;
 var iteracoesPresasCapturadas = [];
+var testesRealizados = 0;
 
 $(document).ready(function() {
 	timeVerificar = setInterval(
@@ -24,8 +25,8 @@ function verificarSimulacao() {
 }
 
 function Simulacao() {
-	this.numeroTestes = 20;
-	this.testesRealizados = 0;
+	this.numeroTestes = 5;
+	testesRealizados = 0;
 	this.resultado = [];
 
 	this.verificarSeAcabou = function() {
@@ -39,7 +40,7 @@ function Simulacao() {
 		    }
 	    	var res = (this.resultado.length  + 1) + "," + (algoritmo.getNumeroPresas() == 0) + "," + $("#nroPredadores").val() + "," + $("#nroPresas").val() + "," +  ($("#motivacaoPresas").val() == "C") + "," + iteracoesPresasCapturadas.join() + ";";
 	    	this.resultado.push(res);
-	    	if (this.testesRealizados < this.numeroTestes) {
+	    	if (testesRealizados < this.numeroTestes) {
 	    		console.info(JSON.stringify(simulacao.resultado));
 	    		this.iniciar();
 	    	} else {
@@ -55,13 +56,13 @@ function Simulacao() {
 		$("#nroColunas").val(15);
 		$("#nroPredadores").val(12);
 		$("#nroPresas").val(10);
-		$("#motivacaoPresas").val("C");
+		$("#motivacaoPresas").val("S");
 	}
 
 	this.iniciar = function() {
 		iniciar();
-		$("#velocidadeIteracoes").val(100);
+		$("#velocidadeIteracoes").val("100");
 		algoritmo.setVelocidade(30);
-		this.testesRealizados++;
+		testesRealizados++;
 	}
 }

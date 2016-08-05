@@ -23,12 +23,33 @@ function Populacao(nroPredadores, nroPresas) {
 	};
 
 	this.gerarPopulacao = function() {
+		var stringPosicoesSalvas = "";
+		if (modoSimulacao) {
+			var posicoesSalvas = Persistencia.get("posicoes_" + testesRealizados);
+			var arrayPosicoesSalvas = [];
+			if (posicoesSalvas !== null) {
+				posicoesSalvas = posicoesSalvas.split(";");
+				$.each(posicoesSalvas, function(key, value) {
+					if ($.trim(value) != "") {
+						var posTmp = value.split("X");
+						arrayPosicoesSalvas.push({"linha" : parseInt(posTmp[0]), "coluna" : parseInt(posTmp[1])});
+					}
+				});
+			}
+		}
+
 		for (var i = 0; i < this.nroPresas; i++) {
 			var presa = new Presa(this.contAnimais);
-			presa.gerarPosicaoAleatoria();
-			if (i % 2) {
-				//presa.setEmocao(false);
+			if (modoSimulacao && posicoesSalvas !== null) {
+				presa.setPosicao(arrayPosicoesSalvas[(this.contAnimais - 1)].linha, arrayPosicoesSalvas[(this.contAnimais - 1)].coluna);
+			} else {
+				presa.gerarPosicaoAleatoria();
+				stringPosicoesSalvas += presa.getPosicao().linha + "X" + presa.getPosicao().coluna + ";";
 			}
+			/* Código fonte responsável por presas com e sem emoção na mesma simulação
+			if (i % 2) {
+				presa.setEmocao(false);
+			}*/
 			if ($("#motivacaoPresas").val() == "S") {
 				presa.setEmocao(false);
 			}
@@ -37,9 +58,19 @@ function Populacao(nroPredadores, nroPresas) {
 		}
 		for (var i = 0; i < this.nroPredadores; i++) {
 			var predador = new Predador(this.contAnimais);
-			predador.gerarPosicaoAleatoria();
+			if (modoSimulacao && posicoesSalvas !== null) {
+				predador.setPosicao(arrayPosicoesSalvas[(this.contAnimais - 1)].linha, arrayPosicoesSalvas[(this.contAnimais - 1)].coluna);
+			} else {
+				predador.gerarPosicaoAleatoria();
+				stringPosicoesSalvas += predador.getPosicao().linha + "X" + predador.getPosicao().coluna + ";";
+			}
 			this.animais.push(predador);
 			this.contAnimais++;
+		}
+
+		if (modoSimulacao && posicoesSalvas === null) {
+			Persistencia.save("posicoes_" + testesRealizados, stringPosicoesSalvas);
+			console.log(stringPosicoesSalvas);
 		}
 	};
 
