@@ -24,7 +24,7 @@ function verificarSimulacao() {
 }
 
 function Simulacao() {
-	this.numeroTestes = 100;
+	this.numeroTestes = 20;
 	this.testesRealizados = 0;
 	this.resultado = [];
 
@@ -37,7 +37,7 @@ function Simulacao() {
 		    		iteracoesPresasCapturadas.push("");		
 		    	}
 		    }
-	    	var res = (this.resultado.length  + 101) + "," + (algoritmo.getNumeroPresas() == 0) + "," + $("#nroPredadores").val() + "," + $("#nroPresas").val() + "," +  ($("#motivacaoPresas").val() == "C") + "," + iteracoesPresasCapturadas.join() + ";";
+	    	var res = (this.resultado.length  + 1) + "," + (algoritmo.getNumeroPresas() == 0) + "," + $("#nroPredadores").val() + "," + $("#nroPresas").val() + "," +  ($("#motivacaoPresas").val() == "C") + "," + iteracoesPresasCapturadas.join() + ";";
 	    	this.resultado.push(res);
 	    	if (this.testesRealizados < this.numeroTestes) {
 	    		console.info(JSON.stringify(simulacao.resultado));
@@ -53,7 +53,7 @@ function Simulacao() {
 	this.configurar = function() {
 		$("#nroLinhas").val(15);
 		$("#nroColunas").val(15);
-		$("#nroPredadores").val(8);
+		$("#nroPredadores").val(12);
 		$("#nroPresas").val(10);
 		$("#motivacaoPresas").val("C");
 	}
@@ -61,7 +61,7 @@ function Simulacao() {
 	this.iniciar = function() {
 		iniciar();
 		$("#velocidadeIteracoes").val(100);
-		algoritmo.setVelocidade(10);
+		algoritmo.setVelocidade(30);
 		this.testesRealizados++;
 	}
 }

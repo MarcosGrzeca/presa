@@ -129,7 +129,8 @@ function Presa(numero) {
 
 		(qualidade  * -1) + (intesidade)
 		*/
-		var res = ((this.qualidade * -1) + this.intensidade) /2;
+		//var res = ((this.qualidade * -1) + this.intensidade) /2;
+		var res = ((this.qualidade * -1) + this.intensidade);
 		if (res < 1) {
 			res = 1;
 		}
@@ -381,6 +382,6 @@ function Presa(numero) {
 	}
 
 	this.getVelocidadeMaxima = function() {
-		return 3;
+		return 6;
 	}
 }
