@@ -25,7 +25,7 @@ function verificarSimulacao() {
 }
 
 function Simulacao() {
-	this.numeroTestes = 5;
+	this.numeroTestes = 1000;
 	testesRealizados = 0;
 	this.resultado = [];
 
@@ -56,7 +56,7 @@ function Simulacao() {
 		$("#nroColunas").val(15);
 		$("#nroPredadores").val(12);
 		$("#nroPresas").val(10);
-		$("#motivacaoPresas").val("S");
+		$("#motivacaoPresas").val("C");
 	}
 
 	this.iniciar = function() {
